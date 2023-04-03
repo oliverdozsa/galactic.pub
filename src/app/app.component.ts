@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AppRoutes} from "./app-routes";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-root',
@@ -20,4 +21,9 @@ export class AppComponent {
   }
 
   private _isLightTheme: boolean = localStorage.getItem("theme") != null && localStorage.getItem("theme") == "light";
+
+  constructor(public auth: AuthService) {
+  }
+
+  protected readonly document = document;
 }
