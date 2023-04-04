@@ -23,6 +23,9 @@ export class AppComponent {
   private _isLightTheme: boolean = localStorage.getItem("theme") != null && localStorage.getItem("theme") == "light";
 
   constructor(public auth: AuthService) {
+    auth.idTokenClaims$.subscribe({
+      next: token => console.log(`${token?.__raw}`)
+    })
   }
 
   protected readonly document = document;
