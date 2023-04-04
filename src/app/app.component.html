@@ -42,7 +42,7 @@
 
       <div *ngIf="auth.user$ | async as user" class="avatar flex-none max-[320px]:hidden block">
         <div class="w-10 rounded-full">
-          <img *ngIf="user.picture" [src]="user.picture" />
+          <img *ngIf="user.picture" [src]="user.picture"/>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
       <li class="disabled mx-auto">
         <div *ngIf="auth.user$ | async as user" class="avatar flex-none">
           <div class="w-10 rounded-full">
-            <img *ngIf="user.picture" [src]="user.picture" />
+            <img *ngIf="user.picture" [src]="user.picture"/>
           </div>
         </div>
       </li>
@@ -74,15 +74,45 @@
         </label>
       </li>
 
+      <li class="menu-title mt-3">
+        <span>voting</span>
+      </li>
+
       <li>
-        <label for="drawer-main-menu" [routerLink]="'/' + AppRoutes.VOTE">
+        <label [routerLink]="'/' + AppRoutes.VOTE">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round"
                   d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>
           </svg>
-          vote
+          vote home
         </label>
+      </li>
+
+      <li>
+        <label [routerLink]="'/' + AppRoutes.VOTE">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>
+          </svg>
+          where I participate
+        </label>
+      </li>
+
+      <li>
+        <label [routerLink]="'/' + AppRoutes.VOTE">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>
+          </svg>
+          my votings
+        </label>
+      </li>
+
+      <li class="menu-title mt-3">
+        <span>posting</span>
       </li>
 
       <li>
@@ -92,14 +122,16 @@
             <path stroke-linecap="round" stroke-linejoin="round"
                   d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46"/>
           </svg>
-          post
+          posting home
         </label>
       </li>
 
-      <li *ngIf="auth.isAuthenticated$ | async; else logInButton">
+      <li *ngIf="auth.isAuthenticated$ | async; else logInButton" class="mt-5">
         <button (click)="auth.logout({logoutParams: {returnTo: document.location.origin}})">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
           </svg>
           log out
         </button>
@@ -108,8 +140,10 @@
       <ng-template #logInButton>
         <li>
           <button (click)="auth.loginWithRedirect()">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
             </svg>
             log in
           </button>
