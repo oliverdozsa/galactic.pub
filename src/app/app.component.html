@@ -39,6 +39,12 @@
         <input type="checkbox" class="toggle mr-2 align-middle toggle-sm md:toggle-md" data-toggle-theme="night,light"
                data-act-class="ACTIVECLASS" [(ngModel)]="isLightTheme"/>
       </div>
+
+      <div *ngIf="auth.user$ | async as user" class="avatar flex-none max-[320px]:hidden block">
+        <div class="w-10 rounded-full">
+          <img *ngIf="user.picture" [src]="user.picture" />
+        </div>
+      </div>
     </div>
 
     <div class="container">
@@ -49,6 +55,14 @@
   <div class="drawer-side">
     <label for="drawer-main-menu" class="drawer-overlay"></label>
     <ul class="menu p-4 w-64 bg-base-100 text-base-content h-full flex">
+      <li class="disabled mx-auto">
+        <div *ngIf="auth.user$ | async as user" class="avatar flex-none">
+          <div class="w-10 rounded-full">
+            <img *ngIf="user.picture" [src]="user.picture" />
+          </div>
+        </div>
+      </li>
+
       <li>
         <label for="drawer-main-menu" [routerLink]="'/' + AppRoutes.HOME">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
