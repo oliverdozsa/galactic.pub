@@ -1,16 +1,17 @@
 import {StellarAccountBalance} from "./stellar-account-balance";
 
 export class AccountBalance {
-  isLoading = false;
-  isNotFound = false;
+  isWorking = false;
   value: number = -1;
+
+  private isNotFound = false;
 
   constructor(public network: string = "", public shouldUseTestNet: boolean = true, public accountPublic: string = "") {
   }
 
   query(): Promise<number> {
     let balancePromise = Promise.resolve(-1);
-    this.isLoading = true;
+    this.isWorking = true;
     this.isNotFound = false;
 
     if (this.network == "stellar") {
@@ -19,13 +20,13 @@ export class AccountBalance {
 
     return balancePromise.then(
       b => {
-        this.isLoading = false;
+        this.isWorking = false;
         this.value = b;
 
         return b;
       },
       e => {
-        this.isLoading = false;
+        this.isWorking = false;
         if (e.message == "Not Found") {
           this.isNotFound = true;
           this.value = -1;
@@ -36,6 +37,11 @@ export class AccountBalance {
         }
       }
     )
+  }
+
+  reset() {
+    this.value = -1;
+    this.isNotFound = false;
   }
 
   get currency(): string {

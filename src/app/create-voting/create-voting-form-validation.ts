@@ -1,8 +1,13 @@
 import {CreateVotingForm} from "./create-voting-form";
 import {Authorization} from "./authorization";
+import {AccountValidator} from "./account/validator/account-validator";
+import {VotingQuestionValidation} from "./voting-question-validation";
+import {VotingQuestion} from "./voting-question";
 
 export class CreateVotingFormValidation {
   private tokenIdentifierRegExp = new RegExp("^[0-9a-z]+$");
+  private fundingAccountValidator: AccountValidator = new AccountValidator();
+
 
   constructor(private form: CreateVotingForm) {
   }
@@ -40,5 +45,34 @@ export class CreateVotingFormValidation {
     const hoursBetweenStartAndEnd = (this.form.endDate.valueOf() - this.form.startDate.valueOf()) / (1000 * 60 * 60);
 
     return isEndDateAfterStartDate && hoursUntilEndDateFromNow >= 2 && hoursBetweenStartAndEnd >= 2;
+  }
+
+  get isFundingAccountPublicValid(): boolean {
+    this.fundingAccountValidator.accountPublic = this.form.fundingAccountPublic;
+    this.fundingAccountValidator.network = this.form.selectedNetwork;
+    return this.fundingAccountValidator.isPublicValid();
+  }
+
+  get areQuestionsValid(): boolean {
+    return this.form.questions.length > 0 &&
+      this.form.questions.every(q => this.isValidQuestion(q));
+  }
+
+  get isOrganizerValid(): boolean {
+    return !this.form.isInvitesBased || this.form.organizerIfInvitesBased.length > 0;
+  }
+
+  get isMaxChoicesValid(): boolean {
+    const maxPossible = this.maxPossibleChoices.determine(this);
+    return this.ballotType == BallotType.MULTI_POLL ||
+      (this.ballotType == BallotType.MULTI_CHOICE && this.maxChoices > 0 && this.maxChoices <= maxPossible);
+  }
+
+  getForQuestionAt(i: number): VotingQuestionValidation {
+    return new VotingQuestionValidation(this.form.questions[i]);
+  }
+
+  private isValidQuestion(votingQuestion: VotingQuestion) {
+    return new VotingQuestionValidation(votingQuestion).isValid
   }
 }
