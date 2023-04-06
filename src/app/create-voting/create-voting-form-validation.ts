@@ -3,10 +3,14 @@ import {Authorization} from "./authorization";
 import {AccountValidator} from "./account/validator/account-validator";
 import {VotingQuestionValidation} from "./voting-question-validation";
 import {VotingQuestion} from "./voting-question";
+import {MaxVotingQuestionsOrChoices} from "./account/max-voting-questions-or-choices";
+import {BallotType} from "./ballot-type";
+import {environment} from "../../environments/environment";
 
 export class CreateVotingFormValidation {
   private tokenIdentifierRegExp = new RegExp("^[0-9a-z]+$");
   private fundingAccountValidator: AccountValidator = new AccountValidator();
+  private maxVotingQuestionsOrChoices: MaxVotingQuestionsOrChoices = new MaxVotingQuestionsOrChoices();
 
 
   constructor(private form: CreateVotingForm) {
@@ -53,6 +57,12 @@ export class CreateVotingFormValidation {
     return this.fundingAccountValidator.isPublicValid();
   }
 
+  get isFundingAccountSecretValid() {
+    this.fundingAccountValidator.accountSecret = this.form.fundingAccountSecret;
+    this.fundingAccountValidator.network = this.form.selectedNetwork;
+    return this.fundingAccountValidator.isSecretValid();
+  }
+
   get areQuestionsValid(): boolean {
     return this.form.questions.length > 0 &&
       this.form.questions.every(q => this.isValidQuestion(q));
@@ -63,13 +73,33 @@ export class CreateVotingFormValidation {
   }
 
   get isMaxChoicesValid(): boolean {
-    const maxPossible = this.maxPossibleChoices.determine(this);
-    return this.ballotType == BallotType.MULTI_POLL ||
-      (this.ballotType == BallotType.MULTI_CHOICE && this.maxChoices > 0 && this.maxChoices <= maxPossible);
+    const maxPossible = this.maxVotingQuestionsOrChoices.determine(this.form);
+    return this.form.ballotType == BallotType.MULTI_POLL ||
+      (this.form.ballotType == BallotType.MULTI_CHOICE && this.form.maxChoices > 0 && this.form.maxChoices <= maxPossible);
   }
 
   getForQuestionAt(i: number): VotingQuestionValidation {
     return new VotingQuestionValidation(this.form.questions[i]);
+  }
+
+  get isDescriptionValid() {
+    return this.form.description.length <= 1000;
+  }
+
+  get isVotesLimitValid(): boolean {
+    const maxPossibleVotesLimitWithBalance = this.form.votesUpperLimit.calculate();
+
+    return this.form.votesLimit != undefined &&
+      this.form.votesLimit <= environment.maxVotesLimit &&
+      this.form.votesLimit > 1 && maxPossibleVotesLimitWithBalance >= this.form.votesLimit;
+  }
+
+  get isAuthorizationInputValid(): boolean {
+    if (this.form.authorization == Authorization.EMAILS) {
+      return this.form.authorizationEmails.size > 0;
+    }
+
+    return false;
   }
 
   private isValidQuestion(votingQuestion: VotingQuestion) {

@@ -1,6 +1,6 @@
 import {environment} from "../../../../environments/environment";
 
-export class StellarVotesLimit {
+export class StellarVotesUpperLimit {
   static calculateBasedOn(balanceXlm: number): number {
     const balanceMinusStartingCost = balanceXlm - (10 * environment.stellarNumOfVoteBuckets + 60)
     if (balanceMinusStartingCost > 0) {

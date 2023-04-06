@@ -1,4 +1,7 @@
-import {BallotType, CreateVotingForm, Visibility, VotingQuestion} from "../components/create-voting/create-voting-form";
+import {CreateVotingForm} from "../create-voting/create-voting-form";
+import {Visibility} from "../create-voting/visibility";
+import {BallotType} from "../create-voting/ballot-type";
+import {VotingQuestion} from "../create-voting/voting-question";
 
 export class CreateVotingRequest {
   public network: string = "";
@@ -25,7 +28,7 @@ export class CreateVotingRequest {
     const request = new CreateVotingRequest();
 
     request.network = form.selectedNetwork;
-    request.votesCap = form.votesCap!;
+    request.votesCap = form.votesLimit!;
     request.title = form.title;
     request.tokenIdentifier = form.tokenIdentifier ? form.tokenIdentifier : undefined;
     request.encryptedUntil = form.isEncrypted ? form.encryptedUntil.toISOString() : undefined;
