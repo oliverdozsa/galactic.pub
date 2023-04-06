@@ -5,16 +5,20 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './pages/home/home.component';
 import {FormsModule} from "@angular/forms";
-import {VoteComponent} from './pages/vote/vote.component';
 import {PostComponent} from './pages/post/post.component';
 import {AuthModule} from "@auth0/auth0-angular";
+import { VoteHomeComponent } from './pages/vote/vote-home/vote-home.component';
+import { LetsVoteComponent } from './pages/vote/lets-vote/lets-vote.component';
+import { MyVotingsComponent } from './pages/vote/my-votings/my-votings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    VoteComponent,
-    PostComponent
+    PostComponent,
+    VoteHomeComponent,
+    LetsVoteComponent,
+    MyVotingsComponent
   ],
   imports: [
     BrowserModule,

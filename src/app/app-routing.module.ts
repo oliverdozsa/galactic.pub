@@ -2,13 +2,17 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AppRoutes} from "./app-routes";
 import {HomeComponent} from "./pages/home/home.component";
-import {VoteComponent} from "./pages/vote/vote.component";
 import {PostComponent} from "./pages/post/post.component";
+import {VoteHomeComponent} from "./pages/vote/vote-home/vote-home.component";
+import {LetsVoteComponent} from "./pages/vote/lets-vote/lets-vote.component";
+import {MyVotingsComponent} from "./pages/vote/my-votings/my-votings.component";
 
 const routes: Routes = [
   {path: '', redirectTo: `/${AppRoutes.HOME}`, pathMatch: 'full'},
   {path: AppRoutes.HOME, component: HomeComponent},
-  {path: AppRoutes.VOTE, component: VoteComponent},
+  {path: AppRoutes.VOTE_HOME, component: VoteHomeComponent},
+  {path: AppRoutes.LETS_VOTE, component: LetsVoteComponent},
+  {path: AppRoutes.MY_VOTINGS, component: MyVotingsComponent},
   {path: AppRoutes.POST, component: PostComponent},
 ];
 
