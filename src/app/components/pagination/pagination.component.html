@@ -1,0 +1,17 @@
+<div class="btn-group">
+  <button *ngIf="hasPrev" class="btn">«</button>
+  <button *ngIf="!hasPrev" class="btn btn-disabled">«</button>
+
+  <button *ngFor="let page of pages" class="btn btn-sm" [class.active]="page == current"
+          (click)="onPageNumberSelected(page)">
+    {{page}}
+  </button>
+
+  <button class="btn btn-sm">1</button>
+  <button class="btn btn-sm btn-active">2</button>
+  <button class="btn btn-sm">3</button>
+  <button class="btn btn-sm">4</button>
+
+  <button *ngIf="hasNext" class="btn">»</button>
+  <button *ngIf="!hasNext" class="btn btn-disabled">»</button>
+</div>

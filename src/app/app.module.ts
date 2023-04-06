@@ -11,6 +11,11 @@ import { VoteHomeComponent } from './pages/vote/vote-home/vote-home.component';
 import { LetsVoteComponent } from './pages/vote/lets-vote/lets-vote.component';
 import { MyVotingsComponent } from './pages/vote/my-votings/my-votings.component';
 import { LoginRequiredComponent } from './components/login-required/login-required.component';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtBearerInterceptor} from "./interceptors/jwt-bearer-interceptor";
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { VotingsPaginationComponent } from './components/votings-pagination/votings-pagination.component';
+import { PageSpinnerComponent } from './components/page-spinner/page-spinner.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,10 @@ import { LoginRequiredComponent } from './components/login-required/login-requir
     VoteHomeComponent,
     LetsVoteComponent,
     MyVotingsComponent,
-    LoginRequiredComponent
+    LoginRequiredComponent,
+    PaginationComponent,
+    VotingsPaginationComponent,
+    PageSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +42,9 @@ import { LoginRequiredComponent } from './components/login-required/login-requir
       }
     }),
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtBearerInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

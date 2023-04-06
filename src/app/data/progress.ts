@@ -1,4 +1,4 @@
-import {KeyPair} from "../components/create-voting/account/key-pair";
+import {AppKeyPair} from "../create-voting/account/app-key-pair";
 
 export enum ProgressState {
   PreInit,
@@ -14,7 +14,7 @@ export enum ProgressState {
 
 export class Progress {
   state: ProgressState = ProgressState.PreInit
-  voterAccount: KeyPair | undefined;
+  voterAccount: AppKeyPair | undefined;
   publicKeyForEnvelope: string | undefined;
   message: string | undefined;
   concealed: string | undefined;

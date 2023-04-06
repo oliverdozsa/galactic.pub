@@ -1,9 +1,13 @@
-<div>
+<div *ngIf="authState == AuthenticationState.CHECKING">
+  <app-page-spinner></app-page-spinner>
+</div>
+
+<div *ngIf="authState == AuthenticationState.UNAUTHENTICATED">
   <h2 class="text-3xl text-center">
     {{text}}
   </h2>
   <div class="text-center mt-2">
-    <button class="btn btn-primary btn-sm gap-2" (click)="auth.loginWithRedirect()">
+    <button class="btn btn-primary btn-sm gap-2" (click)="auth.loginWithPopup()">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
            stroke="currentColor" class="w-5 h-5">
         <path stroke-linecap="round" stroke-linejoin="round"
