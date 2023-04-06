@@ -10,6 +10,7 @@ import {AuthModule} from "@auth0/auth0-angular";
 import { VoteHomeComponent } from './pages/vote/vote-home/vote-home.component';
 import { LetsVoteComponent } from './pages/vote/lets-vote/lets-vote.component';
 import { MyVotingsComponent } from './pages/vote/my-votings/my-votings.component';
+import { LoginRequiredComponent } from './components/login-required/login-required.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MyVotingsComponent } from './pages/vote/my-votings/my-votings.component
     PostComponent,
     VoteHomeComponent,
     LetsVoteComponent,
-    MyVotingsComponent
+    MyVotingsComponent,
+    LoginRequiredComponent
   ],
   imports: [
     BrowserModule,

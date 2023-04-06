@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-lets-vote',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./lets-vote.component.scss']
 })
 export class LetsVoteComponent {
-
+  constructor(public auth: AuthService) {
+  }
 }
