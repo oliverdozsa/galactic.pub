@@ -1,6 +1,4 @@
-<div *ngIf="authState == AuthenticationState.CHECKING">
-  <app-page-spinner></app-page-spinner>
-</div>
+<app-page-spinner *ngIf="authState == AuthenticationState.CHECKING"></app-page-spinner>
 
 <div *ngIf="authState == AuthenticationState.UNAUTHENTICATED">
   <h2 class="text-3xl text-center">

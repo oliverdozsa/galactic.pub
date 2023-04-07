@@ -1,1 +1,89 @@
-<p>votings-pagination works!</p>
+<div class="relative">
+  <div>
+    <div class="flex flex-col gap-4 divide-y-4 divide-dotted">
+      <div *ngFor="let voting of votings.items" class="flex">
+        <div class="grow mt-2">
+          <a routerLink="/{{AppRoutes.VIEW_VOTING}}/{{voting.id}}" class="link link-primary link-hover text-lg">{{voting.title}}</a>
+
+          <div>
+            <a routerLink="/{{AppRoutes.SHOW_RESULTS}}/{{voting.id}}">
+              <button *ngIf="areResultsAvailable(voting)" class="btn btn-xs sm:btn-sm btn-primary mt-1 h-fit">
+                show results
+              </button>
+            </a>
+            <button *ngIf="!areResultsAvailable(voting)" disabled class="mt-1 btn btn-xs sm:btn-sm btn-primary gap-2 h-fit">
+              show results
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                   stroke="currentColor" class="w-5 h-5 sm:w-6 sm:h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="!areResultsAvailable(voting)" class="badge badge-sm badge-outline badge-info line-clamp-1 mt-1">
+            <ng-container *ngIf="!voting.isInitialized">not initialized yet</ng-container>
+            <ng-container *ngIf="voting.isInitialized">encrypted
+              until {{getEncryptedUntilString(voting)}}
+            </ng-container>
+          </div>
+        </div>
+
+        <div *ngIf="allowCastVote && !this.isExpired(voting) && this.isStarted(voting) && !this.isAlreadyVoted(voting) &&
+                    voting.isInitialized" class="my-auto">
+          <a routerLink="/{{AppRoutes.CAST_VOTE}}/{{voting.id}}">
+            <button class="btn btn-primary btn-sm">
+              cast vote
+            </button>
+          </a>
+        </div>
+
+        <div class="flex flex-col gap-1 mt-2">
+          <div *ngIf="this.isExpired(voting)" class="badge badge-outline badge-info me-3 line-clamp-1">
+            expired
+          </div>
+          <div *ngIf="!this.isStarted(voting)" class="badge badge-outline badge-info me-3 line-clamp-1">
+            not started yet
+          </div>
+          <div *ngIf="this.isAlreadyVoted(voting)" class="badge badge-outline badge-info me-3 line-clamp-1">
+            already voted
+          </div>
+          <div *ngIf="!voting.isInitialized" class="badge badge-outline badge-info me-3 line-clamp-1">
+            not initialized yet
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && votings.items.length == 0" class="text-center">
+      {{notFoundText}}
+    </div>
+
+    <div class="flex justify-center mt-8">
+      <app-pagination *ngIf="votings.items.length > 0" [current]="currentPage" [totalPages]="totalPages"
+                      (selectedPage)="onSelectedPageChange($event)">
+
+      </app-pagination>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading"
+       class="absolute top-0 left-0 w-full h-full rounded-md bg-base-100 opacity-75"></div>
+  <div *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <svg class="h-8 w-8 fill-primary" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <style>.spinner_ajPY {
+        transform-origin: center;
+        animation: spinner_AtaB .75s infinite linear
+      }
+
+      @keyframes spinner_AtaB {
+        100% {
+          transform: rotate(360deg)
+        }
+      }</style>
+      <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/>
+      <path
+        d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+        class="spinner_ajPY"/>
+    </svg>
+  </div>
+</div>

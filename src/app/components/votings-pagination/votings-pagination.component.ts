@@ -21,6 +21,9 @@ export class VotingsPaginationComponent {
   allowCastVote: boolean = false;
 
   @Input()
+  notFoundText: string = "";
+
+  @Input()
   set showOnlyWhereNotTriedToCastVote(value: boolean) {
     this._showOnlyWhereNotTriedToCastVote = value;
     this.currentPage = 1;
@@ -55,7 +58,6 @@ export class VotingsPaginationComponent {
 
   getVotings() {
     this.isLoading = true;
-
 
     this.votingsService.getVotingsOf(this.source, this.currentPage, this.itemsPerPage, this._showOnlyWhereNotTriedToCastVote)
       .pipe(
@@ -117,6 +119,6 @@ export class VotingsPaginationComponent {
   }
 
   private isEncrypted(voting: VotingSummary): boolean {
-    return voting.encryptedUntil != null;
+    return voting.encryptedUntil != null && voting.encryptedUntil.length > 0;
   }
 }

@@ -1,7 +1,10 @@
 <app-login-required text="login is required to see your votings"></app-login-required>
 
 <div *ngIf="auth.isAuthenticated$ | async">
-  <div>
-    you rock
+  <div class="px-3">
+    <h1 class="text-4xl text-center mb-10">My votings</h1>
+    <app-votings-pagination [source]="PagingSource.VOTE_CALLER"
+                            [allowCastVote]="true"
+                            notFoundText="you haven't created any votings yet"></app-votings-pagination>
   </div>
 </div>

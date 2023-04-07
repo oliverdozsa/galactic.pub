@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
+import {PagingSource} from "../../../services/votings.service";
 
 @Component({
   selector: 'app-my-votings',
@@ -14,4 +15,6 @@ export class MyVotingsComponent {
     auth.isAuthenticated$
       .subscribe()
   }
+
+    protected readonly PagingSource = PagingSource;
 }

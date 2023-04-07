@@ -11,7 +11,7 @@ import { VoteHomeComponent } from './pages/vote/vote-home/vote-home.component';
 import { LetsVoteComponent } from './pages/vote/lets-vote/lets-vote.component';
 import { MyVotingsComponent } from './pages/vote/my-votings/my-votings.component';
 import { LoginRequiredComponent } from './components/login-required/login-required.component';
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JwtBearerInterceptor} from "./interceptors/jwt-bearer-interceptor";
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { VotingsPaginationComponent } from './components/votings-pagination/votings-pagination.component';
@@ -34,6 +34,7 @@ import { PageSpinnerComponent } from './components/page-spinner/page-spinner.com
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     AuthModule.forRoot({
       domain: 'galactic-pub.eu.auth0.com',
       clientId: 'givelnA5lZwd1JMfl8YL7tM8EkXBEzvb',
