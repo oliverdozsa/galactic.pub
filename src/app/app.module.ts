@@ -16,6 +16,10 @@ import {JwtBearerInterceptor} from "./interceptors/jwt-bearer-interceptor";
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { VotingsPaginationComponent } from './components/votings-pagination/votings-pagination.component';
 import { PageSpinnerComponent } from './components/page-spinner/page-spinner.component';
+import { CreateVotingComponent } from './pages/vote/create-voting/create-voting.component';
+import { SelectNetworkComponent } from './pages/vote/create-voting/select-network/select-network.component';
+import { FundingAccountSourceComponent } from './pages/vote/create-voting/funding-account-source/funding-account-source.component';
+import { FundingAccountBalanceComponent } from './pages/vote/create-voting/funding-account-balance/funding-account-balance.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { PageSpinnerComponent } from './components/page-spinner/page-spinner.com
     LoginRequiredComponent,
     PaginationComponent,
     VotingsPaginationComponent,
-    PageSpinnerComponent
+    PageSpinnerComponent,
+    CreateVotingComponent,
+    SelectNetworkComponent,
+    FundingAccountSourceComponent,
+    FundingAccountBalanceComponent
   ],
   imports: [
     BrowserModule,

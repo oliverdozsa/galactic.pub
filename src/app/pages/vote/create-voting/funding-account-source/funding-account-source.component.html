@@ -1,0 +1,49 @@
+<div class="flex gap-2 text-info justify-center mt-4">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+       class="w-6 h-6 shrink-0">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+  </svg>
+  <p class="text-center">
+    the funding account will finance the voting. it must have enough balance to deduct the preliminary costs from it.
+    when the voting ends, unused balances will be refunded. it's recommended to create a new account solely for the
+    purposes of funding this voting
+  </p>
+</div>
+
+<div class="form-control">
+  <label class="label cursor-pointer justify-start mx-auto gap-2">
+    <input type="checkbox" class="toggle" checked [(ngModel)]="form.shouldUseTestNet"/>
+    <span class="label-text">use test network</span>
+  </label>
+</div>
+
+<div class="flex flex-row gap-2">
+  <div class="form-control w-full">
+    <label class="label">
+      <span class="label-text">account public</span>
+    </label>
+    <input type="text" placeholder="funding account public" class="input input-bordered w-full"
+           [(ngModel)]="form.fundingAccountPublic"
+           [disabled]="form.shouldAccountPublicToBeDeterminedAutomatically"
+           [class.input-error]="!form.validation.isFundingAccountPublicValid"
+           [class.input-success]="form.validation.isFundingAccountPublicValid"
+    />
+  </div>
+
+  <div class="form-control w-full">
+    <label class="label">
+      <span class="label-text">account secret</span>
+    </label>
+    <input type="text" placeholder="funding account secret" class="input input-bordered w-full"
+           [(ngModel)]="form.fundingAccountSecret"
+           [class.input-error]="!form.validation.isFundingAccountSecretValid || form.fundingAccountBalance.isNotFound"
+           [class.input-success]="form.validation.isFundingAccountSecretValid"/>
+  </div>
+</div>
+
+<div *ngIf="form.shouldUseTestNet" class="mt-4">
+  <button class="btn btn-primary btn-block" (click)="onGenerateFundingAccountClicked()">
+    generate funding account
+  </button>
+</div>

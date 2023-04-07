@@ -1,0 +1,53 @@
+<app-login-required text="login is required to create voting"></app-login-required>
+
+<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+  <div class="relative">
+    <div>
+      <div class="flex justify-center">
+        <ul class="steps steps-vertical sm:steps-horizontal sm:gap-3">
+          <li class="step" [class.step-primary]="currentStep >= Step.Network">Network</li>
+          <li class="step" [class.step-primary]="currentStep >= Step.Funding">Funding</li>
+          <li class="step" [class.step-primary]="currentStep >= Step.BasicData">Basic data</li>
+          <li class="step" [class.step-primary]="currentStep >= Step.Questions">Questions</li>
+        </ul>
+      </div>
+
+      <div *ngIf="currentStep == Step.Network">
+        <app-select-network [form]="form"></app-select-network>
+      </div>
+
+      <div *ngIf="currentStep == Step.Funding">
+        <app-funding-account-source [form]="form"></app-funding-account-source>
+        <app-funding-account-balance [form]="form"></app-funding-account-balance>
+      </div>
+
+      <div class="flex justify-center mt-10">
+        <div class="btn-group">
+          <button *ngIf="shouldGoToPrevStepBeDisplayed" class="btn btn-primary" (click)="onPrevClicked()">previous</button>
+          <button *ngIf="shouldGoToNextStepBeDisplayed" class="btn btn-primary" (click)="onNextClicked()" [disabled]="isDisallowedToGoToNextStep">next</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading"
+         class="absolute top-0 left-0 w-full h-full rounded-md bg-base-100 opacity-75"></div>
+    <div *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <svg class="h-8 w-8 fill-primary" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <style>.spinner_ajPY {
+          transform-origin: center;
+          animation: spinner_AtaB .75s infinite linear
+        }
+
+        @keyframes spinner_AtaB {
+          100% {
+            transform: rotate(360deg)
+          }
+        }</style>
+        <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/>
+        <path
+          d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+          class="spinner_ajPY"/>
+      </svg>
+    </div>
+  </div>
+</div>

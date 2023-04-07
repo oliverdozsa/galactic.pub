@@ -1,10 +1,20 @@
 <app-login-required text="login is required to see your votings"></app-login-required>
 
-<div *ngIf="auth.isAuthenticated$ | async">
-  <div class="px-3">
-    <h1 class="text-4xl text-center mb-10">My votings</h1>
+<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+  <h1 class="text-4xl text-center mb-10">My votings</h1>
+
+  <div class="text-end">
+    <button class="btn btn-outline btn-primary border-2 gap-2" (click)="onCreateVotingClicked()">
+      create
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+           class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mt-2">
     <app-votings-pagination [source]="PagingSource.VOTE_CALLER"
-                            [allowCastVote]="true"
                             notFoundText="you haven't created any votings yet"></app-votings-pagination>
   </div>
 </div>
