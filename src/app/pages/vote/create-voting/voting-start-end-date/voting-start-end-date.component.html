@@ -1,0 +1,34 @@
+<div class="flex flex-col sm:flex-row gap-2">
+  <div class="w-full">
+    <label class="label">
+      <span class="label-text">start date</span>
+    </label>
+
+    <input class="w-full input input-bordered" type="datetime-local" [(ngModel)]="startDateRaw"
+           [class.border-success]="form.validation.isStartDateValid"
+           [class.border-error]="!form.validation.isStartDateValid">
+
+    <label *ngIf="!form.validation.isStartDateValid" class="label">
+      <span class="label-text text-error">
+        Please choose starting date that is before the ending date.
+      </span>
+    </label>
+  </div>
+
+  <div class="w-full">
+    <label class="label">
+      <span class="label-text">end date</span>
+    </label>
+
+    <input class="w-full input input-bordered" type="datetime-local" [(ngModel)]="endDateRaw"
+           [class.border-success]="form.validation.isEndDateValid"
+           [class.border-error]="!form.validation.isEndDateValid">
+
+    <label *ngIf="!form.validation.isEndDateValid" class="label">
+      <span class="label-text text-error">
+        Please choose an ending date that is after the starting date there's at least 2 hours between the two, and it's in
+        the future.
+      </span>
+    </label>
+  </div>
+</div>

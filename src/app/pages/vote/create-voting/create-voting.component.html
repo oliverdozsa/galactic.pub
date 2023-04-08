@@ -24,6 +24,15 @@
       <div *ngIf="currentStep == Step.BasicData">
         <app-voting-title [form]="form"></app-voting-title>
         <app-voting-description [form]="form"></app-voting-description>
+        <div class="mt-4">
+          <app-voting-token-identifier></app-voting-token-identifier>
+        </div>
+        <div class="mt-4">
+          <app-voting-start-end-date [form]="form"></app-voting-start-end-date>
+        </div>
+        <div class="mt-4">
+          <app-voting-encryption [form]="form"></app-voting-encryption>
+        </div>
       </div>
 
       <div class="flex justify-center mt-10">

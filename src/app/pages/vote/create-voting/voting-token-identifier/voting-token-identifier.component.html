@@ -1,0 +1,17 @@
+<div class="form-control w-full">
+  <label class="label">
+    <span class="label-text">token identifier</span>
+  </label>
+  <input type="text" placeholder="token identifier (leave empty to auto-generate it)"
+         class="input input-bordered w-full"
+         [(ngModel)]="form.tokenIdentifier"
+         [class.input-error]="!form.validation.isTokenIdentifierValid"
+         [class.input-success]="form.validation.isTokenIdentifierValid"
+  />
+  <label *ngIf="!form.validation.isTokenIdentifierValid" class="label">
+    <span class="label-text text-error">
+      If token identifier is given, it must have at least length 2 but no more than 8, and must consists of numbers,
+        and / or lowercase alphabetic characters.
+    </span>
+  </label>
+</div>

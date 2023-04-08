@@ -1,0 +1,38 @@
+<div class="flex justify-center">
+  <div class="form-control w-52">
+    <label class="label cursor-pointer justify-normal">
+      <input type="checkbox" class="toggle" checked [(ngModel)]="form.isEncrypted"/>
+      <div class="ml-2 flex flex-row gap-2">
+        <div class="label-text text-center">encrypt voting</div>
+        <div>
+          <svg *ngIf="form.isEncrypted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+
+          <svg *ngIf="!form.isEncrypted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+        </div>
+      </div>
+    </label>
+  </div>
+</div>
+
+
+<div *ngIf="form.isEncrypted">
+  <div class="w-full">
+    <label class="label">
+      <span class="label-text">encrypted until</span>
+    </label>
+
+    <input class="w-full input input-bordered" type="datetime-local" [(ngModel)]="rawEncryptedUntil"
+           [class.border-success]="form.validation.isEncryptedUntilValid"
+           [class.border-error]="!form.validation.isEncryptedUntilValid">
+
+    <label *ngIf="!form.validation.isEncryptedUntilValid" class="label">
+      <span class="label-text text-error">
+        Please choose a date that is at least 2 hours from now.
+      </span>
+    </label>
+  </div>
+</div>

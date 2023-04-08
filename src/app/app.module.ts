@@ -27,6 +27,9 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
 import { VotingTitleComponent } from './pages/vote/create-voting/voting-title/voting-title.component';
 import { VotingDescriptionComponent } from './pages/vote/create-voting/voting-description/voting-description.component';
 import {EditorComponent} from "@tinymce/tinymce-angular";
+import { VotingTokenIdentifierComponent } from './pages/vote/create-voting/voting-token-identifier/voting-token-identifier.component';
+import { VotingStartEndDateComponent } from './pages/vote/create-voting/voting-start-end-date/voting-start-end-date.component';
+import { VotingEncryptionComponent } from './pages/vote/create-voting/voting-encryption/voting-encryption.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import {EditorComponent} from "@tinymce/tinymce-angular";
     FundingAccountBalanceComponent,
     SpinnerComponent,
     VotingTitleComponent,
-    VotingDescriptionComponent
+    VotingDescriptionComponent,
+    VotingTokenIdentifierComponent,
+    VotingStartEndDateComponent,
+    VotingEncryptionComponent
   ],
   imports: [
     BrowserModule,
