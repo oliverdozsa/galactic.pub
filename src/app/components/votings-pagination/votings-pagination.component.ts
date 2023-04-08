@@ -73,6 +73,7 @@ export class VotingsPaginationComponent {
 
   onVotingsPageReceived(page: Page<VotingSummary>) {
     this.votings = page;
+    this.isLoading = false;
   }
 
   onGetVotingsFinished() {

@@ -7,19 +7,23 @@ import {HomeComponent} from './pages/home/home.component';
 import {FormsModule} from "@angular/forms";
 import {PostComponent} from './pages/post/post.component';
 import {AuthModule} from "@auth0/auth0-angular";
-import { VoteHomeComponent } from './pages/vote/vote-home/vote-home.component';
-import { LetsVoteComponent } from './pages/vote/lets-vote/lets-vote.component';
-import { MyVotingsComponent } from './pages/vote/my-votings/my-votings.component';
-import { LoginRequiredComponent } from './components/login-required/login-required.component';
+import {VoteHomeComponent} from './pages/vote/vote-home/vote-home.component';
+import {LetsVoteComponent} from './pages/vote/lets-vote/lets-vote.component';
+import {MyVotingsComponent} from './pages/vote/my-votings/my-votings.component';
+import {LoginRequiredComponent} from './components/login-required/login-required.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JwtBearerInterceptor} from "./interceptors/jwt-bearer-interceptor";
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { VotingsPaginationComponent } from './components/votings-pagination/votings-pagination.component';
-import { PageSpinnerComponent } from './components/page-spinner/page-spinner.component';
-import { CreateVotingComponent } from './pages/vote/create-voting/create-voting.component';
-import { SelectNetworkComponent } from './pages/vote/create-voting/select-network/select-network.component';
-import { FundingAccountSourceComponent } from './pages/vote/create-voting/funding-account-source/funding-account-source.component';
-import { FundingAccountBalanceComponent } from './pages/vote/create-voting/funding-account-balance/funding-account-balance.component';
+import {PaginationComponent} from './components/pagination/pagination.component';
+import {VotingsPaginationComponent} from './components/votings-pagination/votings-pagination.component';
+import {CreateVotingComponent} from './pages/vote/create-voting/create-voting.component';
+import {SelectNetworkComponent} from './pages/vote/create-voting/select-network/select-network.component';
+import {
+  FundingAccountSourceComponent
+} from './pages/vote/create-voting/funding-account-source/funding-account-source.component';
+import {
+  FundingAccountBalanceComponent
+} from './pages/vote/create-voting/funding-account-balance/funding-account-balance.component';
+import {SpinnerComponent} from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -32,11 +36,11 @@ import { FundingAccountBalanceComponent } from './pages/vote/create-voting/fundi
     LoginRequiredComponent,
     PaginationComponent,
     VotingsPaginationComponent,
-    PageSpinnerComponent,
     CreateVotingComponent,
     SelectNetworkComponent,
     FundingAccountSourceComponent,
-    FundingAccountBalanceComponent
+    FundingAccountBalanceComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
