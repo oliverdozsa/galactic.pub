@@ -21,6 +21,11 @@
         <app-funding-account-balance [form]="form"></app-funding-account-balance>
       </div>
 
+      <div *ngIf="currentStep == Step.BasicData">
+        <app-voting-title [form]="form"></app-voting-title>
+        <app-voting-description [form]="form"></app-voting-description>
+      </div>
+
       <div class="flex justify-center mt-10">
         <div class="btn-group">
           <button *ngIf="shouldGoToPrevStepBeDisplayed" class="btn btn-primary" (click)="onPrevClicked()">previous</button>

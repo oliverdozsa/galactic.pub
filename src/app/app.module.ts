@@ -24,6 +24,9 @@ import {
   FundingAccountBalanceComponent
 } from './pages/vote/create-voting/funding-account-balance/funding-account-balance.component';
 import {SpinnerComponent} from './components/spinner/spinner.component';
+import { VotingTitleComponent } from './pages/vote/create-voting/voting-title/voting-title.component';
+import { VotingDescriptionComponent } from './pages/vote/create-voting/voting-description/voting-description.component';
+import {EditorComponent} from "@tinymce/tinymce-angular";
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
     SelectNetworkComponent,
     FundingAccountSourceComponent,
     FundingAccountBalanceComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    VotingTitleComponent,
+    VotingDescriptionComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +59,7 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
         redirect_uri: window.location.origin
       }
     }),
+    EditorComponent,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtBearerInterceptor, multi: true}

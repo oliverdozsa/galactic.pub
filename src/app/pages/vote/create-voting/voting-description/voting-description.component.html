@@ -1,0 +1,21 @@
+<div>
+  <label class="label">
+    <span class="label-text">
+      short description
+    </span>
+  </label>
+  <editor class="border rounded-md" [class.border-error]="!form.validation.isDescriptionValid" [init]="{
+  base_url: '/tinymce',
+  suffix: '.min',
+  menubar: false,
+  branding: false,
+  plugins: 'link autolink',
+  default_link_target: '_blank',
+  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link'
+  }"
+          [(ngModel)]="form.description"
+  ></editor>
+  <label *ngIf="!form.validation.isDescriptionValid" class="label">
+    <span class="label-text text-error">Description is too long!</span>
+  </label>
+</div>
