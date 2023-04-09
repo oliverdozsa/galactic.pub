@@ -1,0 +1,59 @@
+<div class="flex flex-col sm:flex-row gap-2">
+  <div class="w-full">
+    <div class="flex gap-2 text-info justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+           class="w-6 h-6 shrink-0">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+      </svg>
+      <p class="text-center">
+        <span *ngIf="form.visibility == Visibility.PRIVATE">
+          voting is only accessible to those who participate.
+        </span>
+
+        <span *ngIf="form.visibility == Visibility.PUBLIC">
+          voting is listed among "public votings". only participants
+          can cast a vote
+        </span>
+
+        <span *ngIf="form.visibility == Visibility.UNLISTED">
+          voting is not listed in "public votings", but still accessible to the public through a link.
+          only participants can cast a vote
+        </span>
+      </p>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">visibility</span>
+      </label>
+      <select class="select select-bordered" [(ngModel)]="form.visibility">
+        <option [value]="Visibility.PRIVATE">private</option>
+        <option [value]="Visibility.UNLISTED">unlisted</option>
+        <option [value]="Visibility.PUBLIC">public</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="w-full">
+    <div class="flex gap-2 text-info justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+           class="w-6 h-6 shrink-0">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+      </svg>
+      <p class="text-center">
+        users will access the voting through their email
+      </p>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">authorization</span>
+      </label>
+      <select disabled class="select select-bordered" [(ngModel)]="form.authorization">
+        <option [value]="Authorization.EMAILS">emails</option>
+      </select>
+    </div>
+  </div>
+</div>

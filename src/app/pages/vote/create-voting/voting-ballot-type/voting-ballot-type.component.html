@@ -1,0 +1,55 @@
+<div class="flex flex-col sm:flex-row gap-2">
+  <div class="w-full">
+    <div class="flex gap-2 text-info justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+           class="w-6 h-6 shrink-0">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+      </svg>
+      <p class="text-center">
+        <span *ngIf="form.ballotType == BallotType.MULTI_POLL">
+        multipe polls, one choice per poll.
+      </span>
+
+        <span *ngIf="form.ballotType == BallotType.MULTI_CHOICE">
+        one poll, with multiple choices.
+      </span>
+      </p>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">ballot type</span>
+      </label>
+      <select class="select select-bordered" [(ngModel)]="form.ballotType">
+        <option [value]="BallotType.MULTI_POLL">multiple polls</option>
+        <option [value]="BallotType.MULTI_CHOICE">multiple choices</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="form.ballotType == BallotType.MULTI_CHOICE" class="w-full">
+    <div class="flex gap-2 text-info justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+           class="w-6 h-6 shrink-0">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+      </svg>
+      <p class="text-center">
+        there can be at most {{maxPossible}}
+      </p>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">max. choices</span>
+      </label>
+      <input type="number" [min]="1" [max]="maxPossible" placeholder="funding account public"
+             class="input input-bordered w-full"
+             [(ngModel)]="form.maxChoices"
+             [class.input-error]="!form.validation.isMaxChoicesValid"
+             [class.input-success]="form.validation.isMaxChoicesValid"
+      />
+    </div>
+  </div>
+</div>

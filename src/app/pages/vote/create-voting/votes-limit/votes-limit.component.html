@@ -1,0 +1,14 @@
+<div class="form-control w-full">
+  <label class="label">
+    <span class="label-text">votes limit</span>
+  </label>
+
+  <input type="number" placeholder="votes limit" class="input input-bordered w-full"
+         [(ngModel)]="form.votesLimit"
+         [class.border-success]="!shouldWarn"
+         [class.border-error]="shouldWarn"/>
+
+  <label *ngIf="shouldWarn" class="label">
+    <span class="label-text-alt text-error">{{errorText}}</span>
+  </label>
+</div>

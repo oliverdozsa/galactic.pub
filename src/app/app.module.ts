@@ -30,6 +30,10 @@ import {EditorComponent} from "@tinymce/tinymce-angular";
 import { VotingTokenIdentifierComponent } from './pages/vote/create-voting/voting-token-identifier/voting-token-identifier.component';
 import { VotingStartEndDateComponent } from './pages/vote/create-voting/voting-start-end-date/voting-start-end-date.component';
 import { VotingEncryptionComponent } from './pages/vote/create-voting/voting-encryption/voting-encryption.component';
+import { VotesLimitComponent } from './pages/vote/create-voting/votes-limit/votes-limit.component';
+import { VotingVisibilityAndAuthorizationComponent } from './pages/vote/create-voting/voting-visibility-and-authorization/voting-visibility-and-authorization.component';
+import { VotingBallotTypeComponent } from './pages/vote/create-voting/voting-ballot-type/voting-ballot-type.component';
+import { VotingAuthorizationEmailsComponent } from './pages/vote/create-voting/voting-authorization-emails/voting-authorization-emails.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,11 @@ import { VotingEncryptionComponent } from './pages/vote/create-voting/voting-enc
     VotingDescriptionComponent,
     VotingTokenIdentifierComponent,
     VotingStartEndDateComponent,
-    VotingEncryptionComponent
+    VotingEncryptionComponent,
+    VotesLimitComponent,
+    VotingVisibilityAndAuthorizationComponent,
+    VotingBallotTypeComponent,
+    VotingAuthorizationEmailsComponent
   ],
   imports: [
     BrowserModule,
