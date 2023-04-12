@@ -1,0 +1,46 @@
+<div class="form-control w-full">
+  <div class="flex flex-row gap-2 w-full">
+    <div class="grow">
+      <label *ngIf="label != ''" class="label">
+        <span class="label-text">{{label}}</span>
+      </label>
+      <input type="text" [(ngModel)]="currentUserInput" [placeholder]="placeholder"
+             class="input input-bordered w-full"
+             [class.input-success]="isInputValid"
+             [class.input-error]="!isInputValid"
+             (keyup.enter)="currentInputToTagIfValid()"/>
+      <label *ngIf="!isInputValid || !areTagsValid" class="label">
+        <span class="label-text-alt text-error">
+          <span *ngIf="!isInputValid">
+            {{inputErrorMessage}}<br *ngIf="!areTagsValid"/>
+          </span>
+
+          <span *ngIf="!areTagsValid">
+            {{tagsErrorMessage}}
+          </span>
+
+        </span>
+      </label>
+    </div>
+
+    <div>
+      <label *ngIf="label != ''" class="label">
+        <span class="label-text h-5"> </span>
+      </label>
+      <button class="btn btn-primary" [disabled]="!isInputValid || currentUserInput.length == 0" (click)="currentInputToTagIfValid()">add</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="tags.length > 0" class="w-full px-2 pt-2 pb-11 mb-3 mt-2 flex flex-wrap rounded-md bg-primary/20">
+  <span *ngFor="let tag of tags; let i = index"
+        class="flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-primary/50 text-gray-200 hover:bg-primary/60 hover:text-gray-100">
+    {{tag.text}}
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3 hover:text-gray-300" viewBox="0 0 20 20" (click)="deleteTagAt(i)"
+         fill="currentColor">
+          <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"/>
+        </svg>
+  </span>
+</div>

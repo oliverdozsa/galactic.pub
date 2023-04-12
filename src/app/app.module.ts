@@ -34,6 +34,7 @@ import { VotesLimitComponent } from './pages/vote/create-voting/votes-limit/vote
 import { VotingVisibilityAndAuthorizationComponent } from './pages/vote/create-voting/voting-visibility-and-authorization/voting-visibility-and-authorization.component';
 import { VotingBallotTypeComponent } from './pages/vote/create-voting/voting-ballot-type/voting-ballot-type.component';
 import { VotingAuthorizationEmailsComponent } from './pages/vote/create-voting/voting-authorization-emails/voting-authorization-emails.component';
+import { TagsInputComponent } from './components/tags-input/tags-input.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { VotingAuthorizationEmailsComponent } from './pages/vote/create-voting/v
     VotesLimitComponent,
     VotingVisibilityAndAuthorizationComponent,
     VotingBallotTypeComponent,
-    VotingAuthorizationEmailsComponent
+    VotingAuthorizationEmailsComponent,
+    TagsInputComponent
   ],
   imports: [
     BrowserModule,
