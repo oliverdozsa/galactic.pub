@@ -1,0 +1,51 @@
+<div class="flex gap-2 text-info justify-center">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+       class="w-6 h-6 shrink-0">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+  </svg>
+  <p class="text-center">
+    <span *ngIf="form.isInvitesBased">
+      voters will get an invitation to participate in the voting via email. no login is required. the invitation will be
+      only valid for this voting
+    </span>
+    <span *ngIf="!form.isInvitesBased">
+      voters can access this voting when they login.
+    </span>
+  </p>
+</div>
+
+<div class="flex justify-center">
+  <div class="form-control">
+    <label class="label cursor-pointer gap-2">
+      <span *ngIf="form.isInvitesBased" class="label-text">cast vote via invitation</span>
+      <span *ngIf="!form.isInvitesBased" class="label-text">cast vote via login</span>
+      <input type="checkbox" class="toggle" [(ngModel)]="form.isInvitesBased"/>
+    </label>
+  </div>
+</div>
+
+<div *ngIf="form.isInvitesBased">
+  <div class="flex gap-2 text-info justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+         class="w-6 h-6 shrink-0">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+    </svg>
+    <p class="text-center">
+    <span>
+      the voting organizer will be added to the invite to inform recipients
+    </span>
+    </p>
+  </div>
+
+  <div class="form-control w-full">
+    <input type="text" placeholder="organizer" class="input input-bordered w-full"
+           [(ngModel)]="form.organizerIfInvitesBased"
+           [class.input-success]="form.validation.isOrganizerValid"
+           [class.input-error]="!form.validation.isOrganizerValid"/>
+    <label *ngIf="!form.validation.isOrganizerValid" class="label">
+      <span class="label-text text-error">If casting voting is based on invites, the organizer must not be empty.</span>
+    </label>
+  </div>
+</div>

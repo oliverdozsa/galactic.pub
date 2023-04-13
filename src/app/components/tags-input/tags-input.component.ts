@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TagsInputTag} from "./tags-input-tag";
 
 @Component({
@@ -18,6 +18,9 @@ export class TagsInputComponent {
 
   @Input()
   tagsValidation: (tags: TagsInputTag[]) => string | undefined = t => undefined;
+
+  @Output()
+  tagsChanged: EventEmitter<TagsInputTag[]> = new EventEmitter<TagsInputTag[]>();
 
   tags: TagsInputTag[] = []
 
@@ -41,12 +44,17 @@ export class TagsInputComponent {
 
   currentInputToTagIfValid() {
     if(this.isInputValid && this.currentUserInput.length > 0) {
-      this.tags.push({text: this.currentUserInput})
+      this.tags.push({text: this.currentUserInput});
+      this.tagsChanged.emit(this.deepCopyTags());
       this.currentUserInput = "";
     }
   }
 
   deleteTagAt(index: number) {
     this.tags.splice(index, 1);
+  }
+
+  private deepCopyTags(): TagsInputTag[] {
+    return JSON.parse(JSON.stringify(this.tags));
   }
 }

@@ -28,4 +28,8 @@ export class VotingAuthorizationEmailsComponent {
 
     return undefined;
   }
+
+  onTagsChanged(tags: TagsInputTag[]) {
+    this.form.authorizationEmails = new Set<string>(tags.map(t => t.text));
+  }
 }

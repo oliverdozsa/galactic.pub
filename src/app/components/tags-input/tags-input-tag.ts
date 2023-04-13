@@ -1,4 +1,3 @@
-export class TagsInputTag {
-  text: string = "";
-  value?: any | undefined;
+export interface TagsInputTag {
+  text: string;
 }

@@ -1,3 +1,4 @@
 <app-tags-input placeholder="add email" label="emails"
                 [inputValidation]="inputValidation"
-                [tagsValidation]="tagsValidation"></app-tags-input>
+                [tagsValidation]="tagsValidation"
+                (tagsChanged)="onTagsChanged($event)"></app-tags-input>
