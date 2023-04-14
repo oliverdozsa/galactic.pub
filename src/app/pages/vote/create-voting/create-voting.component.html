@@ -50,6 +50,10 @@
         </div>
       </div>
 
+      <div *ngIf="currentStep == Step.Questions">
+        <app-voting-questions [form]="form"></app-voting-questions>
+      </div>
+
       <div class="flex justify-center mt-10">
         <div class="btn-group">
           <button *ngIf="shouldGoToPrevStepBeDisplayed" class="btn btn-primary" (click)="onPrevClicked()">previous</button>

@@ -22,6 +22,7 @@ export class TagsInputComponent {
   @Output()
   tagsChanged: EventEmitter<TagsInputTag[]> = new EventEmitter<TagsInputTag[]>();
 
+  @Input()
   tags: TagsInputTag[] = []
 
   currentUserInput: string = "";

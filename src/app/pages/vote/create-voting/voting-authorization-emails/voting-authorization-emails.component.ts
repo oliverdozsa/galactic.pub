@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CreateVotingForm} from "../../../../create-voting/create-voting-form";
 import {TagsInputTag} from "../../../../components/tags-input/tags-input-tag";
 
@@ -7,9 +7,11 @@ import {TagsInputTag} from "../../../../components/tags-input/tags-input-tag";
   templateUrl: './voting-authorization-emails.component.html',
   styleUrls: ['./voting-authorization-emails.component.scss']
 })
-export class VotingAuthorizationEmailsComponent {
+export class VotingAuthorizationEmailsComponent implements OnInit{
   @Input()
   form: CreateVotingForm = new CreateVotingForm();
+
+  tags: TagsInputTag[] = [];
 
   private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -31,5 +33,10 @@ export class VotingAuthorizationEmailsComponent {
 
   onTagsChanged(tags: TagsInputTag[]) {
     this.form.authorizationEmails = new Set<string>(tags.map(t => t.text));
+  }
+
+  ngOnInit(): void {
+    this.tags = Array.from(this.form.authorizationEmails)
+      .map(email => ({text: email} as TagsInputTag));
   }
 }

@@ -1,0 +1,47 @@
+<div *ngFor="let question of form.questions; let i = index; trackBy: trackByIndex" tabindex="0"
+     class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+  <div class="collapse-title text-xl font-medium">
+    <div class="form-control w-full flex flex-row gap-2">
+      <div class="grow">
+        <label class="label">
+          <span class="label-text">question</span>
+        </label>
+        <input type="text" placeholder="e.g.: What is your favorite color?" class="input input-bordered w-full"
+               [(ngModel)]="question.question"
+               [class.input-error]="!isValid(question)"
+               [class.input-success]="isValid(question)"/>
+        <label *ngIf="!isValid(question)" class="label">
+          <span class="label-text-alt text-error">must have length > 1 and < 1000</span>
+        </label>
+      </div>
+
+      <div>
+        <button class="btn btn-square mt-9">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="collapse-content">
+    <p>tabindex="0" attribute is necessary to make the div focusable</p>
+  </div>
+</div>
+
+
+<div class="mt-4">
+  <button class="btn btn-primary gap-2" (click)="addQuestionClicked()" [disabled]="remainingNumberOfPossibleQuestions < 1">
+    add question
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>
+  </button>
+
+  <div class="mt-1 label-text" *ngIf="remainingNumberOfPossibleQuestions > 0">
+    you can
+    add {{remainingNumberOfPossibleQuestions}} more questions
+  </div>
+
+  <div class="mt-1 label-text" *ngIf="remainingNumberOfPossibleQuestions == 0">you can't add more questions</div>
+</div>
