@@ -78,10 +78,6 @@ export class CreateVotingFormValidation {
       (this.form.ballotType == BallotType.MULTI_CHOICE && this.form.maxChoices > 0 && this.form.maxChoices <= maxPossible);
   }
 
-  getForQuestionAt(i: number): VotingQuestionValidation {
-    return new VotingQuestionValidation(this.form.questions[i]);
-  }
-
   get isDescriptionValid() {
     return this.form.description.length <= 1000;
   }

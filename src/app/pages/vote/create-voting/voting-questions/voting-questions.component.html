@@ -1,6 +1,8 @@
 <div class="space-y-3 mt-4">
   <div *ngFor="let question of form.questions; let i = index; trackBy: trackByIndex"
-       class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+       class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box"
+       [class.border-error]="getWarnMessageFor(i) != ''"
+       [class.border-success]="getWarnMessageFor(i) == ''">
     <input type="checkbox" [checked]="true"/>
     <div class="collapse-title text-xl font-medium">
       <span *ngIf="question.question==''">
@@ -60,7 +62,7 @@
               </div>
 
               <div>
-                <button class="btn btn-error btn-square">
+                <button class="btn btn-error btn-square" (click)="deleteOptionClicked(i, j)">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                        stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -86,7 +88,7 @@
         </div>
 
         <div>
-          <button class="btn btn-error gap-2">
+          <button class="btn btn-error gap-2" (click)="deleteQuestionClicked(i)">
             delete question
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="w-6 h-6">
@@ -96,6 +98,12 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <div>
+      <label *ngIf="getWarnMessageFor(i) != ''" class="label">
+        <span class="label-text-alt text-error">{{getWarnMessageFor(i)}}</span>
+      </label>
     </div>
   </div>
 </div>

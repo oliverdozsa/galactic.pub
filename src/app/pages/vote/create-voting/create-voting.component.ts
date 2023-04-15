@@ -15,7 +15,7 @@ export enum Step {
   styleUrls: ['./create-voting.component.scss']
 })
 export class CreateVotingComponent {
-  currentStep: Step = Step.Questions;
+  currentStep: Step = Step.Network;
   form: CreateVotingForm = new CreateVotingForm();
 
   protected readonly Step = Step;

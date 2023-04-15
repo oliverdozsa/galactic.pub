@@ -17,9 +17,6 @@ export class VotingQuestionsComponent {
   maxQuestions = new MaxVotingQuestionsOrChoices();
 
   get remainingNumberOfPossibleQuestions(): number {
-    // TODO: remove this
-    return 4;
-
     if (this.form.ballotType == BallotType.MULTI_CHOICE) {
       return 1;
     }
