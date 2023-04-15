@@ -61,10 +61,6 @@ export class VotingQuestionsComponent {
     this.form.questions[i].deleteAt(j);
   }
 
-  preventPropagationOf(event: any) {
-    event.stopPropagation();
-  }
-
   addQuestionClicked() {
     this.form.questions.push(new VotingQuestion());
   }
@@ -73,8 +69,13 @@ export class VotingQuestionsComponent {
     this.form.questions.splice(i, 1);
   }
 
-  isValid(question: VotingQuestion) {
+  isQuestionValid(question: VotingQuestion) {
     const validation = new VotingQuestionValidation(question);
     return validation.isQuestionValid;
+  }
+
+  isDescriptionValid(question: VotingQuestion) {
+    const validation = new VotingQuestionValidation(question);
+    return validation.isDescriptionValid;
   }
 }
