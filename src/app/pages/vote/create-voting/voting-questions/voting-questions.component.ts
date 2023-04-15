@@ -78,4 +78,9 @@ export class VotingQuestionsComponent {
     const validation = new VotingQuestionValidation(question);
     return validation.isDescriptionValid;
   }
+
+  isOptionValidAt(i: number, question: VotingQuestion) {
+    const validation = new VotingQuestionValidation(question);
+    return validation.isOptionValidAt(i);
+  }
 }
