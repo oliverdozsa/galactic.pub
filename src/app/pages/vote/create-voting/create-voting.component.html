@@ -58,6 +58,7 @@
         <div class="btn-group">
           <button *ngIf="shouldGoToPrevStepBeDisplayed" class="btn btn-primary" (click)="onPrevClicked()">previous</button>
           <button *ngIf="shouldGoToNextStepBeDisplayed" class="btn btn-primary" (click)="onNextClicked()" [disabled]="isDisallowedToGoToNextStep">next</button>
+          <button *ngIf="!shouldGoToNextStepBeDisplayed" class="btn btn-primary" [disabled]="isDisallowedToCreate" (click)="onCreateClicked()">create</button>
         </div>
       </div>
     </div>

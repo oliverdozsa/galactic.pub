@@ -48,6 +48,10 @@ export class CreateVotingComponent {
     return true;
   }
 
+  get isDisallowedToCreate(): boolean {
+    return !this.form.validation.areQuestionsValid;
+  }
+
   get isLoading(): boolean {
     return this.form.isGeneratingFundingAccount || this.form.fundingAccountBalance.isLoading;
   }
@@ -64,5 +68,9 @@ export class CreateVotingComponent {
     if (this.currentStep > Step.Network) {
       this.currentStep -= 1;
     }
+  }
+
+  onCreateClicked() {
+    // TODO
   }
 }
