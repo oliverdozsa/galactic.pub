@@ -24,20 +24,31 @@ import {
   FundingAccountBalanceComponent
 } from './pages/vote/create-voting/funding-account-balance/funding-account-balance.component';
 import {SpinnerComponent} from './components/spinner/spinner.component';
-import { VotingTitleComponent } from './pages/vote/create-voting/voting-title/voting-title.component';
-import { VotingDescriptionComponent } from './pages/vote/create-voting/voting-description/voting-description.component';
+import {VotingTitleComponent} from './pages/vote/create-voting/voting-title/voting-title.component';
+import {VotingDescriptionComponent} from './pages/vote/create-voting/voting-description/voting-description.component';
 import {EditorComponent} from "@tinymce/tinymce-angular";
-import { VotingTokenIdentifierComponent } from './pages/vote/create-voting/voting-token-identifier/voting-token-identifier.component';
-import { VotingStartEndDateComponent } from './pages/vote/create-voting/voting-start-end-date/voting-start-end-date.component';
-import { VotingEncryptionComponent } from './pages/vote/create-voting/voting-encryption/voting-encryption.component';
-import { VotesLimitComponent } from './pages/vote/create-voting/votes-limit/votes-limit.component';
-import { VotingVisibilityAndAuthorizationComponent } from './pages/vote/create-voting/voting-visibility-and-authorization/voting-visibility-and-authorization.component';
-import { VotingBallotTypeComponent } from './pages/vote/create-voting/voting-ballot-type/voting-ballot-type.component';
-import { VotingAuthorizationEmailsComponent } from './pages/vote/create-voting/voting-authorization-emails/voting-authorization-emails.component';
-import { TagsInputComponent } from './components/tags-input/tags-input.component';
-import { VotingAuthorizationModeComponent } from './pages/vote/create-voting/voting-authorization-mode/voting-authorization-mode.component';
-import { VotingQuestionsComponent } from './pages/vote/create-voting/voting-questions/voting-questions.component';
-import { ToastsComponent } from './components/toasts/toasts.component';
+import {
+  VotingTokenIdentifierComponent
+} from './pages/vote/create-voting/voting-token-identifier/voting-token-identifier.component';
+import {
+  VotingStartEndDateComponent
+} from './pages/vote/create-voting/voting-start-end-date/voting-start-end-date.component';
+import {VotingEncryptionComponent} from './pages/vote/create-voting/voting-encryption/voting-encryption.component';
+import {VotesLimitComponent} from './pages/vote/create-voting/votes-limit/votes-limit.component';
+import {
+  VotingVisibilityAndAuthorizationComponent
+} from './pages/vote/create-voting/voting-visibility-and-authorization/voting-visibility-and-authorization.component';
+import {VotingBallotTypeComponent} from './pages/vote/create-voting/voting-ballot-type/voting-ballot-type.component';
+import {
+  VotingAuthorizationEmailsComponent
+} from './pages/vote/create-voting/voting-authorization-emails/voting-authorization-emails.component';
+import {TagsInputComponent} from './components/tags-input/tags-input.component';
+import {
+  VotingAuthorizationModeComponent
+} from './pages/vote/create-voting/voting-authorization-mode/voting-authorization-mode.component';
+import {VotingQuestionsComponent} from './pages/vote/create-voting/voting-questions/voting-questions.component';
+import {ToastsComponent} from './components/toasts/toasts.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -71,6 +82,7 @@ import { ToastsComponent } from './components/toasts/toasts.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
