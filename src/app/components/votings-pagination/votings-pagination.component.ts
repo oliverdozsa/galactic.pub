@@ -1,17 +1,18 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PagingSource, VotingsService} from "../../services/votings.service";
 import {AppRoutes} from "../../app-routes";
 import {Page} from "../../data/page";
 import {VotingSummary} from "../../data/voting.summary";
 import {loadOrDefaultProgresses, Progress, ProgressState} from "../../data/progress";
 import {delay, finalize} from "rxjs";
+import {ToastService} from "../../services/toast.service";
 
 @Component({
   selector: 'app-votings-pagination',
   templateUrl: './votings-pagination.component.html',
   styleUrls: ['./votings-pagination.component.scss']
 })
-export class VotingsPaginationComponent {
+export class VotingsPaginationComponent implements OnInit {
   AppRoutes = AppRoutes;
 
   @Input()
@@ -44,7 +45,7 @@ export class VotingsPaginationComponent {
   private progresses: Map<string, Progress>;
   private _showOnlyWhereNotTriedToCastVote: boolean = false;
 
-  constructor(private votingsService: VotingsService) {
+  constructor(private votingsService: VotingsService, private toastService: ToastService) {
     this.progresses = loadOrDefaultProgresses();
   }
 
@@ -66,8 +67,7 @@ export class VotingsPaginationComponent {
       )
       .subscribe({
         next: p => this.onVotingsPageReceived(p),
-        error: () => {/* TODO: show toastr */
-        }
+        error: () => this.toastService.error("could not get votings!")
       });
   }
 

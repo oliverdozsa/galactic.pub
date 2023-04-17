@@ -1,6 +1,10 @@
 import {Component} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {CreateVotingForm} from "../../../create-voting/create-voting-form";
+import {VotingsService} from "../../../services/votings.service";
+import {ToastService} from "../../../services/toast.service";
+import {AppRoutes} from "../../../app-routes";
+import {Router} from "@angular/router";
 
 export enum Step {
   Network,
@@ -53,10 +57,13 @@ export class CreateVotingComponent {
   }
 
   get isLoading(): boolean {
-    return this.form.isGeneratingFundingAccount || this.form.fundingAccountBalance.isLoading;
+    return this.form.isGeneratingFundingAccount || this.form.fundingAccountBalance.isLoading || this._isCreating;
   }
 
-  constructor(public auth: AuthService) {
+  private _isCreating = false;
+
+  constructor(public auth: AuthService, private votingsService: VotingsService, private toastService: ToastService,
+              private router: Router) {
   }
 
   onNextClicked() {
@@ -71,6 +78,24 @@ export class CreateVotingComponent {
   }
 
   onCreateClicked() {
-    // TODO
+    this._isCreating = true;
+
+    this.votingsService.create(this.form)
+      .subscribe({
+        next: () => this.onVotingSuccessfullyCreated(),
+        error: () => this.onVotingCreationFailed()
+      });
   }
+
+  private onVotingSuccessfullyCreated() {
+    this._isCreating = false;
+    this.toastService.success("Voting created 👍!");
+    this.router.navigate(["/" + AppRoutes.MY_VOTINGS]);
+  }
+
+  private onVotingCreationFailed() {
+    this._isCreating = false;
+    this.toastService.error("Failed to create voting 😟");
+  }
+
 }

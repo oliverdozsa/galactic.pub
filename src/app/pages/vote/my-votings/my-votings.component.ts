@@ -10,8 +10,6 @@ import {AppRoutes} from "../../../app-routes";
   styleUrls: ['./my-votings.component.scss']
 })
 export class MyVotingsComponent {
-  AppRoutes = AppRoutes;
-
   protected readonly PagingSource = PagingSource;
 
   constructor(public auth: AuthService, private router: Router) {

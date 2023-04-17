@@ -49,6 +49,9 @@ import {
 import {VotingQuestionsComponent} from './pages/vote/create-voting/voting-questions/voting-questions.component';
 import {ToastsComponent} from './components/toasts/toasts.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { ViewVotingComponent } from './pages/vote/view-voting/view-voting.component';
+import { ViewVotingDatesComponent } from './pages/vote/view-voting/view-voting-dates/view-voting-dates.component';
+import { CountdownTimeComponent } from './components/countdown-time/countdown-time.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     TagsInputComponent,
     VotingAuthorizationModeComponent,
     VotingQuestionsComponent,
-    ToastsComponent
+    ToastsComponent,
+    ViewVotingComponent,
+    ViewVotingDatesComponent,
+    CountdownTimeComponent
   ],
   imports: [
     BrowserModule,
