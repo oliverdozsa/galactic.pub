@@ -1,0 +1,28 @@
+<div class="grid grid-flow-col gap-5 text-center auto-cols-max">
+  <div *ngIf="daysLeft>0" class="flex flex-col">
+    <span class="countdown font-mono text-5xl">
+      <span [style.--value]="daysLeft"></span>
+    </span>
+    days
+  </div>
+
+  <div *ngIf="hoursLeft > 0" class="flex flex-col">
+    <span class="countdown font-mono text-5xl">
+      <span [style.--value]="hoursLeft"></span>
+    </span>
+    hours
+  </div>
+
+  <div *ngIf="minutesLeft > 0" class="flex flex-col">
+    <span class="countdown font-mono text-5xl">
+      <span [style.--value]="minutesLeft"></span>
+    </span>
+    min
+  </div>
+  <div class="flex flex-col">
+    <span class="countdown font-mono text-5xl">
+      <span [style.--value]="secondsLeft"></span>
+    </span>
+    sec
+  </div>
+</div>

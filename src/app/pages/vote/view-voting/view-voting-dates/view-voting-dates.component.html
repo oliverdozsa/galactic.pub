@@ -1,1 +1,22 @@
+<div class="card w-96 bg-base-100 shadow-md">
+  <div class="card-body">
+    <h2 class="card-title">dates</h2>
+    <div>
+      start date: {{voting!.startDate}}
+    </div>
 
+    <div>
+      end date: {{voting!.endDate}}
+    </div>
+
+    <div class="text-center text-xl mt-2">
+      time left until voting ends
+      <div class="flex justify-center">
+        <app-countdown-time *ngIf="!isExpired" [totalTimeLeftInSeconds]="remainingTotalSecondsLeftUntilVotingEnds"></app-countdown-time>
+        <div *ngIf="isExpired" class="text-4xl text-warning">expired</div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

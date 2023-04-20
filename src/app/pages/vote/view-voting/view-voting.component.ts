@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {VotingsService} from "../../../services/votings.service";
 import {ToastService} from "../../../services/toast.service";
 import {Voting} from "../../../data/voting";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-view-voting',
@@ -17,7 +18,8 @@ export class ViewVotingComponent {
     return this.voting.encryptedUntil != undefined;
   }
 
-  constructor(private route: ActivatedRoute, private votingsService: VotingsService, private toastService: ToastService) {
+  constructor(private route: ActivatedRoute, private votingsService: VotingsService, private toastService: ToastService,
+              public auth: AuthService) {
     const votingId = route.snapshot.paramMap.get("id")!;
     this.getVoting(votingId);
   }

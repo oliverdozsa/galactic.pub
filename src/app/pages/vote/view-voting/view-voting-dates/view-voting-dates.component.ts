@@ -8,20 +8,27 @@ import {Voting} from "../../../../data/voting";
 })
 export class ViewVotingDatesComponent {
   @Input()
-  voting: Voting | undefined;
+  voting: Voting = new Voting();
 
-  private remainingTotalSecondsLeftUntilVotingEnds(): number[] {
-    if (this.voting) {
-      // const totalSecondsRemaining = this.calcRemainingTotalSeconds(this.voting.endDate);
-      const totalSecondsRemaining = 10000;
-      return this.remainingTimeFromSeconds(totalSecondsRemaining)
-    }
-
-    return [];
+  get isExpired(): boolean {
+    return true;
+    return this.remainingTotalSecondsLeftUntilVotingEnds == 0;
   }
 
-  private remainingTotalSecondsLeftUntilEncryptionEnds(): number {
-    if (this.voting && this.voting.encryptedUntil != undefined) {
+  get isEncrypted(): boolean {
+    return this.voting?.encryptedUntil != undefined;
+  }
+
+  get isEncryptionExpired(): boolean {
+    return this.isEncrypted && this.remainingTotalSecondsLeftUntilEncryptionEnds == 0;
+  }
+
+  get remainingTotalSecondsLeftUntilVotingEnds(): number {
+    return this.calcRemainingTotalSeconds(this.voting.endDate);
+  }
+
+  get remainingTotalSecondsLeftUntilEncryptionEnds(): number {
+    if (this.voting.encryptedUntil != undefined) {
       return this.calcRemainingTotalSeconds(this.voting.encryptedUntil!);
     }
 
@@ -35,14 +42,4 @@ export class ViewVotingDatesComponent {
     const diffSeconds = Math.floor((end - now) / 1000);
     return diffSeconds > 0 ? diffSeconds : 0;
   }
-
-  private remainingTimeFromSeconds(secondsTotal: number) {
-    const daysLeft = Math.floor(secondsTotal/ 60 / 60 / 24);
-    const hoursLeft = Math.floor((secondsTotal / 60 / 60) % 24);
-    const minutesLeft = Math.floor((secondsTotal / 60) % 60);
-    const secondsLeft = Math.floor((secondsTotal) % 60);
-
-    return [secondsLeft, minutesLeft, hoursLeft, daysLeft];
-  }
-
 }

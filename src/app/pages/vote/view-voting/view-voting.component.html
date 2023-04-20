@@ -1,1 +1,13 @@
-<app-view-voting-dates></app-view-voting-dates>
+<app-login-required text="login is required to create voting"></app-login-required>
+
+<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+  <div class="relative">
+    <div *ngIf="!isLoading">
+      <app-view-voting-dates [voting]="voting"></app-view-voting-dates>
+    </div>
+
+    <app-spinner [spin]="isLoading" styles="h-8 w-8 fill-primary"></app-spinner>
+  </div>
+
+</div>
+
