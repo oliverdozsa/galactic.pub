@@ -28,6 +28,8 @@ export class CountdownTimeComponent implements OnInit, OnDestroy {
   private tick() {
     this.totalTimeLeftInSeconds -= 1;
     this.calcRemainingTimes();
+
+    console.log(`daysLeft = ${this.daysLeft}`);
   }
 
   private calcRemainingTimes() {

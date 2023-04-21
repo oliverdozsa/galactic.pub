@@ -11,7 +11,6 @@ export class ViewVotingDatesComponent {
   voting: Voting = new Voting();
 
   get isExpired(): boolean {
-    return true;
     return this.remainingTotalSecondsLeftUntilVotingEnds == 0;
   }
 

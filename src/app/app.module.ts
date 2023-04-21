@@ -52,6 +52,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { ViewVotingComponent } from './pages/vote/view-voting/view-voting.component';
 import { ViewVotingDatesComponent } from './pages/vote/view-voting/view-voting-dates/view-voting-dates.component';
 import { CountdownTimeComponent } from './components/countdown-time/countdown-time.component';
+import { ViewVotingNetworkDataComponent } from './pages/vote/view-voting/view-voting-network-data/view-voting-network-data.component';
+import { DisplayAccountComponent } from './pages/vote/view-voting/view-voting-network-data/display-account/display-account.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,9 @@ import { CountdownTimeComponent } from './components/countdown-time/countdown-ti
     ToastsComponent,
     ViewVotingComponent,
     ViewVotingDatesComponent,
-    CountdownTimeComponent
+    CountdownTimeComponent,
+    ViewVotingNetworkDataComponent,
+    DisplayAccountComponent
   ],
   imports: [
     BrowserModule,

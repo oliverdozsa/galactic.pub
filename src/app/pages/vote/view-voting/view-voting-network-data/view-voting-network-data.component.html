@@ -1,0 +1,17 @@
+<div class="card w-full bg-base-100 card-bordered card-compact">
+  <div class="card-body">
+    <h2 class="card-title">network</h2>
+    <div>
+      <img src="assets/{{voting.network}}.svg" class="h-6 w-6 inline-block" alt="stellar">
+      ({{voting.network}})
+      <span *ngIf="voting.isOnTestNetwork">(testnet)</span>
+    </div>
+    <div>
+      asset code: <span class="font-mono">{{voting.assetCode}}</span>
+    </div>
+    <app-display-account [accountId]="voting.issuerAccountId" title="issuer" [voting]="voting"></app-display-account>
+    <app-display-account [accountId]="voting.ballotAccountId" title="ballot" [voting]="voting"></app-display-account>
+    <app-display-account [accountId]="voting.distributionAccountId" title="distribution" [voting]="voting"></app-display-account>
+    <app-display-account [accountId]="voting.fundingAccountId" title="funding" [voting]="voting"></app-display-account>
+  </div>
+</div>
