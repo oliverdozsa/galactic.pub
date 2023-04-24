@@ -54,6 +54,10 @@ import { ViewVotingDatesComponent } from './pages/vote/view-voting/view-voting-d
 import { CountdownTimeComponent } from './components/countdown-time/countdown-time.component';
 import { ViewVotingNetworkDataComponent } from './pages/vote/view-voting/view-voting-network-data/view-voting-network-data.component';
 import { DisplayAccountComponent } from './pages/vote/view-voting/view-voting-network-data/display-account/display-account.component';
+import { ViewVotingEncryptionComponent } from './pages/vote/view-voting/view-voting-encryption/view-voting-encryption.component';
+import { ViewVotingOtherDataComponent } from './pages/vote/view-voting/view-voting-other-data/view-voting-other-data.component';
+import { ViewVotingAuthorizationComponent } from './pages/vote/view-voting/view-voting-authorization/view-voting-authorization.component';
+import { ViewVotingPollsComponent } from './pages/vote/view-voting/view-voting-polls/view-voting-polls.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +92,11 @@ import { DisplayAccountComponent } from './pages/vote/view-voting/view-voting-ne
     ViewVotingDatesComponent,
     CountdownTimeComponent,
     ViewVotingNetworkDataComponent,
-    DisplayAccountComponent
+    DisplayAccountComponent,
+    ViewVotingEncryptionComponent,
+    ViewVotingOtherDataComponent,
+    ViewVotingAuthorizationComponent,
+    ViewVotingPollsComponent
   ],
   imports: [
     BrowserModule,

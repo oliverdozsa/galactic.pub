@@ -1,0 +1,31 @@
+<div class="border border-base-300 bg-base-100 rounded-box divide-y">
+  <div *ngFor="let poll of voting.polls" class="collapse collapse-arrow">
+    <input type="checkbox" />
+    <div class="collapse-title text-xl font-medium">
+      {{poll.question}}
+    </div>
+    <div class="collapse-content">
+
+      <div *ngIf="poll.description" class="mb-4">
+        <b class="mt-1 font-bold">Description</b>
+        <!--  https://angular.io/guide/security#sanitization-and-security-contexts  -->
+        <div class="mt-1" [innerHTML]="poll.description"></div>
+      </div>
+
+      <b class="mt-1 font-bold">Options</b>
+      <div class="divide-y">
+          <div class="py-2" *ngFor="let option of poll.pollOptions">
+            <div class="flex flex-row">
+              <div class="mr-1">
+                {{option.code}}.
+              </div>
+
+              <div>
+                {{option.name}}
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,14 +3,20 @@
 <div *ngIf="auth.isAuthenticated$ | async" class="px-3">
   <div class="relative">
     <div *ngIf="!isLoading">
+      <h1 class="text-4xl text-center">{{voting.title}}</h1>
+      <h2 *ngIf="voting.description" class="text-3xl">
+        Description
+      </h2>
+      <!--  https://angular.io/guide/security#sanitization-and-security-contexts  -->
+      <div [innerHTML]="voting.description" class="mt-1"></div>
 
-      <h2 class="text-3xl">Polls</h2>
-      <div>
-
+      <h2 class="text-3xl mt-6">Polls</h2>
+      <div class="mt-1">
+        <app-view-voting-polls [voting]="voting"></app-view-voting-polls>
       </div>
 
-      <h2 class="text-3xl">Technical data</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <h2 class="text-3xl mt-6">Technical data</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
         <div>
           <app-view-voting-network-data [voting]="voting"></app-view-voting-network-data>
         </div>
@@ -19,6 +25,18 @@
         </div>
       </div>
 
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+        <div>
+          <app-view-voting-encryption [voting]="voting"></app-view-voting-encryption>
+        </div>
+        <div>
+          <app-view-voting-other-data [voting]="voting"></app-view-voting-other-data>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <app-view-voting-authorization [voting]="voting"></app-view-voting-authorization>
+      </div>
     </div>
 
     <app-spinner [spin]="isLoading" styles="h-8 w-8 fill-primary"></app-spinner>
