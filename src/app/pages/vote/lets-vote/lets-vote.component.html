@@ -1,9 +1,9 @@
-<div *ngIf="!(auth.isAuthenticated$ | async); else contentWhenAuthenticated">
-  <app-login-required text="login is required to vote"></app-login-required>
-</div>
+<app-login-required text="login is required to see your votings"></app-login-required>
 
-<ng-template #contentWhenAuthenticated>
-  <div>
-    you rock
-  </div>
-</ng-template>
+<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+  <h1 class="text-4xl text-center mb-10">Let's vote</h1>
+
+  <app-votings-pagination [source]="PagingSource.VOTER"
+                          [allowCastVote]="true"
+                          notFoundText="you don't participate in any voting yet"></app-votings-pagination>
+</div>

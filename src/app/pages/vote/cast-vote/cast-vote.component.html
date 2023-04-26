@@ -1,0 +1,12 @@
+<app-login-required text="login is required to cast vote"></app-login-required>
+
+<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+  <div class="relative">
+    <div *ngIf="!isLoading">
+      <h1 class="text-4xl text-center">{{voting.title}}</h1>
+
+    </div>
+
+    <app-spinner [spin]="isLoading" styles="h-8 w-8 fill-primary"></app-spinner>
+  </div>
+</div>
