@@ -59,6 +59,8 @@ import { ViewVotingOtherDataComponent } from './pages/vote/view-voting/view-voti
 import { ViewVotingAuthorizationComponent } from './pages/vote/view-voting/view-voting-authorization/view-voting-authorization.component';
 import { ViewVotingPollsComponent } from './pages/vote/view-voting/view-voting-polls/view-voting-polls.component';
 import { CastVoteComponent } from './pages/vote/cast-vote/cast-vote.component';
+import { CastMultiPollVoteComponent } from './pages/vote/cast-vote/cast-multi-poll-vote/cast-multi-poll-vote.component';
+import { CastMultiChoiceVoteComponent } from './pages/vote/cast-vote/cast-multi-choice-vote/cast-multi-choice-vote.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +100,9 @@ import { CastVoteComponent } from './pages/vote/cast-vote/cast-vote.component';
     ViewVotingOtherDataComponent,
     ViewVotingAuthorizationComponent,
     ViewVotingPollsComponent,
-    CastVoteComponent
+    CastVoteComponent,
+    CastMultiPollVoteComponent,
+    CastMultiChoiceVoteComponent
   ],
   imports: [
     BrowserModule,

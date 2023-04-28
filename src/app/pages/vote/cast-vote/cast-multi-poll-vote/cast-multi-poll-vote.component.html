@@ -1,0 +1,22 @@
+<h1 class="text-4xl text-center">{{voting.title}}</h1>
+<div *ngIf="voting.description" class="mt-2" [innerHTML]="voting.description"></div>
+<div *ngFor="let poll of voting.polls" class="flex justify-start sm:justify-center">
+
+  <div class="mt-4 w-full sm:w-1/2">
+    <div>
+      <h3 class="text-center text-2xl">{{poll.question}}</h3>
+      <div *ngIf="poll.description" class="my-1" [innerHTML]="poll.description"></div>
+      <div class="form-control">
+        <label *ngFor="let option of poll.pollOptions" class="label cursor-pointer mt-1">
+          <span class="label-text">{{option.name}}</span>
+          <input [value]="option.code" [(ngModel)]="selectedOptions[poll.index]" type="radio"
+                 [name]="''+poll.index" class="radio"/>
+        </label>
+        <label *ngIf="!isChoiceValidFor(poll)" class="label-text-alt text-error">
+          you must choose one!
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div>

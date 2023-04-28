@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import {Poll, PollOption, Voting} from "../../../data/voting";
+import {Voting} from "../../../data/voting";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "@auth0/auth0-angular";
 import {VotingsService} from "../../../services/votings.service";
 import {ToastService} from "../../../services/toast.service";
+import { BallotType } from 'src/app/create-voting/ballot-type';
 
 @Component({
   selector: 'app-cast-vote',
@@ -11,9 +12,10 @@ import {ToastService} from "../../../services/toast.service";
   styleUrls: ['./cast-vote.component.scss']
 })
 export class CastVoteComponent {
+  BallotType = BallotType;
+
   voting: Voting = new Voting();
   isLoading = false;
-  selectedOptions: any[] = [];
 
   constructor(private route: ActivatedRoute, public auth: AuthService, private votingsService: VotingsService, private toastService: ToastService) {
     const votingId = route.snapshot.paramMap.get("id")!;
@@ -27,10 +29,6 @@ export class CastVoteComponent {
         next: v => this.onVotingReceived(v),
         error: err => this.onVotingReceiveFailed()
       });
-  }
-
-  isChoiceValidFor(poll: Poll) {
-    return this.selectedOptions.length > poll.index && this.selectedOptions[poll.index] != undefined;
   }
 
   private onVotingReceived(voting: Voting) {
