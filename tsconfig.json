@@ -27,7 +27,10 @@
     "paths": {
       "https": ["./node_modules/https-browserify"],
       "http": ["./node_modules/stream-http"],
-      "buffer": ["./node_modules/buffer"]
+      "buffer": ["./node_modules/buffer"],
+      "crypto": ["./node_modules/crypto-browserify"],
+      "constants": ["./node_modules/constants-browserify"],
+      "stream": ["./node_modules/stream-browserify"],
     }
   },
   "angularCompilerOptions": {

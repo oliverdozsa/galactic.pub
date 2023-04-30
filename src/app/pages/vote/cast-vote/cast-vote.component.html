@@ -3,6 +3,8 @@
 <div *ngIf="auth.isAuthenticated$ | async" class="px-3">
   <div class="relative">
     <div *ngIf="!isLoading">
+      <h1 class="text-4xl text-center">{{voting.title}}</h1>
+      <div *ngIf="voting.description" class="mt-2" [innerHTML]="voting.description"></div>
       <app-cast-multi-poll-vote *ngIf="voting.ballotType == BallotType.MULTI_POLL" [voting]="voting"></app-cast-multi-poll-vote>
       <app-cast-multi-choice-vote *ngIf="voting.ballotType == BallotType.MULTI_CHOICE" [voting]="voting"></app-cast-multi-choice-vote>
     </div>

@@ -49,18 +49,31 @@ import {
 import {VotingQuestionsComponent} from './pages/vote/create-voting/voting-questions/voting-questions.component';
 import {ToastsComponent} from './components/toasts/toasts.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { ViewVotingComponent } from './pages/vote/view-voting/view-voting.component';
-import { ViewVotingDatesComponent } from './pages/vote/view-voting/view-voting-dates/view-voting-dates.component';
-import { CountdownTimeComponent } from './components/countdown-time/countdown-time.component';
-import { ViewVotingNetworkDataComponent } from './pages/vote/view-voting/view-voting-network-data/view-voting-network-data.component';
-import { DisplayAccountComponent } from './pages/vote/view-voting/view-voting-network-data/display-account/display-account.component';
-import { ViewVotingEncryptionComponent } from './pages/vote/view-voting/view-voting-encryption/view-voting-encryption.component';
-import { ViewVotingOtherDataComponent } from './pages/vote/view-voting/view-voting-other-data/view-voting-other-data.component';
-import { ViewVotingAuthorizationComponent } from './pages/vote/view-voting/view-voting-authorization/view-voting-authorization.component';
-import { ViewVotingPollsComponent } from './pages/vote/view-voting/view-voting-polls/view-voting-polls.component';
-import { CastVoteComponent } from './pages/vote/cast-vote/cast-vote.component';
-import { CastMultiPollVoteComponent } from './pages/vote/cast-vote/cast-multi-poll-vote/cast-multi-poll-vote.component';
-import { CastMultiChoiceVoteComponent } from './pages/vote/cast-vote/cast-multi-choice-vote/cast-multi-choice-vote.component';
+import {ViewVotingComponent} from './pages/vote/view-voting/view-voting.component';
+import {ViewVotingDatesComponent} from './pages/vote/view-voting/view-voting-dates/view-voting-dates.component';
+import {CountdownTimeComponent} from './components/countdown-time/countdown-time.component';
+import {
+  ViewVotingNetworkDataComponent
+} from './pages/vote/view-voting/view-voting-network-data/view-voting-network-data.component';
+import {
+  DisplayAccountComponent
+} from './pages/vote/view-voting/view-voting-network-data/display-account/display-account.component';
+import {
+  ViewVotingEncryptionComponent
+} from './pages/vote/view-voting/view-voting-encryption/view-voting-encryption.component';
+import {
+  ViewVotingOtherDataComponent
+} from './pages/vote/view-voting/view-voting-other-data/view-voting-other-data.component';
+import {
+  ViewVotingAuthorizationComponent
+} from './pages/vote/view-voting/view-voting-authorization/view-voting-authorization.component';
+import {ViewVotingPollsComponent} from './pages/vote/view-voting/view-voting-polls/view-voting-polls.component';
+import {CastVoteComponent} from './pages/vote/cast-vote/cast-vote.component';
+import {CastMultiPollVoteComponent} from './pages/vote/cast-vote/cast-multi-poll-vote/cast-multi-poll-vote.component';
+import {
+  CastMultiChoiceVoteComponent
+} from './pages/vote/cast-vote/cast-multi-choice-vote/cast-multi-choice-vote.component';
+import {CastVoteProgressComponent} from "./pages/vote/cast-vote/cast-vote-progress/cast-vote-progress.component";
 
 @NgModule({
   declarations: [
@@ -102,7 +115,8 @@ import { CastMultiChoiceVoteComponent } from './pages/vote/cast-vote/cast-multi-
     ViewVotingPollsComponent,
     CastVoteComponent,
     CastMultiPollVoteComponent,
-    CastMultiChoiceVoteComponent
+    CastMultiChoiceVoteComponent,
+    CastVoteProgressComponent
   ],
   imports: [
     BrowserModule,

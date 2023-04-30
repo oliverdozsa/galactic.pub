@@ -1,5 +1,3 @@
-<h1 class="text-4xl text-center">{{voting.title}}</h1>
-<div *ngIf="voting.description" class="mt-2" [innerHTML]="voting.description"></div>
 <div *ngFor="let poll of voting.polls" class="flex justify-start sm:justify-center">
 
   <div class="mt-4 w-full sm:w-1/2">
