@@ -6,22 +6,21 @@ import {describeState, ProgressState} from 'src/app/data/progress';
 import {Voting} from "../../../../data/voting";
 import {CastVoteService} from "../../../../services/cast-vote.service";
 import {ToastService} from "../../../../services/toast.service";
+import {Subject, takeUntil} from "rxjs";
+import {fadeInDownAnimation, fadeOutUpAnimation} from "angular-animations";
 
 @Component({
   selector: 'app-cast-vote-progress',
   templateUrl: './cast-vote-progress.component.html',
   styleUrls: ['./cast-vote-progress.component.scss']
 })
-export class CastVoteProgressComponent implements OnInit {
-  describeState = describeState;
-
+export class CastVoteProgressComponent {
   @Input()
   voting: Voting = new Voting();
 
-  @Input()
-  selectedOptions: any[] = [];
-
   orchestration: CastVoteOrchestration | undefined;
+
+  isAllowedToCastVote: boolean = false;
 
   get isCompleted(): boolean {
     return this.orchestration != undefined &&
@@ -41,11 +40,33 @@ export class CastVoteProgressComponent implements OnInit {
     return this.orchestration == undefined ? 0 : this.orchestration.progressPercent;
   }
 
-  constructor(private castVoteService: CastVoteService, private toastService: ToastService,private router: Router) {
+  get progressText(): string {
+    if(this.orchestration != undefined) {
+      return describeState(this.orchestration.progress.state);
+    }
+
+    return "";
+  }
+
+  private selectedOptions: any[] = [];
+
+  private destroy$ = new Subject<void>();
+
+  constructor(private castVoteService: CastVoteService, private toastService: ToastService, private router: Router) {
+    castVoteService.selectedOptionsChange$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: o => this.selectedOptions = o
+      });
+
+    castVoteService.isAllowedToCastVoteChange$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: i => this.isAllowedToCastVote = i
+      })
   }
 
   onCloseClick() {
-    // TODO: this.dialogRef.close();
     this.router.navigateByUrl(`/${AppRoutes.LETS_VOTE}`);
   }
 
@@ -54,7 +75,7 @@ export class CastVoteProgressComponent implements OnInit {
     this.orchestration!.restartCastVote();
   }
 
-  ngOnInit(): void {
+  castVote() {
     this.orchestration = new CastVoteOrchestration(this.voting, this.selectedOptions, this.castVoteService, this.toastService);
     this.orchestration.castVote();
   }

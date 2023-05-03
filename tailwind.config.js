@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{html,ts}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      }
+    },
   },
   plugins: [
     require("daisyui")

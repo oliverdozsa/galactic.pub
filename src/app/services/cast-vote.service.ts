@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 
@@ -24,6 +24,9 @@ export interface EncryptedChoiceResponse {
 })
 export class CastVoteService {
   private static BASE_URL = environment.apiUrl + "/castvote";
+
+  selectedOptionsChange$ = new Subject<any[]>();
+  isAllowedToCastVoteChange$ = new Subject<boolean>();
 
   constructor(private httpClient: HttpClient) {
   }

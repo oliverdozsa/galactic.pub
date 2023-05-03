@@ -7,7 +7,7 @@
       <div class="form-control">
         <label *ngFor="let option of poll.pollOptions" class="label cursor-pointer">
           <span class="label-text">{{option.name}}</span>
-          <input type="checkbox" class="checkbox" [(ngModel)]="selectedOptions[option.code]" />
+          <input type="checkbox" class="checkbox" [(ngModel)]="selectedOptions[option.code]" (input)="onChoiceChange()" />
         </label>
         <label *ngIf="numOfSelectedChoices == 0" class="label-text-alt text-error">you must choose one</label>
         <label *ngIf="numOfSelectedChoices > voting.maxChoices!" class="label-text-alt text-error">you can choose at most {{voting.maxChoices}}</label>

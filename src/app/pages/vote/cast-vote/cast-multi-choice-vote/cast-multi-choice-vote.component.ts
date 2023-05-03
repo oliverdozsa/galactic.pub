@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Poll, Voting} from "../../../../data/voting";
+import {CastVoteService} from "../../../../services/cast-vote.service";
 
 @Component({
   selector: 'app-cast-multi-choice-vote',
@@ -21,7 +22,22 @@ export class CastMultiChoiceVoteComponent implements OnInit {
     return 0;
   }
 
+  constructor(private castVoteService: CastVoteService) {
+    castVoteService.isAllowedToCastVoteChange$.next(false);
+  }
+
   ngOnInit(): void {
     this.poll = this.voting.polls[0];
+  }
+
+  onChoiceChange() {
+    setTimeout(() => {
+      this.castVoteService.selectedOptionsChange$.next(this.selectedOptions);
+    });
+  }
+
+  private notifyIfAllowedToCast() {
+    const isAllowed = this.numOfSelectedChoices > 0 && this.numOfSelectedChoices <= this.voting.maxChoices!;
+    this.castVoteService.isAllowedToCastVoteChange$.next(isAllowed);
   }
 }

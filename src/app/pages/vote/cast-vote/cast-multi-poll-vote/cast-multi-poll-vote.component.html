@@ -8,7 +8,7 @@
         <label *ngFor="let option of poll.pollOptions" class="label cursor-pointer mt-1">
           <span class="label-text">{{option.name}}</span>
           <input [value]="option.code" [(ngModel)]="selectedOptions[poll.index]" type="radio"
-                 [name]="''+poll.index" class="radio"/>
+                 [name]="''+poll.index" class="radio" (input)="onChoiceChange()"/>
         </label>
         <label *ngIf="!isChoiceValidFor(poll)" class="label-text-alt text-error">
           you must choose one!
