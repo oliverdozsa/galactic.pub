@@ -1,13 +1,10 @@
 import {CastVoteOperations} from "./cast-vote-operations";
-import {OrchestrationStep} from "./steps/orchestration-step";
-import {InitStep} from "./steps/init-step";
-import {SignEnvelopeStep} from "./steps/sign-envelope-step";
-import {CreateTransactionStep} from "./steps/create-transaction-step";
-import {CastVoteOnBlockchainStep} from "./steps/cast-vote-on-blockchain-step";
 import {loadOrDefaultProgresses, Progress, ProgressState} from "../../../../data/progress";
 import {Voting} from "../../../../data/voting";
 import {CastVoteService} from "../../../../services/cast-vote.service";
 import {ToastService} from "../../../../services/toast.service";
+import {StepNode} from "./step-node";
+import {CastVoteStepsBuilder} from "./cast-vote-steps-builder";
 
 export class CastVoteOrchestration {
   current: StepNode | undefined;
@@ -38,7 +35,7 @@ export class CastVoteOrchestration {
     this.progresses = loadOrDefaultProgresses();
     this.progress = this.getAndCreateIfNeededProgress();
 
-    this.start = this.buildSteps();
+    this.start = new CastVoteStepsBuilder(this, this.toastService).buildSteps()
     this.current = this.determineStepToStartFrom();
   }
 
@@ -116,42 +113,6 @@ export class CastVoteOrchestration {
     return stepsLeft;
   }
 
-  private buildSteps(): StepNode {
-    const initStep: StepNode = {
-      step: new InitStep(this, this.toastService),
-      next: undefined,
-      progressStateWhenStarted: ProgressState.PreInit,
-      progressStateWhenFinished: ProgressState.Initialized
-    };
-
-    const signEnvelopeStep: StepNode = {
-      step: new SignEnvelopeStep(this, this.toastService),
-      next: undefined,
-      progressStateWhenStarted: ProgressState.SigningEnvelope,
-      progressStateWhenFinished: ProgressState.SignedEnvelope
-    };
-
-    const createTransactionStep: StepNode = {
-      step: new CreateTransactionStep(this, this.toastService),
-      next: undefined,
-      progressStateWhenStarted: ProgressState.CreatingTransaction,
-      progressStateWhenFinished: ProgressState.CreatedTransaction
-    }
-
-    const castVoteOnBlockchainStep: StepNode = {
-      step: new CastVoteOnBlockchainStep(this, this.toastService),
-      next: undefined,
-      progressStateWhenStarted: ProgressState.CastingVote,
-      progressStateWhenFinished: ProgressState.Completed
-    };
-
-    initStep.next = signEnvelopeStep;
-    signEnvelopeStep.next = createTransactionStep;
-    createTransactionStep.next = castVoteOnBlockchainStep;
-
-    return initStep;
-  }
-
   private findStepToStartFromBasedOnFinished(untilCurrentProgress: ProgressState): StepNode | undefined {
     let currentFinishedNode = this.start;
     while (currentFinishedNode != undefined && currentFinishedNode.progressStateWhenFinished != untilCurrentProgress) {
@@ -173,11 +134,4 @@ export class CastVoteOrchestration {
 
     return currentStartedNode;
   }
-}
-
-interface StepNode {
-  step: OrchestrationStep,
-  next: StepNode | undefined,
-  progressStateWhenFinished: ProgressState,
-  progressStateWhenStarted: ProgressState
 }
