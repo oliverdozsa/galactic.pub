@@ -19,7 +19,7 @@ export class CastVoteComponent {
 
   constructor(private route: ActivatedRoute, public auth: AuthService, private votingsService: VotingsService, private toastService: ToastService) {
     const votingId = route.snapshot.paramMap.get("id")!;
-    this.getVoting(votingId);
+    this.getVoting(votingId); // TODO: check first if authenticated
   }
 
   getVoting(id: string) {

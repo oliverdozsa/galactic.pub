@@ -11,4 +11,7 @@ export class SpinnerComponent {
 
   @Input()
   styles: string = "";
+
+  @Input()
+  text: string = "";
 }

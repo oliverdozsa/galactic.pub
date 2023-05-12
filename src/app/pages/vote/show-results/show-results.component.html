@@ -1,0 +1,70 @@
+<app-login-required text="login is required to view voting results"></app-login-required>
+
+<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+  <div class="relative">
+    <div *ngIf="!isLoading && reason != RejectReason.None" class="text-center">
+      <h5 *ngIf="reason == RejectReason.VotingIsPrivateButUserIsUnauthenticated" class="text-center">
+        you're not allowed to view results of this voting; try logging in
+      </h5>
+      <h5 *ngIf="reason == RejectReason.VotingIsPrivateAndUserIsNotAllowed" class="text-center">
+        voting is private; you can't view its results
+      </h5>
+      <h5 *ngIf="reason == RejectReason.VotingIsStillEncrypted" class="text-center">
+        voting is still encrypted; you can't view its results yet. try again when encryption expires
+      </h5>
+      <h5 *ngIf="reason == RejectReason.Unknown" class="text-center">
+        something went wrong...☹️
+      </h5>
+    </div>
+
+    <div *ngIf="isVotingReceived && reason == RejectReason.None">
+      <h1 class="text-4xl text-center">
+        {{voting.title}}
+        <button class="btn btn-ghost" (click)="onRefreshClicked()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
+          </svg>
+        </button>
+      </h1>
+
+      <div *ngIf="hasVotingTransaction" class="mt-2">
+        <div class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+          <input type="checkbox"/>
+          <div class="collapse-title text-xl font-medium">
+            my vote
+          </div>
+          <div class="collapse-content">
+            <div class="flex justify-center items-center">
+              <div>
+                transaction:
+              </div>
+
+              <div class="ml-1">
+                <code>{{progress!.castedVoteTransactionId!.slice(0, 10)}}...</code>
+              </div>
+
+              <div>
+                <a [href]="transactionLink" target="_blank" class="inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h5 class="text-lg text-center"><b>your choices</b></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- TODO: polls data & chart for each poll -->
+    </div>
+
+    <app-spinner [spin]="isLoading" text="getting results..." styles="h-8 w-8 fill-primary"></app-spinner>
+  </div>
+</div>

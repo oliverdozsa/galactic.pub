@@ -9,6 +9,7 @@ import {MyVotingsComponent} from "./pages/vote/my-votings/my-votings.component";
 import {CreateVotingComponent} from "./pages/vote/create-voting/create-voting.component";
 import {ViewVotingComponent} from "./pages/vote/view-voting/view-voting.component";
 import {CastVoteComponent} from "./pages/vote/cast-vote/cast-vote.component";
+import {ShowResultsComponent} from "./pages/vote/show-results/show-results.component";
 
 const routes: Routes = [
   {path: '', redirectTo: `/${AppRoutes.HOME}`, pathMatch: 'full'},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: AppRoutes.CREATE_VOTING, component: CreateVotingComponent},
   {path: AppRoutes.VIEW_VOTING + "/:id", component: ViewVotingComponent},
   {path: AppRoutes.CAST_VOTE + "/:id", component: CastVoteComponent},
+  {path: AppRoutes.SHOW_RESULTS + "/:id", component: ShowResultsComponent},
   {path: AppRoutes.POST, component: PostComponent},
 ];
 

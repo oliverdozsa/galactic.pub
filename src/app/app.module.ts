@@ -74,6 +74,7 @@ import {
   CastMultiChoiceVoteComponent
 } from './pages/vote/cast-vote/cast-multi-choice-vote/cast-multi-choice-vote.component';
 import {CastVoteProgressComponent} from "./pages/vote/cast-vote/cast-vote-progress/cast-vote-progress.component";
+import { ShowResultsComponent } from './pages/vote/show-results/show-results.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import {CastVoteProgressComponent} from "./pages/vote/cast-vote/cast-vote-progre
     CastVoteComponent,
     CastMultiPollVoteComponent,
     CastMultiChoiceVoteComponent,
-    CastVoteProgressComponent
+    CastVoteProgressComponent,
+    ShowResultsComponent
   ],
   imports: [
     BrowserModule,
