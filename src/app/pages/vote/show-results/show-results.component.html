@@ -30,13 +30,13 @@
       </h1>
 
       <div *ngIf="hasVotingTransaction" class="mt-2">
-        <div class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+        <div class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box border-dotted border-4">
           <input type="checkbox"/>
           <div class="collapse-title text-xl font-medium">
-            my vote
+            vote receipt
           </div>
           <div class="collapse-content">
-            <div class="flex justify-center items-center">
+            <div class="flex items-center">
               <div>
                 transaction:
               </div>
@@ -58,6 +58,28 @@
 
             <div>
               <h5 class="text-lg text-center"><b>your choices</b></h5>
+              <div class="overflow-x-auto">
+                <table class="table w-full mt-1">
+                  <!-- head -->
+                  <thead>
+                  <tr>
+                    <th>index</th>
+                    <th>question</th>
+                    <th>choice</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let poll of voting.polls">
+                    <td>{{poll.index}}</td>
+                    <td>{{poll.question}}</td>
+                    <td>{{getChosenOptionsFor(poll)}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <p>
+                  <small>(This is only visible to you.)</small>
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -3,12 +3,13 @@ import {AuthService} from "@auth0/auth0-angular";
 import {VotingsService} from "../../../services/votings.service";
 import {ActivatedRoute} from "@angular/router";
 import {ToastService} from "../../../services/toast.service";
-import {Voting} from "../../../data/voting";
+import {Poll, Voting} from "../../../data/voting";
 import {RejectReason} from "./reject-reason";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Subject, takeUntil} from "rxjs";
 import {loadOrDefaultProgresses, Progress} from "../../../data/progress";
 import {getTransactionLink} from "./transaction-link";
+import {BallotType} from "../../../create-voting/ballot-type";
 
 @Component({
   selector: 'app-show-results',
@@ -65,6 +66,24 @@ export class ShowResultsComponent implements OnDestroy {
 
   onRefreshClicked() {
     // TODO
+  }
+
+  getChosenOptionsFor(poll: Poll): string {
+    if(this.progress == undefined) {
+      return "";
+    }
+
+    if(this.voting.ballotType == BallotType.MULTI_POLL) {
+      const chosenOptionCode = this.progress!.selectedOptions![poll.index];
+      return poll.pollOptions.find(o => o.code == chosenOptionCode)!.name;
+    } else if(this.voting.ballotType == BallotType.MULTI_CHOICE) {
+      return poll.pollOptions
+        .filter(o => this.progress!.selectedOptions[o.code] == true)
+        .map(o => o.name)
+        .join(", ");
+    }
+
+    return "";
   }
 
   private onIsAuthenticated(isAuth: boolean, votingId: string) {
