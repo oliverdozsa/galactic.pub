@@ -6,10 +6,13 @@ import {ToastService} from "../../../services/toast.service";
 import {Poll, Voting} from "../../../data/voting";
 import {RejectReason} from "./reject-reason";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Subject, takeUntil} from "rxjs";
+import {finalize, Subject, takeUntil} from "rxjs";
 import {loadOrDefaultProgresses, Progress} from "../../../data/progress";
 import {getTransactionLink} from "./transaction-link";
 import {BallotType} from "../../../create-voting/ballot-type";
+import {CollectedVoteResults, ShowResultsOperations} from "./show-results-operations";
+import {Chart, ChartHandling} from "./chart-handling";
+import {ThemeService} from "../../../services/theme.service";
 
 @Component({
   selector: 'app-show-results',
@@ -17,6 +20,9 @@ import {BallotType} from "../../../create-voting/ballot-type";
   styleUrls: ['./show-results.component.scss']
 })
 export class ShowResultsComponent implements OnDestroy {
+  protected readonly RejectReason = RejectReason;
+  protected readonly Chart = Chart;
+
   reason = RejectReason.None;
 
   isAuthenticated = false;
@@ -26,8 +32,13 @@ export class ShowResultsComponent implements OnDestroy {
 
   progress: Progress | undefined;
 
+  doesResultExist = false;
+  areResultsAvailable = false;
+
+  chartHandling: ChartHandling = new ChartHandling();
+
   get isLoading() {
-    return this.isGettingVoting;
+    return this.isGettingVoting || this.isGettingResults;
   }
 
   private isGettingVoting = true;
@@ -44,11 +55,11 @@ export class ShowResultsComponent implements OnDestroy {
   }
 
   constructor(public auth: AuthService, route: ActivatedRoute, private votingsService: VotingsService,
-              private toastService: ToastService) {
+              private toastService: ToastService, private themeService: ThemeService) {
     const votingId = route.snapshot.paramMap.get("id")!;
 
     const progresses = loadOrDefaultProgresses();
-    if(progresses.has(votingId)) {
+    if (progresses.has(votingId)) {
       this.progress = progresses.get(votingId);
     }
 
@@ -56,6 +67,12 @@ export class ShowResultsComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: a => this.onIsAuthenticated(a, votingId)
+      });
+
+    themeService.themeChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: c => this.chartHandling.updateTheme(c)
       });
   }
 
@@ -65,18 +82,19 @@ export class ShowResultsComponent implements OnDestroy {
   }
 
   onRefreshClicked() {
-    // TODO
+    ShowResultsOperations.clearResultsOf(this.voting);
+    this.getResults();
   }
 
   getChosenOptionsFor(poll: Poll): string {
-    if(this.progress == undefined) {
+    if (this.progress == undefined) {
       return "";
     }
 
-    if(this.voting.ballotType == BallotType.MULTI_POLL) {
+    if (this.voting.ballotType == BallotType.MULTI_POLL) {
       const chosenOptionCode = this.progress!.selectedOptions![poll.index];
       return poll.pollOptions.find(o => o.code == chosenOptionCode)!.name;
-    } else if(this.voting.ballotType == BallotType.MULTI_CHOICE) {
+    } else if (this.voting.ballotType == BallotType.MULTI_CHOICE) {
       return poll.pollOptions
         .filter(o => this.progress!.selectedOptions[o.code] == true)
         .map(o => o.name)
@@ -136,8 +154,38 @@ export class ShowResultsComponent implements OnDestroy {
 
   private getResults() {
     this.isGettingResults = true;
-    // TODO
+    this.areResultsAvailable = false;
+    this.doesResultExist = false;
+
+    const sub = ShowResultsOperations.getResultsOf(this.voting)
+      .pipe(
+        finalize(() => {
+          this.isGettingResults = false;
+          sub.unsubscribe();
+        })
+      )
+      .subscribe({
+        next: r => this.onResultsAvailable(r),
+        error: e => this.onGenericError(e)
+      });
   }
 
-  protected readonly RejectReason = RejectReason;
+  private onResultsAvailable(results: CollectedVoteResults) {
+    if (!this.doesResultExist) {
+      this.doesResultExist = results.size > 0 && Array.from(results.entries())
+        .every(v => v[1].size != 0);
+    }
+
+    this.areResultsAvailable = true;
+
+    this.chartHandling.updateResults(results, this.voting.polls);
+  }
+
+  private onGenericError(err: any) {
+    this.reason = RejectReason.Unknown;
+    this.isGettingVoting = false;
+    this.isGettingResults = false;
+
+    console.log(`Something went wrong. err: ${JSON.stringify(err)}`);
+  }
 }

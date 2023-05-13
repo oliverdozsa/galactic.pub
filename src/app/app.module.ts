@@ -74,7 +74,8 @@ import {
   CastMultiChoiceVoteComponent
 } from './pages/vote/cast-vote/cast-multi-choice-vote/cast-multi-choice-vote.component';
 import {CastVoteProgressComponent} from "./pages/vote/cast-vote/cast-vote-progress/cast-vote-progress.component";
-import { ShowResultsComponent } from './pages/vote/show-results/show-results.component';
+import {ShowResultsComponent} from './pages/vote/show-results/show-results.component';
+import {NgxEchartsModule} from "ngx-echarts";
 
 @NgModule({
   declarations: [
@@ -134,6 +135,9 @@ import { ShowResultsComponent } from './pages/vote/show-results/show-results.com
       }
     }),
     EditorComponent,
+    NgxEchartsModule.forRoot({
+      echarts: () => import("echarts")
+    }),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtBearerInterceptor, multi: true}
