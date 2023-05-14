@@ -31,12 +31,10 @@ export class AppComponent {
   private _isLightTheme: boolean = localStorage.getItem("theme") != null && localStorage.getItem("theme") == "light";
 
   constructor(public auth: AuthService, private themeService: ThemeService) {
-    setTimeout(() => {
-      if (this._isLightTheme) {
-        this.themeService.switchedToLight();
-      } else {
-        this.themeService.switchedToDark();
-      }
-    })
+    if (this._isLightTheme) {
+      this.themeService.switchedToLight();
+    } else {
+      this.themeService.switchedToDark();
+    }
   }
 }

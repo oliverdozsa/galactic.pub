@@ -12,6 +12,7 @@ enum CurrentTheme {
 })
 export class ThemeService {
   themeChanged$: Subject<any> = new Subject<any>();
+  currentColors: any;
 
   private current: CurrentTheme = CurrentTheme.Undefined;
 
@@ -22,13 +23,13 @@ export class ThemeService {
 
     this.current = CurrentTheme.Dark;
 
-    const colors = {
+    this.currentColors = {
       fgText: '#b4c6ef',
       bg: '#0f172a',
       separator: '#b4c6ef',
     };
 
-    this.themeChanged$.next(colors);
+    this.themeChanged$.next(this.currentColors);
   }
 
   switchedToLight() {
@@ -38,14 +39,13 @@ export class ThemeService {
 
     this.current = CurrentTheme.Light;
 
-    const colors = {
+    this.currentColors = {
       fgText: '#1f2937',
       bg: '#ffffff',
       separator: '#1f2937',
     };
-    // TODO
 
-    this.themeChanged$.next(colors);
+    this.themeChanged$.next(this.currentColors);
   }
 
   constructor() {

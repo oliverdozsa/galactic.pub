@@ -33,6 +33,7 @@ export class CastMultiChoiceVoteComponent implements OnInit {
   onChoiceChange() {
     setTimeout(() => {
       this.castVoteService.selectedOptionsChange$.next(this.selectedOptions);
+      this.notifyIfAllowedToCast();
     });
   }
 

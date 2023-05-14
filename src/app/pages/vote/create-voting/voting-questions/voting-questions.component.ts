@@ -18,7 +18,8 @@ export class VotingQuestionsComponent {
 
   get remainingNumberOfPossibleQuestions(): number {
     if (this.form.ballotType == BallotType.MULTI_CHOICE) {
-      return 1;
+      const maxPossible = 1 - this.form.questions.length;
+      return maxPossible >= 0 ? maxPossible : 0;
     }
 
     return this.maxQuestions.determine(this.form) - this.form.questions.length;

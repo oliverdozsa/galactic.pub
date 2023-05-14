@@ -69,6 +69,7 @@ export class ShowResultsComponent implements OnDestroy {
         next: a => this.onIsAuthenticated(a, votingId)
       });
 
+    this.chartHandling.updateTheme(this.themeService.currentColors);
     themeService.themeChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
