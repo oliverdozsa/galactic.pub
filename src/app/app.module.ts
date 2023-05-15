@@ -76,6 +76,7 @@ import {
 import {CastVoteProgressComponent} from "./pages/vote/cast-vote/cast-vote-progress/cast-vote-progress.component";
 import {ShowResultsComponent} from './pages/vote/show-results/show-results.component';
 import {NgxEchartsModule} from "ngx-echarts";
+import { InviteComponent } from './pages/vote/invite/invite.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import {NgxEchartsModule} from "ngx-echarts";
     CastMultiPollVoteComponent,
     CastMultiChoiceVoteComponent,
     CastVoteProgressComponent,
-    ShowResultsComponent
+    ShowResultsComponent,
+    InviteComponent
   ],
   imports: [
     BrowserModule,

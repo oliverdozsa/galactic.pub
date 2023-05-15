@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {AuthService} from "@auth0/auth0-angular";
 import {AuthenticationState} from "../../data/authentication-state";
+import {CheckAuthService} from "../../services/check-auth.service";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-login-required',
@@ -13,8 +14,8 @@ export class LoginRequiredComponent {
 
   authState: AuthenticationState = AuthenticationState.CHECKING;
 
-  constructor(public auth: AuthService) {
-    auth.isAuthenticated$.subscribe({
+  constructor(public checkAuth: CheckAuthService, public auth: AuthService) {
+    checkAuth.isAuthenticated$.subscribe({
       next: isAuth => this.authState = isAuth ? AuthenticationState.AUTHENTICATED : AuthenticationState.UNAUTHENTICATED
     });
   }

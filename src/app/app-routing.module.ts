@@ -10,9 +10,9 @@ import {CreateVotingComponent} from "./pages/vote/create-voting/create-voting.co
 import {ViewVotingComponent} from "./pages/vote/view-voting/view-voting.component";
 import {CastVoteComponent} from "./pages/vote/cast-vote/cast-vote.component";
 import {ShowResultsComponent} from "./pages/vote/show-results/show-results.component";
+import {InviteComponent} from "./pages/vote/invite/invite.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: `/${AppRoutes.HOME}`, pathMatch: 'full'},
   {path: AppRoutes.HOME, component: HomeComponent},
   {path: AppRoutes.VOTE_HOME, component: VoteHomeComponent},
   {path: AppRoutes.LETS_VOTE, component: LetsVoteComponent},
@@ -22,6 +22,8 @@ const routes: Routes = [
   {path: AppRoutes.CAST_VOTE + "/:id", component: CastVoteComponent},
   {path: AppRoutes.SHOW_RESULTS + "/:id", component: ShowResultsComponent},
   {path: AppRoutes.POST, component: PostComponent},
+  {path: AppRoutes.VOTING_INVITE + "/:token", component: InviteComponent},
+  {path: '', redirectTo: `/${AppRoutes.HOME}`, pathMatch: 'full'},
 ];
 
 @NgModule({

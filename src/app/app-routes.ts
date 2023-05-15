@@ -7,6 +7,6 @@ export enum AppRoutes {
   VIEW_VOTING = 'view-voting',
   CAST_VOTE = 'cast-vote',
   SHOW_RESULTS = 'show-voting-results',
-  INVITE = 'voting-invite',
+  VOTING_INVITE = 'voting-invite',
   POST = 'post',
 }
