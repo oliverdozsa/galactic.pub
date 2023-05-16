@@ -3,43 +3,18 @@ import {Observable, switchMap} from "rxjs";
 import {Injectable} from "@angular/core";
 import {AuthService} from "@auth0/auth0-angular";
 import {TokenAuthService} from "../services/token-auth.service";
+import {CheckAuthService} from "../services/check-auth.service";
 
 @Injectable()
 export class JwtBearerInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthService, private tokenAuth: TokenAuthService) {
+  constructor(private auth: AuthService, private tokenAuth: TokenAuthService, private checkAuth: CheckAuthService) {
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if(this.tokenAuth.isAuthenticated) {
-      return this.addTokenAuthJwtIfNeeded(req, next)
-    } else {
-      return this.addAuth0JwtIfNeeded(req, next);
-    }
-  }
-
-  private addTokenAuthJwtIfNeeded(request: HttpRequest<any>, next: HttpHandler) {
-    if(this.shouldRequestBeAuthenticatedBasedOnUrl(request)) {
-      const token = this.tokenAuth.token!.token;
-      const newHeaders = request.headers.set("Authorization", "Bearer " + token);
-      const requestWithJwt = request.clone<any>({headers: newHeaders});
-      return next.handle(requestWithJwt)
-    }
-
-    return next.handle(request);
-  }
-
-  private addAuth0JwtIfNeeded(request: HttpRequest<any>, next: HttpHandler) {
-    const addJwt = this.auth.idTokenClaims$
-      .pipe(switchMap(t => {
-        const newHeaders = request.headers.set("Authorization", "Bearer " + t?.__raw);
-        const requestWithJwt = request.clone<any>({headers: newHeaders});
-        return next.handle(requestWithJwt);
-      }));
-
-    return this.auth.isAuthenticated$
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.checkAuth.isAuthenticated$
       .pipe(switchMap(isAuth => {
-        if (isAuth && this.shouldRequestBeAuthenticatedBasedOnUrl(request)) {
-          return addJwt;
+        if(isAuth && this.shouldRequestBeAuthenticatedBasedOnUrl(request)) {
+          return this.useAppropriateJwt(request, next);
         }
 
         return next.handle(request);
@@ -48,5 +23,27 @@ export class JwtBearerInterceptor implements HttpInterceptor {
 
   private shouldRequestBeAuthenticatedBasedOnUrl(request: HttpRequest<any>) {
     return !request.url.includes("castvote/createTransaction") && !request.url.includes("encryptchoice");
+  }
+
+  private useAppropriateJwt(request: HttpRequest<any>, next: HttpHandler) {
+    const addJwtAuth0 = this.auth.idTokenClaims$
+      .pipe(switchMap(t => {
+        const newHeaders = request.headers.set("Authorization", "Bearer " + t?.__raw);
+        const requestWithJwt = request.clone<any>({headers: newHeaders});
+        return next.handle(requestWithJwt);
+      }));
+
+    const addJwtTokenAuth = this.tokenAuth.jwt$
+      .pipe(switchMap(t => {
+        const newHeaders = request.headers.set("Authorization", "Bearer " + t);
+        const requestWithJwt = request.clone<any>({headers: newHeaders});
+        return next.handle(requestWithJwt);
+      }));
+
+    if(this.tokenAuth.isActive) {
+      return addJwtTokenAuth;
+    } else {
+      return addJwtAuth0;
+    }
   }
 }
