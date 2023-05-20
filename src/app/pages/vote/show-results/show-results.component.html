@@ -1,6 +1,6 @@
 <app-login-required text="login is required to view voting results"></app-login-required>
 
-<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+<div *ngIf="this.isAuthenticated" class="px-3">
   <div class="relative">
     <div *ngIf="!isLoading && reason != RejectReason.None" class="text-center">
       <h5 *ngIf="reason == RejectReason.VotingIsPrivateButUserIsUnauthenticated" class="text-center">

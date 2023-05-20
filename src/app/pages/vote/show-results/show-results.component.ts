@@ -1,5 +1,4 @@
 import {Component, OnDestroy} from '@angular/core';
-import {AuthService} from "@auth0/auth0-angular";
 import {VotingsService} from "../../../services/votings.service";
 import {ActivatedRoute} from "@angular/router";
 import {ToastService} from "../../../services/toast.service";
@@ -13,6 +12,8 @@ import {BallotType} from "../../../create-voting/ballot-type";
 import {CollectedVoteResults, ShowResultsOperations} from "./show-results-operations";
 import {Chart, ChartHandling} from "./chart-handling";
 import {ThemeService} from "../../../services/theme.service";
+import {AppAuthService} from "../../../services/app-auth.service";
+import {AuthenticationState} from "../../../data/authentication-state";
 
 @Component({
   selector: 'app-show-results',
@@ -54,7 +55,7 @@ export class ShowResultsComponent implements OnDestroy {
     return getTransactionLink(this.voting, this.progress!.castedVoteTransactionId!);
   }
 
-  constructor(public auth: AuthService, route: ActivatedRoute, private votingsService: VotingsService,
+  constructor(public appAuth: AppAuthService, route: ActivatedRoute, private votingsService: VotingsService,
               private toastService: ToastService, private themeService: ThemeService) {
     const votingId = route.snapshot.paramMap.get("id")!;
 
@@ -63,11 +64,15 @@ export class ShowResultsComponent implements OnDestroy {
       this.progress = progresses.get(votingId);
     }
 
-    auth.isAuthenticated$
+    appAuth.authState$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: a => this.onIsAuthenticated(a, votingId)
       });
+
+    if(appAuth.isAuthenticated) {
+      this.getVoting(votingId);
+    }
 
     this.chartHandling.updateTheme(this.themeService.currentColors);
     themeService.themeChanged$
@@ -105,10 +110,10 @@ export class ShowResultsComponent implements OnDestroy {
     return "";
   }
 
-  private onIsAuthenticated(isAuth: boolean, votingId: string) {
-    this.isAuthenticated = isAuth;
+  private onIsAuthenticated(authState: AuthenticationState, votingId: string) {
+    this.isAuthenticated = authState == AuthenticationState.AUTHENTICATED;
 
-    if (isAuth) {
+    if (this.isAuthenticated) {
       this.getVoting(votingId)
     }
 

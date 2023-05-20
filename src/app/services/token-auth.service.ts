@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {finalize, map, Observable, Subject, tap} from "rxjs";
+import {Subject} from "rxjs";
 import jwtDecode from "jwt-decode";
 
 interface InviteBasedToken {
@@ -14,29 +14,35 @@ interface InviteBasedToken {
 export class TokenAuthService {
   private static BASE_URL = environment.apiUrl + "/tokenauth";
 
-  isAuthenticated$ = new Subject<boolean>();
-  jwt$ = new Subject<string>();
+  jwt$ = new Subject<string | undefined>()
   isActive: boolean = false;
 
   constructor(private httpClient: HttpClient) {
     if (this.has()) {
       if (this.isExpired()) {
-        this.clear();
+        setTimeout(() => this.clear());
       } else {
+        this.isActive = true;
         const invitationToken = this.read();
         this.watch(invitationToken);
-        this.isAuthenticated$.next(true);
-        this.jwt$.next(invitationToken.token)
+
+        setTimeout(() => this.jwt$.next(invitationToken.token));
       }
     }
   }
 
-  authenticateThrough(token: string) {
+  loginWith(token: string) {
+    this.isActive = true;
+
     const subscription = this.httpClient.get<InviteBasedToken>(TokenAuthService.BASE_URL + `/${token}`)
       .subscribe({
         next: t => {
           subscription.unsubscribe();
           this.onTokenReceived(t);
+        },
+        error: () => {
+          subscription.unsubscribe();
+          this.jwt$.next(undefined);
         }
       });
   }
@@ -46,7 +52,6 @@ export class TokenAuthService {
   }
 
   private onTokenReceived(token: InviteBasedToken) {
-    this.isAuthenticated$.next(true);
     this.jwt$.next(token.token);
     this.store(token);
     this.watch(token)
@@ -68,8 +73,8 @@ export class TokenAuthService {
 
   private clear() {
     this.isActive = false;
+    this.jwt$.next(undefined);
     localStorage.removeItem("invitationToken");
-    this.isAuthenticated$.next(false);
   }
 
   private has() {

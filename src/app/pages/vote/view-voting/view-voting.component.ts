@@ -4,6 +4,8 @@ import {VotingsService} from "../../../services/votings.service";
 import {ToastService} from "../../../services/toast.service";
 import {Voting} from "../../../data/voting";
 import {AuthService} from "@auth0/auth0-angular";
+import {AppAuthService} from "../../../services/app-auth.service";
+import {AuthenticationState} from "../../../data/authentication-state";
 
 @Component({
   selector: 'app-view-voting',
@@ -19,9 +21,20 @@ export class ViewVotingComponent {
   }
 
   constructor(private route: ActivatedRoute, private votingsService: VotingsService, private toastService: ToastService,
-              public auth: AuthService) {
+              public appAuth: AppAuthService) {
     const votingId = route.snapshot.paramMap.get("id")!;
-    this.getVoting(votingId);
+
+    appAuth.authState$.subscribe({
+      next: a => {
+        if(a == AuthenticationState.AUTHENTICATED) {
+          this.getVoting(votingId);
+        }
+      }
+    });
+
+    if(appAuth.isAuthenticated) {
+      this.getVoting(votingId);
+    }
   }
 
   getVoting(id: string) {

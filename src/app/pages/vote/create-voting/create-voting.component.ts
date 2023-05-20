@@ -5,6 +5,7 @@ import {VotingsService} from "../../../services/votings.service";
 import {ToastService} from "../../../services/toast.service";
 import {AppRoutes} from "../../../app-routes";
 import {Router} from "@angular/router";
+import {AppAuthService} from "../../../services/app-auth.service";
 
 export enum Step {
   Network,
@@ -62,7 +63,7 @@ export class CreateVotingComponent {
 
   private _isCreating = false;
 
-  constructor(public auth: AuthService, private votingsService: VotingsService, private toastService: ToastService,
+  constructor(public appAuth: AppAuthService, private votingsService: VotingsService, private toastService: ToastService,
               private router: Router) {
   }
 

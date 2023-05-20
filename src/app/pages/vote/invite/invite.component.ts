@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {TokenAuthService} from "../../../services/token-auth.service";
 import {AppRoutes} from "../../../app-routes";
 import {Subject, takeUntil} from "rxjs";
+import {AppAuthService} from "../../../services/app-auth.service";
 
 @Component({
   selector: 'app-invite',
@@ -15,7 +16,8 @@ export class InviteComponent implements OnDestroy {
   private token: string | undefined;
   private destroy$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private tokenAuthService: TokenAuthService, private router: Router) {
+  constructor(private route: ActivatedRoute, private tokenAuth: TokenAuthService,
+              private appAuth: AppAuthService, private router: Router) {
     this.token = route.snapshot.paramMap.get("token")!;
     this.loginThroughToken();
   }
@@ -26,16 +28,18 @@ export class InviteComponent implements OnDestroy {
   }
 
   private loginThroughToken() {
-    this.tokenAuthService.authenticateThrough(this.token!);
-    this.tokenAuthService.isAuthenticated$
-      .pipe(takeUntil(this.destroy$))
+    const subscription = this.tokenAuth.jwt$
       .subscribe({
-        next: isAuth => this.onAuthenticated(isAuth)
+        next: () => {
+          subscription.unsubscribe();
+          this.onAuthenticated();
+        }
       });
+
+    this.appAuth.loginThroughToken(this.token!);
   }
 
-  private onAuthenticated(isAuth: boolean) {
+  private onAuthenticated() {
     this.router.navigate(["/" + AppRoutes.LETS_VOTE]);
-    // TODO: handle isAuth = false;
   }
 }

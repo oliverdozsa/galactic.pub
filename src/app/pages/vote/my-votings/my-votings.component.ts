@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {PagingSource} from "../../../services/votings.service";
 import {AppRoutes} from "../../../app-routes";
+import {AppAuthService} from "../../../services/app-auth.service";
 
 @Component({
   selector: 'app-my-votings',
@@ -12,7 +12,7 @@ import {AppRoutes} from "../../../app-routes";
 export class MyVotingsComponent {
   protected readonly PagingSource = PagingSource;
 
-  constructor(public auth: AuthService, private router: Router) {
+  constructor(public appAuth: AppAuthService, private router: Router) {
   }
 
   onCreateVotingClicked() {

@@ -1,6 +1,6 @@
 <app-login-required text="login is required to view voting"></app-login-required>
 
-<div *ngIf="auth.isAuthenticated$ | async" class="px-3">
+<div *ngIf="appAuth.isAuthenticated" class="px-3">
   <div class="relative">
     <div *ngIf="!isLoading">
       <h1 class="text-4xl text-center">{{voting.title}}</h1>

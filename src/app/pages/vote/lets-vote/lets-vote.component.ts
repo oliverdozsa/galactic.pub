@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {PagingSource} from "../../../services/votings.service";
-import {CheckAuthService} from "../../../services/check-auth.service";
+import {AppAuthService} from "../../../services/app-auth.service";
 
 @Component({
   selector: 'app-lets-vote',
@@ -8,7 +8,7 @@ import {CheckAuthService} from "../../../services/check-auth.service";
   styleUrls: ['./lets-vote.component.scss']
 })
 export class LetsVoteComponent {
-  constructor(public checkAuth: CheckAuthService) {
+  constructor(public appAuth: AppAuthService) {
   }
 
   protected readonly PagingSource = PagingSource;
