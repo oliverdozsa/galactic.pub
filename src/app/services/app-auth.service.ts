@@ -2,16 +2,19 @@ import {Injectable} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {TokenAuthService} from "./token-auth.service";
 import {AuthenticationState} from "../data/authentication-state";
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppAuthService {
   jwt: string | undefined;
+  isTokenAuthAuthenticated = false;
 
   authState: AuthenticationState = AuthenticationState.UNAUTHENTICATED;
   authState$ = new Subject<AuthenticationState>();
+
+  private isAuth0Authenticated = false;
 
   get isAuthenticated() {
     return this.jwt != undefined;
@@ -43,15 +46,35 @@ export class AppAuthService {
     this.tokenAuth.loginWith(token);
   }
 
+  logout() {
+    if (this.tokenAuth.isActive) {
+      this.tokenAuth.logout();
+    } else {
+      this.auth0.logout({logoutParams: {returnTo: document.location.origin}});
+    }
+  }
+
   private onAuth0JwtReceived(jwt: string | undefined) {
-    if(!this.tokenAuth.isActive) {
+    this.isAuth0Authenticated = jwt != undefined;
+
+    if (!this.tokenAuth.isActive) {
       this.onJwtReceived(jwt)
+    } else if(jwt != undefined) {
+      this.auth0.logout({openUrl: false});
     }
   }
 
   private onTokenAuthJwtReceived(jwt: string | undefined) {
-    this.auth0.logout();
-    this.onJwtReceived(jwt);
+    if (!this.tokenAuth.isActive) {
+      return;
+    }
+
+    if (this.isAuth0Authenticated) {
+      this.auth0.logout(); // This will redirect & reload the page
+    } else {
+      this.isTokenAuthAuthenticated = jwt != undefined;
+      this.onJwtReceived(jwt);
+    }
   }
 
   private onJwtReceived(jwt: string | undefined) {

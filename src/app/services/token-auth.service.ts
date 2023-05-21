@@ -28,6 +28,8 @@ export class TokenAuthService {
 
         setTimeout(() => this.jwt$.next(invitationToken.token));
       }
+    } else {
+      setTimeout(() => this.jwt$.next(undefined));
     }
   }
 
@@ -72,9 +74,9 @@ export class TokenAuthService {
   }
 
   private clear() {
-    this.isActive = false;
     this.jwt$.next(undefined);
     localStorage.removeItem("invitationToken");
+    this.isActive = false;
   }
 
   private has() {

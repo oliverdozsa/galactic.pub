@@ -116,7 +116,7 @@
         </label>
       </li>
 
-      <li>
+      <li *ngIf="!appAuth.isTokenAuthAuthenticated">
         <label for="drawer-main-menu" [routerLink]="'/' + AppRoutes.MY_VOTINGS">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                stroke="currentColor">
@@ -142,8 +142,8 @@
         </label>
       </li>
 
-      <li *ngIf="auth.isAuthenticated$ | async; else logInButton" class="mt-5">
-        <button (click)="auth.logout({logoutParams: {returnTo: document.location.origin}})">
+      <li *ngIf="appAuth.isAuthenticated; else logInButton" class="mt-5">
+        <button (click)="appAuth.logout()">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round"
