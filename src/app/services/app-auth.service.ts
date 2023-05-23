@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {TokenAuthService} from "./token-auth.service";
 import {AuthenticationState} from "../data/authentication-state";
-import {Subject, Subscription} from "rxjs";
+import {Subject} from "rxjs";
+import {ToastService} from "./toast.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AppAuthService {
     return this.jwt != undefined;
   }
 
-  constructor(private auth0: AuthService, private tokenAuth: TokenAuthService) {
+  constructor(private auth0: AuthService, private tokenAuth: TokenAuthService, private toast: ToastService) {
     this.authState = AuthenticationState.CHECKING;
     this.authState$.next(this.authState);
 
@@ -47,6 +48,7 @@ export class AppAuthService {
   }
 
   logout() {
+    this.toast.success("Bye! 👋");
     if (this.tokenAuth.isActive) {
       this.tokenAuth.logout();
     } else {
@@ -59,7 +61,7 @@ export class AppAuthService {
 
     if (!this.tokenAuth.isActive) {
       this.onJwtReceived(jwt)
-    } else if(jwt != undefined) {
+    } else if (jwt != undefined) {
       this.auth0.logout({openUrl: false});
     }
   }
@@ -80,6 +82,11 @@ export class AppAuthService {
   private onJwtReceived(jwt: string | undefined) {
     this.jwt = jwt;
     this.authState = this.jwt == undefined ? AuthenticationState.UNAUTHENTICATED : AuthenticationState.AUTHENTICATED;
+
+    if(this.authState == AuthenticationState.AUTHENTICATED) {
+      this.toast.success("Hello! 👋");
+    }
+
     this.authState$.next(this.authState);
   }
 }
