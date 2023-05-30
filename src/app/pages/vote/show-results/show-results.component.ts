@@ -26,8 +26,6 @@ export class ShowResultsComponent implements OnDestroy {
 
   reason = RejectReason.None;
 
-  isAuthenticated = false;
-
   voting: Voting = new Voting();
   isVotingReceived = false;
 
@@ -67,7 +65,7 @@ export class ShowResultsComponent implements OnDestroy {
     appAuth.authState$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: a => this.onIsAuthenticated(a, votingId)
+        next: () => this.onIsAuthenticated(votingId)
       });
 
     if(appAuth.isAuthenticated) {
@@ -110,10 +108,8 @@ export class ShowResultsComponent implements OnDestroy {
     return "";
   }
 
-  private onIsAuthenticated(authState: AuthenticationState, votingId: string) {
-    this.isAuthenticated = authState == AuthenticationState.AUTHENTICATED;
-
-    if (this.isAuthenticated) {
+  private onIsAuthenticated(votingId: string) {
+    if (this.appAuth.isAuthenticated) {
       this.getVoting(votingId)
     }
 
@@ -144,7 +140,7 @@ export class ShowResultsComponent implements OnDestroy {
     if (err.status == 403) {
       this.isGettingVoting = false;
 
-      if (this.isAuthenticated) {
+      if (this.appAuth.isAuthenticated) {
         this.reason = RejectReason.VotingIsPrivateAndUserIsNotAllowed;
       } else {
         this.reason = RejectReason.VotingIsPrivateButUserIsUnauthenticated;
