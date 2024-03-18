@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": ["theme-change"],
             "outputPath": "dist/galactic-pub",
             "index": "src/index.html",
             "main": "src/main.ts",
