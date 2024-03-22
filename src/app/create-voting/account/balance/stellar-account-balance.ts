@@ -1,5 +1,6 @@
 import {StellarServers} from "../../../blockchains/StellarServers";
-import {Horizon} from "stellar-sdk";
+import {HorizonApi} from "@stellar/stellar-sdk/lib/horizon";
+import BalanceLine = HorizonApi.BalanceLine;
 
 export class StellarAccountBalance {
   static queryBalanceOf(accountPublic: string, isOnTestNetwork: boolean): Promise<number> {
@@ -9,7 +10,7 @@ export class StellarAccountBalance {
       .then(r => StellarAccountBalance.findXlmBalance(r.balances));
   }
 
-  private static findXlmBalance(balances: Horizon.BalanceLine[]): number {
+  private static findXlmBalance(balances: BalanceLine[]): number {
     const xlmBalance = balances.find(b => b.asset_type == "native")
     return Number.parseFloat(xlmBalance!.balance);
   }

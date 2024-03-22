@@ -1,4 +1,4 @@
-import {Keypair} from "stellar-sdk";
+import {Keypair} from "@stellar/stellar-sdk";
 
 export class StellarAccountPublicKeyDerivation {
   static derivePublicFrom(secret: string): string {

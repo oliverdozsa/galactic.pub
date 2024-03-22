@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
-import {Keypair} from "stellar-sdk";
+import {Keypair} from "@stellar/stellar-sdk";
 import {AppKeyPair} from "../app-key-pair";
 
 export class StellarGenerateTestAccount {

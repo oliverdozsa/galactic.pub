@@ -1,20 +1,19 @@
 import {
-  AccountResponse,
   Asset,
   BASE_FEE,
-  Horizon,
   Keypair,
   Memo,
   Networks,
-  Operation,
   TransactionBuilder
-} from "stellar-sdk";
+} from "@stellar/stellar-sdk";
 import {from, map, Observable, switchMap} from "rxjs";
-import SubmitTransactionResponse = Horizon.SubmitTransactionResponse;
 import {CastVoteTransactionData} from "./cast-vote-operations";
 import {AppKeyPair} from "../../../../create-voting/account/app-key-pair";
 import {StellarServers} from "../../../../blockchains/StellarServers";
 import {Voting} from "../../../../data/voting";
+import {AccountResponse, HorizonApi} from "@stellar/stellar-sdk/lib/horizon";
+import SubmitTransactionResponse = HorizonApi.SubmitTransactionResponse;
+import {Operation} from "@stellar/stellar-base";
 
 export class CastVoteStellarOperations {
   static createAccount(): AppKeyPair {

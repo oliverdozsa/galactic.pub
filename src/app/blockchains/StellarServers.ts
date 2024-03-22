@@ -1,4 +1,4 @@
-import {Server} from "stellar-sdk";
+import {Server} from "@stellar/stellar-sdk/lib/horizon";
 
 export class StellarServers {
   static publicServer = new Server("https://horizon.stellar.org");

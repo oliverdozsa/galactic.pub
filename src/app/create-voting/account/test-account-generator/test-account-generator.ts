@@ -1,5 +1,4 @@
-import {Keypair} from "stellar-sdk";
-import {finalize, map, Observable, of} from "rxjs";
+import {finalize, Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {AppKeyPair} from "../app-key-pair";
 import {StellarGenerateTestAccount} from "./stellar-test-account-generator";

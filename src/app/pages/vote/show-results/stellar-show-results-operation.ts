@@ -1,6 +1,6 @@
 import {Observable, of, Subject} from "rxjs";
 import {CollectedVoteResults} from "./show-results-operations";
-import {ServerApi} from "stellar-sdk";
+import {ServerApi} from "@stellar/stellar-sdk/lib/horizon";
 import PaymentOperationRecord = ServerApi.PaymentOperationRecord;
 import TransactionRecord = ServerApi.TransactionRecord;
 import {VoteResults} from "./vote-results";
@@ -44,13 +44,14 @@ class StellarCollectResults {
     return this.collectedVoteResults$;
   }
 
-  processPage(page: ServerApi.CollectionPage<ServerApi.PaymentOperationRecord>) {
+  processPage(page: ServerApi.CollectionPage<any>) {
     if (page.records && page.records.length > 0) {
       this.numOfRecordsProcessing += page.records.length;
       page.records.forEach(r => this.processRecord(r));
 
-      page.next.call(this)
-        .then(p => this.processPage(p))
+      page.next().then(p => this.processPage(p));
+      // page.next.call(this)
+      //   .then(p => this.processPage(p))
     } else {
       this.isPagingOngoing = false;
       this.checkIfDone();
@@ -58,8 +59,11 @@ class StellarCollectResults {
   }
 
   processRecord(paymentRecord: PaymentOperationRecord) {
-    paymentRecord.transaction.call(this)
+    paymentRecord.transaction()
       .then(t => this.onTransactionOfPaymentRecordProcessed(paymentRecord, t));
+
+    // paymentRecord.transaction.call(this)
+    //   .then(t => this.onTransactionOfPaymentRecordProcessed(paymentRecord, t));
   }
 
   onTransactionOfPaymentRecordProcessed(paymentRecord: PaymentOperationRecord, transactionRecord: TransactionRecord) {
