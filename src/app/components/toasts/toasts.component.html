@@ -4,7 +4,7 @@
        [class.alert-error]="toast.kind == ToastKind.Error"
        [class.alert-warning]="toast.kind == ToastKind.Warning"
        [@fadeOutOnLeave]>
-    <div class="flex flex-row w-full">
+    <div class="flex flex-row w-full items-center">
       <div class="grow">
 
         <div class="flex flex-row gap-2 items-center">
@@ -37,8 +37,8 @@
         </div>
       </div>
 
-      <div>
-        <button class="btn btn-ghost" (click)="toastService.deleteToast(toast)">
+      <div class="ml-10">
+        <button class="btn btn-ghost btn-sm" (click)="toastService.deleteToast(toast)">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>

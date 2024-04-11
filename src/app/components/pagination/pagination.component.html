@@ -1,12 +1,12 @@
-<div class="btn-group">
-  <button *ngIf="hasPrev" class="btn btn-sm">«</button>
-  <button *ngIf="!hasPrev" class="btn btn-sm btn-disabled">«</button>
+<div class="join">
+  <button *ngIf="hasPrev" class="btn btn-sm join-item">«</button>
+  <button *ngIf="!hasPrev" class="btn btn-sm btn-disabled join-item">«</button>
 
-  <button *ngFor="let page of pages" class="btn btn-sm" [class.btn-active]="page == current"
+  <button *ngFor="let page of pages" class="btn btn-sm join-item" [class.btn-active]="page == current"
           (click)="onPageNumberSelected(page)">
     {{page}}
   </button>
 
-  <button *ngIf="hasNext" class="btn btn-sm">»</button>
-  <button *ngIf="!hasNext" class="btn btn-sm btn-disabled">»</button>
+  <button *ngIf="hasNext" class="btn btn-sm join-item">»</button>
+  <button *ngIf="!hasNext" class="btn btn-sm btn-disabled join-item">»</button>
 </div>
