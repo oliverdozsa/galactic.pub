@@ -1,0 +1,40 @@
+<div *ngIf="!authService.isLoggedIn" class="cursor-pointer" (click)="onLoginClicked()">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+       class="size-8">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"/>
+  </svg>
+  <small>login</small>
+</div>
+
+<div *ngIf="authService.isLoggedIn">
+  <div class="dropdown dropdown-end">
+    <div tabindex="0" role="button">
+      <div class="relative">
+        <div class="avatar cursor-pointer">
+          <div class="w-12 rounded-full">
+            <img [src]="picture" alt="User picture"/>
+          </div>
+        </div>
+
+        <div class="absolute -bottom-0.75 -right-0.75 border-3 border-solid bg-base-300 border-base-100 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+               stroke="currentColor" class="size-3.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+      <li class="menu-title">{{ name }}</li>
+      <li>
+        <a (click)="onLogoutClicked()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+          </svg>
+          logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
