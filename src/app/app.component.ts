@@ -10,4 +10,9 @@ import {LoginComponent} from './components/login/login.component';
 })
 export class AppComponent {
   title = 'galacic.pub';
+  protected readonly Date = Date;
+
+  get currentYear() {
+    return new Date().getFullYear();
+  }
 }

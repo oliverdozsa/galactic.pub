@@ -1,0 +1,162 @@
+<div class="px-3">
+  <h1 class="text-4xl text-center">Voting home</h1>
+  <p class="mt-10">
+    A privacy focused voting platform built on blockchain technology. This ensures the immutability and integrity
+    of the voting process.
+  </p>
+
+  <h2 class="text-3xl mt-8">It is...</h2>
+  <h3 class="text-2xl mt-5">Trustless</h3>
+  <p>
+    All votes are recorded on the blockchain, and anyone with access to the blockchain can see the results for
+    themselves.
+    This level of transparency helps to build trust and confidence in the voting process.
+  </p>
+
+  <h3 class="text-2xl mt-5">Verifiable</h3>
+  <p>
+    Users cast their vote directly on the blockchain, and they can verify that their vote is counted.
+  </p>
+
+  <h3 class="text-2xl mt-5">Privacy-first</h3>
+  <p>
+    Blind signatures are used to protect the anonymity of voters during voting.
+  </p>
+
+  <h3 class="text-2xl mt-5">Fair</h3>
+  <p>
+    Voting results can be encrypted until a given date to prevent preliminary results.
+  </p>
+
+  <h2 class="text-3xl mt-8">Inspiration</h2>
+  <p>
+    It's based on <a href="https://stellot.com" target="_blank" class="link link-primary">stellot</a>, but it's
+    not 1 to 1 copy. The <a href="https://github.com/oliverdozsa/galactic.host" target="_blank" class="link link-primary">server</a>
+    (TDS) is ported to play framework.
+    The main differences are the followings:
+  </p>
+
+  <h3 class="text-2xl mt-5">Support for multiple blockchains</h3>
+  <p>
+    Currently works with stellar, but code is prepared to be easily extended to other networks which have similar
+    characteristics to stellar.
+  </p>
+
+  <h3 class="text-2xl mt-5">Scalability</h3>
+  <p>
+    Votings with thousands of voters can be created. The preparation of the voting on the blockchain occurs in the
+    "background" so there's very little time needed to wait before voting can be started.
+  </p>
+
+  <h3 class="text-2xl mt-5">Multi choice votings</h3>
+  <p>
+    Votings where multiple choices are possible for a single question are supported.
+  </p>
+
+  <h3 class="text-2xl mt-5">Low cost</h3>
+  <p>
+    When a voting ends unused resources are refunded to the account that was used for the funding of the voting. Thanks
+    to this it's very cheap to organize votings with hundreds of participants.
+  </p>
+
+  <h2 class="text-3xl mt-8">FAQ</h2>
+  <div class="border border-base-300 bg-base-100 rounded-box mt-5 shadow-md">
+    <div tabindex="0" class="collapse collapse-arrow">
+      <input type="checkbox"/>
+      <div class="collapse-title text-xl font-medium">
+        How does it work?
+      </div>
+      <div class="collapse-content">
+        <p>
+          Here are the steps in a nutshell
+        </p>
+        <ol class="list-decimal list-outside ml-4">
+          <li class="mt-2">
+            Your first authenticate with the server and start the voting session. This is analogous to paper voting: you
+            show
+            your identification to the voting commission in order to make sure you won't vote twice. You get your voting
+            paper after that.
+          </li>
+          <li class="mt-2">
+            You create a concealed voting request. This request will contain information about where to deliver the
+            voting
+            token.
+            The concealed request cannot be read by the server. You send this to the server for signing. It's like
+            putting
+            your vote in
+            an envelope that has carbon-copy on the inside. Then bringing this envelope to the voting commission where
+            they sign it. When they
+            put their signature on it, thanks to the carbon-copy, the signature will go to the vote too, but the
+            commission
+            won't be able to see
+            it as it's inside the envelope.
+          </li>
+          <li class="mt-2">
+            You become anonymous. From the concealed request and the signature from step 2, you create
+            the revealed request and the (revealed) signature for it. You present the server the revealed request and
+            signature, and ask
+            it to deliver the vote token. With the vote token in your possession you cast your vote.<br/>
+            To stick with the paper voting, it's like putting on a mask, get the vote paper from the envelope and give
+            it
+            to the commission.
+            They'll accept the vote as a valid one (since they'll see their signature on it), but they won't know who
+            you
+            are because there's a mask on your face.
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="collapse collapse-arrow border-base-300 border-t">
+      <input type="checkbox"/>
+      <div class="collapse-title text-xl font-medium">
+        What networks are supported?
+      </div>
+      <div class="collapse-content">
+        <p>
+          Voting is conducted on the Stellar network.
+        </p>
+      </div>
+    </div>
+
+    <div class="collapse collapse-arrow border-base-300 border-t">
+      <input type="checkbox"/>
+      <div class="collapse-title text-xl font-medium">
+        How much does a vote cost?
+      </div>
+      <div class="collapse-content">
+        <p>
+          An example: 500 participants vote costs less than 10XLMs on the Stellar network. Initial cost is higher, but after
+          a voting is ended, unused resources are refunded.
+        </p>
+      </div>
+    </div>
+
+    <div class="collapse collapse-arrow border-base-300 border-t">
+      <input type="checkbox"/>
+      <div class="collapse-title text-xl font-medium">
+        I want to try creating a voting without costing money. Is it possible?
+      </div>
+      <div class="collapse-content">
+        <p>
+          Yes, absolutely. When creating a voting switch "use test network" on. You can use your own testnet account, or
+          let DeVote generate one for you. The voting will be created entirely on the testnet. Please note, that testnets are
+          cleared periodically, so expect to things break after some time.
+        </p>
+      </div>
+    </div>
+
+    <div class="collapse collapse-arrow border-base-300 border-t">
+      <input type="checkbox"/>
+      <div class="collapse-title text-xl font-medium">
+        Can it be used for like political elections?
+      </div>
+      <div class="collapse-content">
+        <p>
+          There are risks, read <a class="link link-primary" href="https://academic.oup.com/cybersecurity/article/7/1/tyaa025/6137886" target="_blank">this article</a>.
+          Use wherever this is tolerable.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
