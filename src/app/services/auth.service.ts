@@ -1,14 +1,13 @@
-import {inject, Injectable, signal} from '@angular/core';
-import {OAuthService, OAuthSuccessEvent} from 'angular-oauth2-oidc';
-import {Subject} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {OAuthService} from 'angular-oauth2-oidc';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  authEvent = new Subject<void>()
-
   private oauthService = inject(OAuthService);
+  private router = inject(Router);
 
   get isLoggedIn() {
     return this.oauthService.hasValidIdToken();
@@ -26,19 +25,12 @@ export class AuthService {
     });
 
     this.oauthService.setupAutomaticSilentRefresh();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
-
-    this.oauthService.events.subscribe({
-      next: e => {
-        if(e instanceof OAuthSuccessEvent) {
-          this.authEvent.next();
-        }
-      }
-    })
+    this.oauthService.loadDiscoveryDocumentAndTryLogin()
+      .then(() => this.onTryLoginComplete());
   }
 
   login() {
-    this.oauthService.initImplicitFlow();
+    this.oauthService.initImplicitFlow(this.router.url);
   }
 
   logout() {
@@ -52,5 +44,16 @@ export class AuthService {
 
   getIdToken() {
     return this.oauthService.getIdToken();
+  }
+
+  private onTryLoginComplete() {
+    let stateUrl = this.oauthService.state!;
+    if (stateUrl) {
+      if (!stateUrl.startsWith('/')) {
+        stateUrl = decodeURIComponent(stateUrl);
+      }
+
+      setTimeout(() =>this.router.navigateByUrl(stateUrl));
+    }
   }
 }
