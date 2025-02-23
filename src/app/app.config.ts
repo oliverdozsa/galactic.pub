@@ -3,8 +3,11 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
-import {provideOAuthClient} from 'angular-oauth2-oidc';
+import {OAuthStorage, provideOAuthClient} from 'angular-oauth2-oidc';
 
+export function storageFactory(): OAuthStorage {
+  return localStorage
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
