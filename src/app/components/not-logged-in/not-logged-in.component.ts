@@ -12,6 +12,7 @@ export class NotLoggedInComponent implements AfterViewInit, OnDestroy {
   private line: any;
 
   ngAfterViewInit(): void {
+    console.log(`ngAfterViewInit`)
     this.line = new LeaderLine(document.querySelector("#need-to-login"), document.querySelector("#login-button"));
     this.line.setOptions({startSocket: "bottom", endSocket: "bottom", color: "oklch(0.21 0.006 285.885)"});
   }
