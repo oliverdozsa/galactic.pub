@@ -1,10 +1,22 @@
 <div class="flex justify-center">
   <div>
     <ul class="steps">
-      <li class="step step-primary">Register</li>
-      <li class="step step-primary">Choose plan</li>
-      <li class="step">Purchase</li>
-      <li class="step">Receive Product</li>
+      <li [class.step-primary]="currentStep >= Step.BasicData" class="step">Basic data</li>
+      <li [class.step-primary]="currentStep >= Step.TechnicalData" class="step">Technical data</li>
+      <li [class.step-primary]="currentStep >= Step.Polls" class="step">Polls</li>
     </ul>
+  </div>
+</div>
+
+<div class="flex justify-between">
+  <div>
+    <button (click)="onPreviousClicked()" [class.btn-disabled]="!isPreviousAvailable"
+            [class.btn-active]="isPreviousAvailable" class="btn">Previous
+    </button>
+  </div>
+  <div>
+    <button (click)="onNextClicked()" [class.btn-disabled]="!isNextAvailable" [class.btn-active]="isNextAvailable"
+            class="btn btn-primary">Next
+    </button>
   </div>
 </div>
