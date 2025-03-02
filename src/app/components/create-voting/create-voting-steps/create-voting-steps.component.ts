@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {CreateVotingRequest} from '../create-voting-request';
 
 export enum Step {
   BasicData,
@@ -16,6 +17,16 @@ export class CreateVotingStepsComponent {
   Step = Step;
 
   currentStep = Step.BasicData;
+  votingRequest: CreateVotingRequest = {
+    title: "",
+    description: "",
+    maxVoters: 0,
+    visibility: "",
+    dates: {
+      startDate: "",
+      endDate: ""
+    }
+  };
 
   get isNextAvailable() {
     return this.currentStep < Step.Polls;
