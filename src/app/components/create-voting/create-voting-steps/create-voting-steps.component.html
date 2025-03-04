@@ -8,6 +8,12 @@
   </div>
 </div>
 
+<div>
+  <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData"></app-create-voting-basic-data>
+  <app-create-voting-technical-data *ngIf="currentStep == Step.TechnicalData"></app-create-voting-technical-data>
+  <app-create-voting-polls *ngIf="currentStep == Step.Polls"></app-create-voting-polls>
+</div>
+
 <div class="flex justify-between">
   <div>
     <button (click)="onPreviousClicked()" [class.btn-disabled]="!isPreviousAvailable"
@@ -15,8 +21,10 @@
     </button>
   </div>
   <div>
-    <button (click)="onNextClicked()" [class.btn-disabled]="!isNextAvailable" [class.btn-active]="isNextAvailable"
+    <button *ngIf="!isCreateAvailable" (click)="onNextClicked()" [class.btn-disabled]="!isNextAvailable" [class.btn-active]="isNextAvailable"
             class="btn btn-primary">Next
+    </button>
+    <button *ngIf="isCreateAvailable" (click)="onNextClicked()" class="btn btn-success btn-active">Create
     </button>
   </div>
 </div>
