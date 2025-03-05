@@ -17,7 +17,6 @@ export interface CreateVotingRequest {
     encryptedUntil?: string,
     startDate: string,
     endDate: string
-  }
-
+  },
   ballotType?: string
 }

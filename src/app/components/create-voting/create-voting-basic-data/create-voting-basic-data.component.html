@@ -1,9 +1,60 @@
-<div>
+<fieldset class="fieldset">
   <div>
-    <fieldset class="fieldset">
-      <legend class="fieldset-legend">Title</legend>
-      <input type="text" class="input" placeholder="voting title" />
-      <p class="fieldset-label text-error">required</p>
-    </fieldset>
+    <legend class="fieldset-legend">Title</legend>
+    <input type="text" class="input validator" required minlength="2" maxlength="1000" placeholder="voting title"/>
+    <div class="validator-hint">Length must be >= 2 and <= 1000.</div>
+
+    <legend class="fieldset-legend">Description</legend>
+    <textarea class="textarea validator" required minlength="2" maxlength="1000" rows="10"
+              placeholder="voting description"></textarea>
+    <div class="validator-hint">Length must be >= 2 and <= 1000.</div>
+
   </div>
-</div>
+</fieldset>
+
+<fieldset class="fieldset">
+  <legend class="fieldset-legend">Number of voters</legend>
+  <input type="number" class="input validator" required min="2" max="500" placeholder="number of voters"/>
+  <div class="validator-hint">Must be between 2 and 500.</div>
+</fieldset>
+
+<fieldset class="fieldset">
+  <div>
+    <legend class="fieldset-legend">Visibility</legend>
+    <select class="select">
+      <option>Unlisted</option>
+      <option>Private</option>
+    </select>
+    <span class="fieldset-label">TODO: explain the currently selected option</span>
+
+    <legend class="fieldset-legend">Ballot type</legend>
+    <select class="select">
+      <option>Multiple polls</option>
+      <option>Multiple choices</option>
+    </select>
+    <span class="fieldset-label">TODO: explain the currently selected option</span>
+  </div>
+</fieldset>
+
+<fieldset class="fieldset">
+  <div>
+    <legend class="fieldset-legend">Start date</legend>
+    <input type="datetime-local" class="input validator" required/>
+    <div class="validator-hint">TODO: start date validation</div>
+
+    <legend class="fieldset-legend">End date</legend>
+    <input type="datetime-local" class="input validator" required/>
+    <div class="validator-hint">TODO: end date validation</div>
+
+    <legend class="fieldset-legend">Encrypt voting</legend>
+    <label class="fieldset-label">
+      <input type="checkbox" checked="checked" class="checkbox"/>
+      Encrypt?
+    </label>
+
+    <legend class="fieldset-legend">Encrypt until</legend>
+    <input type="datetime-local" class="input validator" required/>
+    <div class="validator-hint">TODO: encrypt date validation</div>
+  </div>
+</fieldset>
+
