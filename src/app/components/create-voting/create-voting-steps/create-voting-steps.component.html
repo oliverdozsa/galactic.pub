@@ -9,12 +9,12 @@
 </div>
 
 <div>
-  <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData"></app-create-voting-basic-data>
+  <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData" [votingRequest]="votingRequest"></app-create-voting-basic-data>
   <app-create-voting-technical-data *ngIf="currentStep == Step.TechnicalData"></app-create-voting-technical-data>
   <app-create-voting-polls *ngIf="currentStep == Step.Polls"></app-create-voting-polls>
 </div>
 
-<div class="flex justify-between">
+<div class="flex justify-between mt-10">
   <div>
     <button (click)="onPreviousClicked()" [class.btn-disabled]="!isPreviousAvailable"
             [class.btn-active]="isPreviousAvailable" class="btn">Previous

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {CreateVotingRequest} from '../create-voting-request';
+import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-voting-request';
 import {CreateVotingBasicDataComponent} from '../create-voting-basic-data/create-voting-basic-data.component';
 import {NgIf} from '@angular/common';
 import {
@@ -32,7 +32,8 @@ export class CreateVotingStepsComponent {
     title: "",
     description: "",
     maxVoters: 0,
-    visibility: "",
+    visibility: VotingVisibility.Unlisted,
+    ballotType: BallotType.MultiChoice,
     dates: {
       startDate: "",
       endDate: ""
