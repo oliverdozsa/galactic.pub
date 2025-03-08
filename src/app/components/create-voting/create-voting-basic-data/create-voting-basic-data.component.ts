@@ -18,6 +18,36 @@ export class CreateVotingBasicDataComponent {
   @Input()
   votingRequest!: CreateVotingRequest;
 
+  set startDate(value: string) {
+    const asDate = new Date(Date.parse(value));
+    this.votingRequest.dates.startDate = asDate.toISOString();
+    this._startDate = value;
+  }
+
+  get startDate() {
+    return this._startDate;
+  }
+
+  set endDate(value: string) {
+    const asDate = new Date(Date.parse(value));
+    this.votingRequest.dates.startDate = asDate.toISOString();
+    this._endDate = value;
+  }
+
+  get endDate() {
+    return this._endDate;
+  }
+
+  set encryptedUntil(value: string) {
+    const asDate = new Date(Date.parse(value));
+    this.votingRequest.dates.startDate = asDate.toISOString();
+    this._endDate = value;
+  }
+
+  get encryptedUntil() {
+    return this._endDate;
+  }
+
   get visibilityHint(): string {
     if(this.votingRequest.visibility == VotingVisibility.Private) {
       return "Voting will be only visible to participants.";
@@ -37,4 +67,8 @@ export class CreateVotingBasicDataComponent {
 
     return "<UNKOWN BALLOT TYPE>";
   }
+
+  private _startDate: string = "";
+  private _endDate: string = "";
+  private _encryptedUntil: string = "";
 }
