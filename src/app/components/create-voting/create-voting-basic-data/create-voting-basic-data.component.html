@@ -60,8 +60,7 @@
       </div>
       <div class="grow">
         <label class="fieldset-label">Encrypt until</label>
-        <input type="datetime-local" class="input validator w-full"/>
-        <div class="validator-hint hidden">TODO: encrypt date validation</div>
+        <input [(ngModel)]="encryptedUntil" type="datetime-local" class="input validator w-full"/>
       </div>
     </div>
   </fieldset>

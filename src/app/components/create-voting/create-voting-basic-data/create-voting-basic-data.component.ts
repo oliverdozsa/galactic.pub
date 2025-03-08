@@ -40,12 +40,12 @@ export class CreateVotingBasicDataComponent {
 
   set encryptedUntil(value: string) {
     const asDate = new Date(Date.parse(value));
-    this.votingRequest.dates.startDate = asDate.toISOString();
-    this._endDate = value;
+    this.votingRequest.dates.encryptedUntil = asDate.toISOString();
+    this._encryptedUntil = value;
   }
 
   get encryptedUntil() {
-    return this._endDate;
+    return this._encryptedUntil;
   }
 
   get visibilityHint(): string {
