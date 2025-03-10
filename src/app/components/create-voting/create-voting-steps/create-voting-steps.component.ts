@@ -41,6 +41,10 @@ export class CreateVotingStepsComponent {
   };
 
   get isNextAvailable() {
+    if(this.currentStep == Step.BasicData) {
+      return this.isBasicDataValid;
+    }
+
     return this.currentStep < Step.Polls;
   }
 
@@ -52,6 +56,8 @@ export class CreateVotingStepsComponent {
     return this.currentStep == Step.Polls;
   }
 
+  isBasicDataValid = false;
+
   onNextClicked() {
     if(this.currentStep < Step.Polls) {
       this.currentStep++;
@@ -62,5 +68,9 @@ export class CreateVotingStepsComponent {
     if(this.currentStep > Step.BasicData) {
       this.currentStep--;
     }
+  }
+
+  onBasicDataValid(isValid: boolean) {
+    this.isBasicDataValid = isValid;
   }
 }

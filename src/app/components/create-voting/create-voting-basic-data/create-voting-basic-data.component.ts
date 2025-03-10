@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-voting-request';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
@@ -20,13 +20,17 @@ export class CreateVotingBasicDataComponent {
   @Input()
   votingRequest!: CreateVotingRequest;
 
-  endDateValidationHint = "";
-  startDateValidationHint = "";
+  @Output()
+  isValid = new EventEmitter<boolean>;
+
+  endDateValidationHint = "<NOT SET>";
+  startDateValidationHint = "<NOT SET>";
 
   set startDate(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.startDate = asDate.toISOString();
     this._startDate = value;
+    this.checkValidityOfAll();
   }
 
   get startDate() {
@@ -37,6 +41,7 @@ export class CreateVotingBasicDataComponent {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.startDate = asDate.toISOString();
     this._endDate = value;
+    this.checkValidityOfAll();
   }
 
   get endDate() {
@@ -47,6 +52,7 @@ export class CreateVotingBasicDataComponent {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.encryptedUntil = asDate.toISOString();
     this._encryptedUntil = value;
+    this.checkValidityOfAll();
   }
 
   get encryptedUntil() {
@@ -111,20 +117,81 @@ export class CreateVotingBasicDataComponent {
   }
 
   get isMaxVotersValid() {
-    return this.votingRequest.maxVoters && this.votingRequest.maxVoters > 1 && this.votingRequest.maxVoters <= 500;
+    return this.votingRequest.maxVoters != undefined && this.votingRequest.maxVoters > 1 && this.votingRequest.maxVoters <= 500;
   }
 
   get isDescriptionValid() {
-    return this.votingRequest.description &&
+    return this.votingRequest.description != null &&
       this.votingRequest.description.length > 1 && this.votingRequest.description.length <= 1000;
   }
 
   get isTitleValid() {
-    return this.votingRequest.title &&
+    return this.votingRequest.title != null &&
       this.votingRequest.title.length > 1 && this.votingRequest.title.length <= 1000;
+  }
+
+  get isEncryptedUntilValid() {
+    if (!this.encryptedUntil) {
+      return false;
+    }
+
+    const nowValue = Date.now();
+    const encryptedUntilValue = Date.parse(this.encryptedUntil);
+
+    return encryptedUntilValue > nowValue;
+  }
+
+  set title(value: string) {
+    this.votingRequest.title = value;
+    this.checkValidityOfAll();
+  }
+
+  get title() {
+    return this.votingRequest.title;
+  }
+
+  set description(value: string) {
+    this.votingRequest.description = value;
+    this.checkValidityOfAll();
+  }
+
+  get description() {
+    return this.votingRequest.description;
+  }
+
+  set maxVoters(value: number) {
+    this.votingRequest.maxVoters = value;
+    this.checkValidityOfAll();
+  }
+
+  get maxVoters() {
+    return this.votingRequest.maxVoters;
+  }
+
+  set shouldEncrypt(value: boolean) {
+    this._shouldEncrypt = value;
+    this.checkValidityOfAll();
+  }
+
+  get shouldEncrypt() {
+    return this._shouldEncrypt;
   }
 
   private _startDate: string = "";
   private _endDate: string = "";
   private _encryptedUntil: string = "";
+  private _shouldEncrypt = false;
+
+  private checkValidityOfAll() {
+    const areRequiredDataValid: boolean =
+      this.isTitleValid && this.isDescriptionValid && this.isMaxVotersValid &&
+      this.isStartDateValid && this.isEndDateValid;
+
+    let isAllValid = areRequiredDataValid;
+    if (this.shouldEncrypt) {
+      isAllValid = isAllValid && this.isEncryptedUntilValid;
+    }
+
+    this.isValid.emit(isAllValid);
+  }
 }

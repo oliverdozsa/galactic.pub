@@ -3,12 +3,12 @@
     <legend class="fieldset-legend">Title & description</legend>
 
     <label class="fieldset-label">Title</label>
-    <input [(ngModel)]="votingRequest.title" type="text" class="input validator w-full" minlength="2" maxlength="1000"
+    <input [(ngModel)]="title" type="text" class="input validator w-full" minlength="2" maxlength="1000"
            placeholder="voting title" [class.input-error]="!isTitleValid" [class.input-success]="isTitleValid"/>
     <div *ngIf="!isTitleValid" class="text-error">Length must be >= 2 and <= 1000.</div>
 
     <label class="fieldset-label mt-2">Description</label>
-    <textarea [(ngModel)]="votingRequest.description" class="textarea validator w-full" minlength="2" maxlength="1000"
+    <textarea [(ngModel)]="description" class="textarea validator w-full" minlength="2" maxlength="1000"
               rows="10"
               placeholder="voting description" [class.input-error]="!isDescriptionValid"
               [class.input-success]="isDescriptionValid"></textarea>
@@ -21,7 +21,7 @@
     <legend class="fieldset-legend">Limitations</legend>
 
     <label class="fieldset-label">Number of voters</label>
-    <input [(ngModel)]="votingRequest.maxVoters" type="number" class="input w-full" min="2" max="500"
+    <input [(ngModel)]="maxVoters" type="number" class="input w-full" min="2" max="500"
            placeholder="number of voters" [class.input-error]="!isMaxVotersValid"
            [class.input-success]="isMaxVotersValid"/>
     <div *ngIf="!isMaxVotersValid" class="text-error">Must be between 2 and 500.</div>
@@ -60,13 +60,17 @@
       <div>
         <label class="fieldset-label">Encrypt voting</label>
         <label class="fieldset-label">
-          <input type="checkbox" checked="checked" class="checkbox"/>
+          <input [(ngModel)]="shouldEncrypt" type="checkbox" checked="checked" class="checkbox"/>
           Encrypt?
         </label>
       </div>
       <div class="grow">
         <label class="fieldset-label">Encrypt until</label>
-        <input [(ngModel)]="encryptedUntil" type="datetime-local" class="input validator w-full"/>
+        <input [disabled]="!shouldEncrypt" [(ngModel)]="encryptedUntil" type="datetime-local"
+               class="input w-full" [class.input-error]="shouldEncrypt && !isEncryptedUntilValid"
+               [class.input-success]="shouldEncrypt && isEncryptedUntilValid"/>
+        <div *ngIf="shouldEncrypt && !isEncryptedUntilValid" class="text-error">Encrypted until must be in the future.
+        </div>
       </div>
     </div>
   </fieldset>
