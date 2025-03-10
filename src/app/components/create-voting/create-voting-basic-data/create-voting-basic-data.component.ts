@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-voting-request';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ValidationState} from '../../../../validation-state';
 import {NgIf} from '@angular/common';
 
 @Component({
@@ -17,12 +16,12 @@ import {NgIf} from '@angular/common';
 export class CreateVotingBasicDataComponent {
   VotingVisibility = VotingVisibility;
   BallotType = BallotType;
-  ValidationState = ValidationState;
 
   @Input()
   votingRequest!: CreateVotingRequest;
 
-  endDateValidationHint ="";
+  endDateValidationHint = "";
+  startDateValidationHint = "";
 
   set startDate(value: string) {
     const asDate = new Date(Date.parse(value));
@@ -74,34 +73,55 @@ export class CreateVotingBasicDataComponent {
     return "<UNKOWN BALLOT TYPE>";
   }
 
-  get endDateValidation(): ValidationState {
-    if (this.startDate == "") {
-      return ValidationState.None;
+  get isEndDateValid(): boolean {
+    if (!this.endDate) {
+      this.endDateValidationHint = "End date is necessary."
+      return false;
     }
 
-    if (this.endDate == "") {
-      return ValidationState.None;
+    if (!this.startDate) {
+      this.endDateValidationHint = "Must have start date set for end date."
+      return false;
     }
 
     const startDateValue = Date.parse(this.startDate);
     const endDateValue = Date.parse(this.endDate);
     const nowValue = Date.now();
 
-    if (endDateValue > startDateValue && endDateValue > nowValue) {
-      return ValidationState.Valid;
-    }
-
-    if(nowValue >= endDateValue) {
-      this.endDateValidationHint = "End date must be in the future."
-      return ValidationState.Invalid;
-    }
-
-    if(endDateValue <= startDateValue) {
+    if (endDateValue <= startDateValue) {
       this.endDateValidationHint = "End date must be after start date."
-      return ValidationState.Invalid;
+      return false;
     }
 
-    return ValidationState.Invalid;
+    if (endDateValue <= nowValue) {
+      this.endDateValidationHint = "End date must be in the future.";
+      return false;
+    }
+
+    return true;
+  }
+
+  get isStartDateValid() {
+    if (!this.startDate) {
+      this.startDateValidationHint = "Start date is necessary.";
+      return false;
+    }
+
+    return true;
+  }
+
+  get isMaxVotersValid() {
+    return this.votingRequest.maxVoters && this.votingRequest.maxVoters > 1 && this.votingRequest.maxVoters <= 500;
+  }
+
+  get isDescriptionValid() {
+    return this.votingRequest.description &&
+      this.votingRequest.description.length > 1 && this.votingRequest.description.length <= 1000;
+  }
+
+  get isTitleValid() {
+    return this.votingRequest.title &&
+      this.votingRequest.title.length > 1 && this.votingRequest.title.length <= 1000;
   }
 
   private _startDate: string = "";

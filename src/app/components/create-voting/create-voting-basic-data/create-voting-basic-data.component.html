@@ -1,26 +1,30 @@
 <div class="flex justify-center">
-  <fieldset class="fieldset w-xl bg-base-200 border border-base-300 p-4 rounded-box">
+  <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
     <legend class="fieldset-legend">Title & description</legend>
 
     <label class="fieldset-label">Title</label>
-    <input type="text" class="input validator w-full" required minlength="2" maxlength="1000"
-           placeholder="voting title"/>
-    <div class="validator-hint hidden">Length must be >= 2 and <= 1000.</div>
+    <input [(ngModel)]="votingRequest.title" type="text" class="input validator w-full" minlength="2" maxlength="1000"
+           placeholder="voting title" [class.input-error]="!isTitleValid" [class.input-success]="isTitleValid"/>
+    <div *ngIf="!isTitleValid" class="text-error">Length must be >= 2 and <= 1000.</div>
 
     <label class="fieldset-label mt-2">Description</label>
-    <textarea class="textarea validator w-full" required minlength="2" maxlength="1000" rows="10"
-              placeholder="voting description"></textarea>
-    <div class="validator-hint hidden">Length must be >= 2 and <= 1000.</div>
+    <textarea [(ngModel)]="votingRequest.description" class="textarea validator w-full" minlength="2" maxlength="1000"
+              rows="10"
+              placeholder="voting description" [class.input-error]="!isDescriptionValid"
+              [class.input-success]="isDescriptionValid"></textarea>
+    <div *ngIf="!isDescriptionValid" class="text-error">Length must be >= 2 and <= 1000.</div>
   </fieldset>
 </div>
 
 <div class="flex justify-center">
-  <fieldset class="fieldset w-xl bg-base-200 border border-base-300 p-4 rounded-box">
+  <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
     <legend class="fieldset-legend">Limitations</legend>
 
     <label class="fieldset-label">Number of voters</label>
-    <input type="number" class="input validator w-full" required min="2" max="500" placeholder="number of voters"/>
-    <div class="validator-hint hidden">Must be between 2 and 500.</div>
+    <input [(ngModel)]="votingRequest.maxVoters" type="number" class="input w-full" min="2" max="500"
+           placeholder="number of voters" [class.input-error]="!isMaxVotersValid"
+           [class.input-success]="isMaxVotersValid"/>
+    <div *ngIf="!isMaxVotersValid" class="text-error">Must be between 2 and 500.</div>
 
     <label class="fieldset-label mt-2">Visibility</label>
     <select [(ngModel)]="votingRequest.visibility" class="select w-full">
@@ -39,18 +43,18 @@
 </div>
 
 <div class="flex justify-center">
-  <fieldset class="fieldset w-xl bg-base-200 border border-base-300 p-4 rounded-box">
+  <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
     <legend class="fieldset-legend">Dates</legend>
 
     <label class="fieldset-label">Start date</label>
-    <input [(ngModel)]="startDate" type="datetime-local" class="input validator w-full" required/>
-    <div class="validator-hint hidden">TODO: start date validation</div>
+    <input [(ngModel)]="startDate" type="datetime-local" class="input w-full" [class.input-error]="!isStartDateValid"
+           [class.input-success]="isStartDateValid"/>
+    <div *ngIf="!isStartDateValid" class="text-error">{{ startDateValidationHint }}</div>
 
     <label class="fieldset-label mt-2">End date</label>
-    <input [(ngModel)]="endDate" type="datetime-local" class="input w-full"
-           [class.input-error]="endDateValidation == ValidationState.Invalid"
-           [class.input-success]="endDateValidation == ValidationState.Valid" required/>
-    <div *ngIf="endDateValidation == ValidationState.Invalid" class="text-error">{{ endDateValidationHint }}</div>
+    <input [(ngModel)]="endDate" type="datetime-local" class="input w-full" [class.input-error]="!isEndDateValid"
+           [class.input-success]="isEndDateValid" required/>
+    <div *ngIf="!isEndDateValid" class="text-error">{{ endDateValidationHint }}</div>
 
     <div class="flex flex-row gap-x-4 mt-2">
       <div>
