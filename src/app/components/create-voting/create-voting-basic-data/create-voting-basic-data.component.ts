@@ -194,6 +194,19 @@ export class CreateVotingBasicDataComponent implements OnInit {
     return this._shouldEncrypt;
   }
 
+  get maxChoices(): number {
+    // TODO
+    return 0;
+  }
+
+  set maxChoices(value:number) {
+    // TODO
+  }
+
+  get isMaxChoicesValid(): boolean {
+    return true;
+  }
+
   ngOnInit(): void {
     this.shouldEncrypt = this.encryptedUntil != "";
   }
