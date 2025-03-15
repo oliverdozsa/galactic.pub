@@ -26,6 +26,9 @@ export class CreateVotingBasicDataComponent implements OnInit {
 
   endDateValidationHint = "<NOT SET>";
   startDateValidationHint = "<NOT SET>";
+  maxChoicesValidationHint = "<NOT SET>"
+
+  maxChoicesUpperLimit = 4;
 
   set startDate(value: string) {
     const asDate = new Date(Date.parse(value));
@@ -187,6 +190,7 @@ export class CreateVotingBasicDataComponent implements OnInit {
       this.votingRequest.dates.encryptedUntil = "";
     }
 
+    this.determineMaxChoicesUpperLimit();
     this.checkValidityOfAll();
   }
 
@@ -195,16 +199,24 @@ export class CreateVotingBasicDataComponent implements OnInit {
   }
 
   get maxChoices(): number {
-    // TODO
-    return 0;
+    if (!this.votingRequest.maxChoices) {
+      return 0;
+    }
+
+    return this.votingRequest.maxChoices;
   }
 
-  set maxChoices(value:number) {
-    // TODO
+  set maxChoices(value: number) {
+    this.votingRequest.maxChoices = value;
+    this.checkValidityOfAll();
   }
 
   get isMaxChoicesValid(): boolean {
-    return true;
+    if (this.shouldEncrypt) {
+      return this.checkMaxChoicesValidityWhenEncrypted();
+    } else {
+      return this.checkMaxChoicesValidityWhenUnencrypted();
+    }
   }
 
   ngOnInit(): void {
@@ -214,15 +226,39 @@ export class CreateVotingBasicDataComponent implements OnInit {
   private _shouldEncrypt = false;
 
   private checkValidityOfAll() {
-    const areRequiredDataValid: boolean =
-      this.isTitleValid && this.isDescriptionValid && this.isMaxVotersValid &&
-      this.isStartDateValid && this.isEndDateValid;
-
-    let isAllValid = areRequiredDataValid;
+    let isAllValid = this.isTitleValid && this.isDescriptionValid && this.isMaxVotersValid &&
+      this.isStartDateValid && this.isEndDateValid && this.isMaxChoicesValid;
     if (this.shouldEncrypt) {
       isAllValid = isAllValid && this.isEncryptedUntilValid;
     }
 
     this.isValid.emit(isAllValid);
+  }
+
+  private determineMaxChoicesUpperLimit() {
+    if (this.shouldEncrypt) {
+      this.maxChoicesUpperLimit = 1;
+    } else {
+      this.maxChoicesUpperLimit = 4;
+    }
+  }
+
+  private checkMaxChoicesValidityWhenEncrypted() {
+    if (this.votingRequest.maxChoices != 1) {
+      this.maxChoicesValidationHint = "When voting is encrypted, maximum choices is limited to 1."
+      return false;
+    }
+
+    return true;
+  }
+
+  private checkMaxChoicesValidityWhenUnencrypted() {
+    if (this.votingRequest.maxChoices &&
+      this.votingRequest.maxChoices > 0 && this.votingRequest.maxChoices <= 4) {
+      return true;
+    }
+
+    this.maxChoicesValidationHint = "Must be between 1 and 4.";
+    return false;
   }
 }

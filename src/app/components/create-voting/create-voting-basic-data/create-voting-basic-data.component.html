@@ -41,10 +41,10 @@
     <span class="fieldset-label">{{ ballotTypeHint }}</span>
 
     <label class="fieldset-label">Maximum choices</label>
-    <input [(ngModel)]="maxChoices" type="number" class="input w-full" min="1" max="10"
-           placeholder="number of voters" [class.input-error]="!isMaxChoicesValid"
+    <input [(ngModel)]="maxChoices" type="number" class="input w-full" min="1" [max]="maxChoicesUpperLimit"
+           placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
            [class.input-success]="isMaxChoicesValid"/>
-    <div *ngIf="!isMaxChoicesValid" class="text-error">TODO: Max choices validaiton hint.</div>
+    <div *ngIf="!isMaxChoicesValid" class="text-error">{{maxChoicesValidationHint}}</div>
   </fieldset>
 </div>
 

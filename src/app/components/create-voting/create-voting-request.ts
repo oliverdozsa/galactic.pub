@@ -12,6 +12,7 @@ export interface CreateVotingRequest {
   title: string,
   description: string,
   maxVoters: number,
+  maxChoices?: number,
   visibility: string,
   dates: {
     encryptedUntil?: string,
