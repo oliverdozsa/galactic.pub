@@ -3,6 +3,7 @@ import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-votin
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {CreateVotingDates} from './create-voting-dates';
+import {CreateVotingMaxChoices} from './create-voting-max-choices';
 
 @Component({
   selector: 'app-create-voting-basic-data',
@@ -24,37 +25,48 @@ export class CreateVotingBasicDataComponent implements OnInit {
   @Output()
   isValid = new EventEmitter<boolean>;
 
-  maxChoicesValidationHint = "<NOT SET>"
+  datesHandler: CreateVotingDates | undefined = undefined;
+  maxChoicesHandler: CreateVotingMaxChoices | undefined = undefined;
 
-  maxChoicesUpperLimit = 4;
-
-  dates: CreateVotingDates | undefined = undefined;
-
-  set startDate(value: string) {
-    this.dates!.startDate = value;
+  set title(value: string) {
+    this.votingRequest.title = value;
     this.checkValidityOfAll();
   }
 
-  get startDate() {
-    return this.dates ? this.dates.startDate : "";
+  get title() {
+    return this.votingRequest.title;
   }
 
-  set endDate(value: string) {
-    this.dates!.endDate = value;
+  get isTitleValid() {
+    return this.votingRequest.title != null &&
+      this.votingRequest.title.length > 1 && this.votingRequest.title.length <= 1000;
+  }
+
+  set description(value: string) {
+    this.votingRequest.description = value;
     this.checkValidityOfAll();
   }
 
-  get endDate() {
-    return this.dates ? this.dates.endDate : "";
+  get description() {
+    return this.votingRequest.description;
   }
 
-  set encryptedUntil(value: string) {
-    this.dates!.encryptedUntil = value;
+  get isDescriptionValid() {
+    return this.votingRequest.description != null &&
+      this.votingRequest.description.length > 1 && this.votingRequest.description.length <= 1000;
+  }
+
+  set maxVoters(value: number) {
+    this.votingRequest.maxVoters = value;
     this.checkValidityOfAll();
   }
 
-  get encryptedUntil() {
-    return this.dates ?  this.dates.encryptedUntil : "";
+  get maxVoters() {
+    return this.votingRequest.maxVoters;
+  }
+
+  get isMaxVotersValid() {
+    return this.votingRequest.maxVoters != undefined && this.votingRequest.maxVoters > 1 && this.votingRequest.maxVoters <= 500;
   }
 
   get visibilityHint(): string {
@@ -77,57 +89,43 @@ export class CreateVotingBasicDataComponent implements OnInit {
     return "<UNKOWN BALLOT TYPE>";
   }
 
-  get isEndDateValid(): boolean {
-    return this.dates ?  this.dates.isEndDateValid : false;
+  set maxChoices(value: number) {
+    this.maxChoicesHandler!.maxChoices = value;
+    this.checkValidityOfAll();
+  }
+
+  get maxChoices(): number {
+    return this.maxChoicesHandler ? this.maxChoicesHandler.maxChoices : 0;
+  }
+
+  get isMaxChoicesValid(): boolean {
+    return this.maxChoicesHandler ? this.maxChoicesHandler.isMaxChoicesValid : false;
+  }
+
+  set startDate(value: string) {
+    this.datesHandler!.startDate = value;
+    this.checkValidityOfAll();
+  }
+
+  get startDate() {
+    return this.datesHandler ? this.datesHandler.startDate : "";
   }
 
   get isStartDateValid() {
-    return this.dates ?  this.dates.isStartDateValid : false;
+    return this.datesHandler ?  this.datesHandler.isStartDateValid : false;
   }
 
-  get isMaxVotersValid() {
-    return this.votingRequest.maxVoters != undefined && this.votingRequest.maxVoters > 1 && this.votingRequest.maxVoters <= 500;
-  }
-
-  get isDescriptionValid() {
-    return this.votingRequest.description != null &&
-      this.votingRequest.description.length > 1 && this.votingRequest.description.length <= 1000;
-  }
-
-  get isTitleValid() {
-    return this.votingRequest.title != null &&
-      this.votingRequest.title.length > 1 && this.votingRequest.title.length <= 1000;
-  }
-
-  get isEncryptedUntilValid() {
-    return this.dates ?  this.dates.isEncryptedUntilValid : false;
-  }
-
-  set title(value: string) {
-    this.votingRequest.title = value;
+  set endDate(value: string) {
+    this.datesHandler!.endDate = value;
     this.checkValidityOfAll();
   }
 
-  get title() {
-    return this.votingRequest.title;
+  get endDate() {
+    return this.datesHandler ? this.datesHandler.endDate : "";
   }
 
-  set description(value: string) {
-    this.votingRequest.description = value;
-    this.checkValidityOfAll();
-  }
-
-  get description() {
-    return this.votingRequest.description;
-  }
-
-  set maxVoters(value: number) {
-    this.votingRequest.maxVoters = value;
-    this.checkValidityOfAll();
-  }
-
-  get maxVoters() {
-    return this.votingRequest.maxVoters;
+  get isEndDateValid(): boolean {
+    return this.datesHandler ?  this.datesHandler.isEndDateValid : false;
   }
 
   set shouldEncrypt(value: boolean) {
@@ -136,7 +134,9 @@ export class CreateVotingBasicDataComponent implements OnInit {
       this.votingRequest.dates.encryptedUntil = "";
     }
 
-    this.determineMaxChoicesUpperLimit();
+    this.maxChoicesHandler!.shouldEncrypt = value;
+    this.maxChoicesHandler!.determineMaxChoicesUpperLimit();
+
     this.checkValidityOfAll();
   }
 
@@ -144,29 +144,22 @@ export class CreateVotingBasicDataComponent implements OnInit {
     return this._shouldEncrypt;
   }
 
-  get maxChoices(): number {
-    if (!this.votingRequest.maxChoices) {
-      return 0;
-    }
-
-    return this.votingRequest.maxChoices;
-  }
-
-  set maxChoices(value: number) {
-    this.votingRequest.maxChoices = value;
+  set encryptedUntil(value: string) {
+    this.datesHandler!.encryptedUntil = value;
     this.checkValidityOfAll();
   }
 
-  get isMaxChoicesValid(): boolean {
-    if (this.shouldEncrypt) {
-      return this.checkMaxChoicesValidityWhenEncrypted();
-    } else {
-      return this.checkMaxChoicesValidityWhenUnencrypted();
-    }
+  get encryptedUntil() {
+    return this.datesHandler ?  this.datesHandler.encryptedUntil : "";
+  }
+
+  get isEncryptedUntilValid() {
+    return this.datesHandler ?  this.datesHandler.isEncryptedUntilValid : false;
   }
 
   ngOnInit(): void {
-    this.dates = new CreateVotingDates(this.votingRequest);
+    this.datesHandler = new CreateVotingDates(this.votingRequest);
+    this.maxChoicesHandler = new CreateVotingMaxChoices(this.votingRequest);
     this.shouldEncrypt = this.encryptedUntil != "";
   }
 
@@ -180,32 +173,5 @@ export class CreateVotingBasicDataComponent implements OnInit {
     }
 
     this.isValid.emit(isAllValid);
-  }
-
-  private determineMaxChoicesUpperLimit() {
-    if (this.shouldEncrypt) {
-      this.maxChoicesUpperLimit = 1;
-    } else {
-      this.maxChoicesUpperLimit = 4;
-    }
-  }
-
-  private checkMaxChoicesValidityWhenEncrypted() {
-    if (this.votingRequest.maxChoices != 1) {
-      this.maxChoicesValidationHint = "When voting is encrypted, maximum choices is limited to 1."
-      return false;
-    }
-
-    return true;
-  }
-
-  private checkMaxChoicesValidityWhenUnencrypted() {
-    if (this.votingRequest.maxChoices &&
-      this.votingRequest.maxChoices > 0 && this.votingRequest.maxChoices <= 4) {
-      return true;
-    }
-
-    this.maxChoicesValidationHint = "Must be between 1 and 4.";
-    return false;
   }
 }
