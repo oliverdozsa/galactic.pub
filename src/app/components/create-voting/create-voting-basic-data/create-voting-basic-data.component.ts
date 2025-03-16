@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-voting-request';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
-import moment from 'moment';
+import {CreateVotingDates} from './create-voting-dates';
 
 @Component({
   selector: 'app-create-voting-basic-data',
@@ -24,55 +24,37 @@ export class CreateVotingBasicDataComponent implements OnInit {
   @Output()
   isValid = new EventEmitter<boolean>;
 
-  endDateValidationHint = "<NOT SET>";
-  startDateValidationHint = "<NOT SET>";
   maxChoicesValidationHint = "<NOT SET>"
 
   maxChoicesUpperLimit = 4;
 
+  dates: CreateVotingDates | undefined = undefined;
+
   set startDate(value: string) {
-    const asDate = new Date(Date.parse(value));
-    this.votingRequest.dates.startDate = asDate.toISOString();
+    this.dates!.startDate = value;
     this.checkValidityOfAll();
   }
 
   get startDate() {
-    if (!this.votingRequest.dates.startDate) {
-      return ""
-    }
-
-    const asDate = new Date(Date.parse(this.votingRequest.dates.startDate));
-    return moment(asDate).format("YYYY-MM-DDTkk:mm");
+    return this.dates ? this.dates.startDate : "";
   }
 
   set endDate(value: string) {
-    const asDate = new Date(Date.parse(value));
-    this.votingRequest.dates.endDate = asDate.toISOString();
+    this.dates!.endDate = value;
     this.checkValidityOfAll();
   }
 
   get endDate() {
-    if (!this.votingRequest.dates.endDate) {
-      return ""
-    }
-
-    const asDate = new Date(Date.parse(this.votingRequest.dates.endDate));
-    return moment(asDate).format("YYYY-MM-DDTkk:mm");
+    return this.dates ? this.dates.endDate : "";
   }
 
   set encryptedUntil(value: string) {
-    const asDate = new Date(Date.parse(value));
-    this.votingRequest.dates.encryptedUntil = asDate.toISOString();
+    this.dates!.encryptedUntil = value;
     this.checkValidityOfAll();
   }
 
   get encryptedUntil() {
-    if (!this.votingRequest.dates.encryptedUntil) {
-      return ""
-    }
-
-    const asDate = new Date(Date.parse(this.votingRequest.dates.encryptedUntil));
-    return moment(asDate).format("YYYY-MM-DDTkk:mm");
+    return this.dates ?  this.dates.encryptedUntil : "";
   }
 
   get visibilityHint(): string {
@@ -96,40 +78,11 @@ export class CreateVotingBasicDataComponent implements OnInit {
   }
 
   get isEndDateValid(): boolean {
-    if (!this.endDate) {
-      this.endDateValidationHint = "End date is necessary."
-      return false;
-    }
-
-    if (!this.startDate) {
-      this.endDateValidationHint = "Must have start date set for end date."
-      return false;
-    }
-
-    const startDateValue = Date.parse(this.startDate);
-    const endDateValue = Date.parse(this.endDate);
-    const nowValue = Date.now();
-
-    if (endDateValue <= startDateValue) {
-      this.endDateValidationHint = "End date must be after start date."
-      return false;
-    }
-
-    if (endDateValue <= nowValue) {
-      this.endDateValidationHint = "End date must be in the future.";
-      return false;
-    }
-
-    return true;
+    return this.dates ?  this.dates.isEndDateValid : false;
   }
 
   get isStartDateValid() {
-    if (!this.startDate) {
-      this.startDateValidationHint = "Start date is necessary.";
-      return false;
-    }
-
-    return true;
+    return this.dates ?  this.dates.isStartDateValid : false;
   }
 
   get isMaxVotersValid() {
@@ -147,14 +100,7 @@ export class CreateVotingBasicDataComponent implements OnInit {
   }
 
   get isEncryptedUntilValid() {
-    if (!this.encryptedUntil) {
-      return false;
-    }
-
-    const nowValue = Date.now();
-    const encryptedUntilValue = Date.parse(this.encryptedUntil);
-
-    return encryptedUntilValue > nowValue;
+    return this.dates ?  this.dates.isEncryptedUntilValid : false;
   }
 
   set title(value: string) {
@@ -220,6 +166,7 @@ export class CreateVotingBasicDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dates = new CreateVotingDates(this.votingRequest);
     this.shouldEncrypt = this.encryptedUntil != "";
   }
 
