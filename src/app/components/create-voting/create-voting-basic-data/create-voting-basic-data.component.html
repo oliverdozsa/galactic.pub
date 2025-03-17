@@ -3,16 +3,16 @@
     <legend class="fieldset-legend">Title & description</legend>
 
     <label class="fieldset-label">Title</label>
-    <input [(ngModel)]="title" type="text" class="input validator w-full" minlength="2" maxlength="1000"
-           placeholder="voting title" [class.input-error]="!isTitleValid" [class.input-success]="isTitleValid"/>
-    <div *ngIf="!isTitleValid" class="text-error">Length must be >= 2 and <= 1000.</div>
+    <input [(ngModel)]="titleAndDescHandler.title" type="text" class="input validator w-full" minlength="2" maxlength="1000"
+           placeholder="voting title" [class.input-error]="!titleAndDescHandler.isTitleValid" [class.input-success]="titleAndDescHandler.isTitleValid"/>
+    <div *ngIf="!titleAndDescHandler.isTitleValid" class="text-error">Length must be >= 2 and <= 1000.</div>
 
     <label class="fieldset-label mt-2">Description</label>
-    <textarea [(ngModel)]="description" class="textarea validator w-full" minlength="2" maxlength="1000"
+    <textarea [(ngModel)]="titleAndDescHandler.description" class="textarea validator w-full" minlength="2" maxlength="1000"
               rows="10"
-              placeholder="voting description" [class.input-error]="!isDescriptionValid"
-              [class.input-success]="isDescriptionValid"></textarea>
-    <div *ngIf="!isDescriptionValid" class="text-error">Length must be >= 2 and <= 1000.</div>
+              placeholder="voting description" [class.input-error]="!titleAndDescHandler.isDescriptionValid"
+              [class.input-success]="titleAndDescHandler.isDescriptionValid"></textarea>
+    <div *ngIf="!titleAndDescHandler.isDescriptionValid" class="text-error">Length must be >= 2 and <= 1000.</div>
   </fieldset>
 </div>
 
@@ -21,30 +21,30 @@
     <legend class="fieldset-legend">Limitations</legend>
 
     <label class="fieldset-label">Number of voters</label>
-    <input [(ngModel)]="maxVoters" type="number" class="input w-full" min="2" max="500"
-           placeholder="number of voters" [class.input-error]="!isMaxVotersValid"
-           [class.input-success]="isMaxVotersValid"/>
-    <div *ngIf="!isMaxVotersValid" class="text-error">Must be between 2 and 500.</div>
+    <input [(ngModel)]="limitationsHandler.maxVoters" type="number" class="input w-full" min="2" max="500"
+           placeholder="number of voters" [class.input-error]="!limitationsHandler.isMaxVotersValid"
+           [class.input-success]="limitationsHandler.isMaxVotersValid"/>
+    <div *ngIf="!limitationsHandler.isMaxVotersValid" class="text-error">Must be between 2 and 500.</div>
 
     <label class="fieldset-label mt-2">Visibility</label>
     <select [(ngModel)]="votingRequest.visibility" class="select w-full">
       <option [value]="VotingVisibility.Unlisted">Unlisted</option>
       <option [value]="VotingVisibility.Private">Private</option>
     </select>
-    <span class="fieldset-label">{{ visibilityHint }}</span>
+    <span class="fieldset-label">{{ limitationsHandler.visibilityHint }}</span>
 
     <label class="fieldset-label mt-2">Ballot type</label>
     <select [(ngModel)]="votingRequest.ballotType" class="select w-full">
       <option [value]="BallotType.MultiPoll">Multiple polls</option>
       <option [value]="BallotType.MultiChoice">Multiple choices</option>
     </select>
-    <span class="fieldset-label">{{ ballotTypeHint }}</span>
+    <span class="fieldset-label">{{ limitationsHandler.ballotTypeHint }}</span>
 
     <label class="fieldset-label">Maximum choices</label>
-    <input [(ngModel)]="maxChoices" type="number" class="input w-full" min="1" [max]="maxChoicesHandler!.upperLimit"
-           placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
-           [class.input-success]="isMaxChoicesValid"/>
-    <div *ngIf="!isMaxChoicesValid" class="text-error">{{maxChoicesHandler!.validationHint}}</div>
+    <input [(ngModel)]="limitationsHandler.maxChoices" type="number" class="input w-full" min="1" [max]="limitationsHandler!.upperLimit"
+           placeholder="maximum choices" [class.input-error]="!limitationsHandler.isMaxChoicesValid"
+           [class.input-success]="limitationsHandler.isMaxChoicesValid"/>
+    <div *ngIf="!limitationsHandler.isMaxChoicesValid" class="text-error">{{limitationsHandler!.validationHint}}</div>
   </fieldset>
 </div>
 
@@ -53,29 +53,29 @@
     <legend class="fieldset-legend">Dates</legend>
 
     <label class="fieldset-label">Start date</label>
-    <input [(ngModel)]="startDate" type="datetime-local" class="input w-full" [class.input-error]="!isStartDateValid"
-           [class.input-success]="isStartDateValid"/>
-    <div *ngIf="!isStartDateValid" class="text-error">{{ datesHandler!.startDateValidationHint }}</div>
+    <input [(ngModel)]="datesHandler.startDate" type="datetime-local" class="input w-full" [class.input-error]="!datesHandler!.isStartDateValid"
+           [class.input-success]="datesHandler!.isStartDateValid"/>
+    <div *ngIf="!datesHandler.isStartDateValid" class="text-error">{{ datesHandler.startDateValidationHint }}</div>
 
     <label class="fieldset-label mt-2">End date</label>
-    <input [(ngModel)]="endDate" type="datetime-local" class="input w-full" [class.input-error]="!isEndDateValid"
-           [class.input-success]="isEndDateValid" required/>
-    <div *ngIf="!isEndDateValid" class="text-error">{{ datesHandler!.endDateValidationHint }}</div>
+    <input [(ngModel)]="datesHandler.endDate" type="datetime-local" class="input w-full" [class.input-error]="!datesHandler!.isEndDateValid"
+           [class.input-success]="datesHandler.isEndDateValid" required/>
+    <div *ngIf="!datesHandler.isEndDateValid" class="text-error">{{ datesHandler.endDateValidationHint }}</div>
 
     <div class="flex flex-row gap-x-4 mt-2">
       <div>
         <label class="fieldset-label">Encrypt voting</label>
         <label class="fieldset-label">
-          <input [(ngModel)]="shouldEncrypt" type="checkbox" checked="checked" class="checkbox"/>
+          <input [(ngModel)]="limitationsHandler.shouldEncrypt" type="checkbox" checked="checked" class="checkbox"/>
           Encrypt?
         </label>
       </div>
       <div class="grow">
         <label class="fieldset-label">Encrypt until</label>
-        <input [disabled]="!shouldEncrypt" [(ngModel)]="encryptedUntil" type="datetime-local"
-               class="input w-full" [class.input-error]="shouldEncrypt && !isEncryptedUntilValid"
-               [class.input-success]="shouldEncrypt && isEncryptedUntilValid"/>
-        <div *ngIf="shouldEncrypt && !isEncryptedUntilValid" class="text-error">Encrypted until must be in the future.
+        <input [disabled]="!limitationsHandler.shouldEncrypt" [(ngModel)]="datesHandler.encryptedUntil" type="datetime-local"
+               class="input w-full" [class.input-error]="limitationsHandler.shouldEncrypt && !datesHandler.isEncryptedUntilValid"
+               [class.input-success]="limitationsHandler.shouldEncrypt && datesHandler.isEncryptedUntilValid"/>
+        <div *ngIf="limitationsHandler.shouldEncrypt && !datesHandler.isEncryptedUntilValid" class="text-error">Encrypted until must be in the future.
         </div>
       </div>
     </div>

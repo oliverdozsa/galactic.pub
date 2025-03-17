@@ -1,13 +1,19 @@
 import {CreateVotingRequest} from '../create-voting-request';
 import moment from 'moment/moment';
+import {Subject} from 'rxjs';
+import {CreateVotingBasicDataType} from './create-voting-basic-data.component';
 
 export class CreateVotingDates {
   endDateValidationHint = "<NOT SET>";
   startDateValidationHint = "<NOT SET>";
 
+  validationEvent =
+    new Subject<{type: CreateVotingBasicDataType, isValid: boolean}>();
+
   set startDate(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.startDate = asDate.toISOString();
+    this.validationEvent.next({type: CreateVotingBasicDataType.StartDate, isValid: this.isStartDateValid});
   }
 
   get startDate() {
@@ -31,6 +37,7 @@ export class CreateVotingDates {
   set endDate(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.endDate = asDate.toISOString();
+    this.validationEvent.next({type: CreateVotingBasicDataType.EndDate, isValid: this.isEndDateValid});
   }
 
   get endDate() {
@@ -73,6 +80,7 @@ export class CreateVotingDates {
   set encryptedUntil(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.encryptedUntil = asDate.toISOString();
+    this.validationEvent.next({type: CreateVotingBasicDataType.EncryptedUntil, isValid: this.isEncryptedUntilValid});
   }
 
   get encryptedUntil() {
@@ -95,6 +103,6 @@ export class CreateVotingDates {
     return encryptedUntilValue > nowValue;
   }
 
-  constructor(private votingRequest: CreateVotingRequest) {
+  constructor(public votingRequest: CreateVotingRequest) {
   }
 }

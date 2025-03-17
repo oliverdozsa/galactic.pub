@@ -3,7 +3,18 @@ import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-votin
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {CreateVotingDates} from './create-voting-dates';
-import {CreateVotingMaxChoices} from './create-voting-max-choices';
+import {CreateVotingLimitations} from './create-voting-limitations';
+import {CreateVotingTitleAndDesc} from './create-voting-title-and-desc';
+
+export enum CreateVotingBasicDataType {
+  Title,
+  Description,
+  NumOfVoters,
+  MaxChoices,
+  StartDate,
+  EndDate,
+  EncryptedUntil
+}
 
 @Component({
   selector: 'app-create-voting-basic-data',
@@ -20,158 +31,56 @@ export class CreateVotingBasicDataComponent implements OnInit {
   BallotType = BallotType;
 
   @Input()
-  votingRequest!: CreateVotingRequest;
+  votingRequest = new CreateVotingRequest();
 
   @Output()
   isValid = new EventEmitter<boolean>;
 
-  datesHandler: CreateVotingDates | undefined = undefined;
-  maxChoicesHandler: CreateVotingMaxChoices | undefined = undefined;
+  datesHandler: CreateVotingDates;
+  limitationsHandler: CreateVotingLimitations;
+  titleAndDescHandler: CreateVotingTitleAndDesc;
 
-  set title(value: string) {
-    this.votingRequest.title = value;
-    this.checkValidityOfAll();
-  }
+  private dataValidations = new Map<CreateVotingBasicDataType, boolean>();
+  private requiredDataTypes = Object.keys(CreateVotingBasicDataType)
+    .filter(t => !isNaN(Number(t)));
 
-  get title() {
-    return this.votingRequest.title;
-  }
-
-  get isTitleValid() {
-    return this.votingRequest.title != null &&
-      this.votingRequest.title.length > 1 && this.votingRequest.title.length <= 1000;
-  }
-
-  set description(value: string) {
-    this.votingRequest.description = value;
-    this.checkValidityOfAll();
-  }
-
-  get description() {
-    return this.votingRequest.description;
-  }
-
-  get isDescriptionValid() {
-    return this.votingRequest.description != null &&
-      this.votingRequest.description.length > 1 && this.votingRequest.description.length <= 1000;
-  }
-
-  set maxVoters(value: number) {
-    this.votingRequest.maxVoters = value;
-    this.checkValidityOfAll();
-  }
-
-  get maxVoters() {
-    return this.votingRequest.maxVoters;
-  }
-
-  get isMaxVotersValid() {
-    return this.votingRequest.maxVoters != undefined && this.votingRequest.maxVoters > 1 && this.votingRequest.maxVoters <= 500;
-  }
-
-  get visibilityHint(): string {
-    if (this.votingRequest.visibility == VotingVisibility.Private) {
-      return "Voting will be only visible to participants.";
-    } else if (this.votingRequest.visibility == VotingVisibility.Unlisted) {
-      return "Voting will be visible to anyone who has the link.";
-    }
-
-    return "<UNKOWN VISIBILITY>";
-  }
-
-  get ballotTypeHint(): string {
-    if (this.votingRequest.ballotType == BallotType.MultiPoll) {
-      return "Voting can have multiple polls with 1 choice / poll.";
-    } else if (this.votingRequest.ballotType == BallotType.MultiChoice) {
-      return "Voting can have only 1 poll with multiple choices."
-    }
-
-    return "<UNKOWN BALLOT TYPE>";
-  }
-
-  set maxChoices(value: number) {
-    this.maxChoicesHandler!.maxChoices = value;
-    this.checkValidityOfAll();
-  }
-
-  get maxChoices(): number {
-    return this.maxChoicesHandler ? this.maxChoicesHandler.maxChoices : 0;
-  }
-
-  get isMaxChoicesValid(): boolean {
-    return this.maxChoicesHandler ? this.maxChoicesHandler.isMaxChoicesValid : false;
-  }
-
-  set startDate(value: string) {
-    this.datesHandler!.startDate = value;
-    this.checkValidityOfAll();
-  }
-
-  get startDate() {
-    return this.datesHandler ? this.datesHandler.startDate : "";
-  }
-
-  get isStartDateValid() {
-    return this.datesHandler ?  this.datesHandler.isStartDateValid : false;
-  }
-
-  set endDate(value: string) {
-    this.datesHandler!.endDate = value;
-    this.checkValidityOfAll();
-  }
-
-  get endDate() {
-    return this.datesHandler ? this.datesHandler.endDate : "";
-  }
-
-  get isEndDateValid(): boolean {
-    return this.datesHandler ?  this.datesHandler.isEndDateValid : false;
-  }
-
-  set shouldEncrypt(value: boolean) {
-    this._shouldEncrypt = value;
-    if (!value) {
-      this.votingRequest.dates.encryptedUntil = "";
-    }
-
-    this.maxChoicesHandler!.shouldEncrypt = value;
-    this.maxChoicesHandler!.determineMaxChoicesUpperLimit();
-
-    this.checkValidityOfAll();
-  }
-
-  get shouldEncrypt() {
-    return this._shouldEncrypt;
-  }
-
-  set encryptedUntil(value: string) {
-    this.datesHandler!.encryptedUntil = value;
-    this.checkValidityOfAll();
-  }
-
-  get encryptedUntil() {
-    return this.datesHandler ?  this.datesHandler.encryptedUntil : "";
-  }
-
-  get isEncryptedUntilValid() {
-    return this.datesHandler ?  this.datesHandler.isEncryptedUntilValid : false;
+  constructor() {
+    this.titleAndDescHandler = new CreateVotingTitleAndDesc(this.votingRequest);
+    this.limitationsHandler = new CreateVotingLimitations(this.votingRequest);
+    this.datesHandler = new CreateVotingDates(this.votingRequest);
   }
 
   ngOnInit(): void {
-    this.datesHandler = new CreateVotingDates(this.votingRequest);
-    this.maxChoicesHandler = new CreateVotingMaxChoices(this.votingRequest);
-    this.shouldEncrypt = this.encryptedUntil != "";
+    this.titleAndDescHandler.votingRequest = this.votingRequest;
+    this.limitationsHandler.votingRequest = this.votingRequest
+    this.datesHandler.votingRequest = this.votingRequest;
+
+    this.titleAndDescHandler.validationEvent.subscribe({next: v => this.handleDataValidationEvent(v)})
+    this.limitationsHandler.validationEvent.subscribe({next: v => this.handleDataValidationEvent(v)})
+    this.datesHandler.validationEvent.subscribe({next: v => this.handleDataValidationEvent(v)})
+
+    this.limitationsHandler.shouldEncrypt = this.datesHandler.encryptedUntil != "";
   }
 
-  private _shouldEncrypt = false;
+  handleDataValidationEvent(event$: { type: CreateVotingBasicDataType, isValid: boolean }) {
+    this.dataValidations.set(event$.type, event$.isValid);
+    this.checkValidityOfAll();
+  }
 
   private checkValidityOfAll() {
-    let isAllValid = this.isTitleValid && this.isDescriptionValid && this.isMaxVotersValid &&
-      this.isStartDateValid && this.isEndDateValid && this.isMaxChoicesValid;
-    if (this.shouldEncrypt) {
-      isAllValid = isAllValid && this.isEncryptedUntilValid;
+    let numOfValids = 0;
+    for(let isValid in this.dataValidations.values()) {
+      numOfValids += isValid ? 1 : 0;
     }
 
-    this.isValid.emit(isAllValid);
+    this.isValid.emit(numOfValids == this.requiredDataTypes.length);
+
+    // let isAllValid = this.isTitleValid && this.isDescriptionValid && this.isMaxVotersValid &&
+    //   this.isStartDateValid && this.isEndDateValid && this.isMaxChoicesValid;
+    // if (this.shouldEncrypt) {
+    //   isAllValid = isAllValid && this.isEncryptedUntilValid;
+    // }
+    //
+    // this.isValid.emit(isAllValid);
   }
 }

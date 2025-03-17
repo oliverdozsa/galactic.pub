@@ -8,16 +8,19 @@ export enum BallotType {
   MultiChoice = "MULTI_CHOICE"
 }
 
-export interface CreateVotingRequest {
-  title: string,
-  description: string,
-  maxVoters: number,
-  maxChoices?: number,
-  visibility: string,
+export class CreateVotingRequest {
+  title: string = "";
+  description: string = "";
+  maxVoters: number = 0;
+  maxChoices?: number;
+  visibility: string = "";
   dates: {
     encryptedUntil?: string,
     startDate: string,
     endDate: string
-  },
+  } = {
+    startDate: "",
+    endDate: ""
+  };
   ballotType?: string
 }
