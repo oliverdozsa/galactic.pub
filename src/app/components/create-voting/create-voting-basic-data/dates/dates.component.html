@@ -1,0 +1,33 @@
+<div class="flex justify-center">
+  <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
+    <legend class="fieldset-legend">Dates</legend>
+
+    <label class="fieldset-label">Start date</label>
+    <input [(ngModel)]="startDate" type="datetime-local" class="input w-full" [class.input-error]="!isStartDateValid"
+           [class.input-success]="isStartDateValid"/>
+    <div *ngIf="!isStartDateValid" class="text-error">{{ startDateValidationHint }}</div>
+
+    <label class="fieldset-label mt-2">End date</label>
+    <input [(ngModel)]="endDate" type="datetime-local" class="input w-full" [class.input-error]="!isEndDateValid"
+           [class.input-success]="isEndDateValid" required/>
+    <div *ngIf="!isEndDateValid" class="text-error">{{ endDateValidationHint }}</div>
+
+    <div class="flex flex-row gap-x-4 mt-2">
+      <div>
+        <label class="fieldset-label">Encrypt voting</label>
+        <label class="fieldset-label">
+          <input [(ngModel)]="shouldEncrypt" type="checkbox" checked="checked" class="checkbox"/>
+          Encrypt?
+        </label>
+      </div>
+      <div class="grow">
+        <label class="fieldset-label">Encrypt until</label>
+        <input [disabled]="!shouldEncrypt" [(ngModel)]="encryptedUntil" type="datetime-local"
+               class="input w-full" [class.input-error]="shouldEncrypt && !isEncryptedUntilValid"
+               [class.input-success]="shouldEncrypt && isEncryptedUntilValid"/>
+        <div *ngIf="shouldEncrypt && !isEncryptedUntilValid" class="text-error">Encrypted until must be in the future.
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>

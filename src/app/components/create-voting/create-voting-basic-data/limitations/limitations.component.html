@@ -1,0 +1,31 @@
+<div class="flex justify-center">
+  <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
+    <legend class="fieldset-legend">Limitations</legend>
+
+    <label class="fieldset-label">Number of voters</label>
+    <input [(ngModel)]="maxVoters" type="number" class="input w-full" min="2" max="500"
+           placeholder="number of voters" [class.input-error]="!isMaxVotersValid"
+           [class.input-success]="isMaxVotersValid"/>
+    <div *ngIf="!isMaxVotersValid" class="text-error">Must be between 2 and 500.</div>
+
+    <label class="fieldset-label mt-2">Visibility</label>
+    <select [(ngModel)]="votingRequest.visibility" class="select w-full">
+      <option [value]="VotingVisibility.Unlisted">Unlisted</option>
+      <option [value]="VotingVisibility.Private">Private</option>
+    </select>
+    <span class="fieldset-label">{{ visibilityHint }}</span>
+
+    <label class="fieldset-label mt-2">Ballot type</label>
+    <select [(ngModel)]="votingRequest.ballotType" class="select w-full">
+      <option [value]="BallotType.MultiPoll">Multiple polls</option>
+      <option [value]="BallotType.MultiChoice">Multiple choices</option>
+    </select>
+    <span class="fieldset-label">{{ ballotTypeHint }}</span>
+
+    <label class="fieldset-label">Maximum choices</label>
+    <input [(ngModel)]="maxChoices" type="number" class="input w-full" min="1" [max]="upperLimit"
+           placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
+           [class.input-success]="isMaxChoicesValid"/>
+    <div *ngIf="!isMaxChoicesValid" class="text-error">{{validationHint}}</div>
+  </fieldset>
+</div>

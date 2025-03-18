@@ -1,13 +1,26 @@
-import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-voting-request';
-import {Subject} from 'rxjs';
-import {CreateVotingBasicDataType} from './create-voting-basic-data.component';
+import {Component, Input} from '@angular/core';
+import {BallotType, CreateVotingRequest, VotingVisibility} from '../../create-voting-request';
+import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 
-export class CreateVotingLimitations {
+@Component({
+  selector: 'app-limitations',
+  imports: [
+    FormsModule,
+    NgIf
+  ],
+  templateUrl: './limitations.component.html',
+  styleUrl: './limitations.component.css'
+})
+export class LimitationsComponent {
+  @Input()
+  votingRequest!: CreateVotingRequest;
+
+  VotingVisibility = VotingVisibility;
+  BallotType = BallotType;
+
   validationHint = "<NOT SET>";
   upperLimit = 4;
-
-  validationEvent =
-    new Subject<{type: CreateVotingBasicDataType, isValid: boolean}>();
 
   private _shouldEncrypt = false;
 
@@ -42,12 +55,10 @@ export class CreateVotingLimitations {
 
   set maxChoices(value: number) {
     this.votingRequest.maxChoices = value;
-    this.validationEvent.next({type: CreateVotingBasicDataType.MaxChoices, isValid: this.isMaxChoicesValid});
   }
 
   set maxVoters(value: number) {
     this.votingRequest.maxVoters = value;
-    this.validationEvent.next({type: CreateVotingBasicDataType.NumOfVoters, isValid: this.isMaxVotersValid});
   }
 
   get maxVoters() {
@@ -78,7 +89,7 @@ export class CreateVotingLimitations {
     return "<UNKOWN BALLOT TYPE>";
   }
 
-  constructor(public votingRequest: CreateVotingRequest) {
+  constructor() {
   }
 
   determineMaxChoicesUpperLimit() {

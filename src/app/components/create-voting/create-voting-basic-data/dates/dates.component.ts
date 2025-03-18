@@ -1,19 +1,31 @@
-import {CreateVotingRequest} from '../create-voting-request';
-import moment from 'moment/moment';
-import {Subject} from 'rxjs';
-import {CreateVotingBasicDataType} from './create-voting-basic-data.component';
+import {Component, Input} from '@angular/core';
+import moment from 'moment';
+import {CreateVotingRequest} from '../../create-voting-request';
+import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 
-export class CreateVotingDates {
+@Component({
+  selector: 'app-dates',
+  imports: [
+    FormsModule,
+    NgIf
+  ],
+  templateUrl: './dates.component.html',
+  styleUrl: './dates.component.css'
+})
+export class DatesComponent {
+  @Input()
+  votingRequest!: CreateVotingRequest;
+
+  @Input()
+  shouldEncrypt: boolean = false;
+
   endDateValidationHint = "<NOT SET>";
   startDateValidationHint = "<NOT SET>";
-
-  validationEvent =
-    new Subject<{type: CreateVotingBasicDataType, isValid: boolean}>();
 
   set startDate(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.startDate = asDate.toISOString();
-    this.validationEvent.next({type: CreateVotingBasicDataType.StartDate, isValid: this.isStartDateValid});
   }
 
   get startDate() {
@@ -37,7 +49,6 @@ export class CreateVotingDates {
   set endDate(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.endDate = asDate.toISOString();
-    this.validationEvent.next({type: CreateVotingBasicDataType.EndDate, isValid: this.isEndDateValid});
   }
 
   get endDate() {
@@ -80,7 +91,6 @@ export class CreateVotingDates {
   set encryptedUntil(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.encryptedUntil = asDate.toISOString();
-    this.validationEvent.next({type: CreateVotingBasicDataType.EncryptedUntil, isValid: this.isEncryptedUntilValid});
   }
 
   get encryptedUntil() {
@@ -101,8 +111,5 @@ export class CreateVotingDates {
     const encryptedUntilValue = Date.parse(this.encryptedUntil);
 
     return encryptedUntilValue > nowValue;
-  }
-
-  constructor(public votingRequest: CreateVotingRequest) {
   }
 }

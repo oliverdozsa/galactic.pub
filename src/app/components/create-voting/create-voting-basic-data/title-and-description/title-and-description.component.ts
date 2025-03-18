@@ -1,17 +1,23 @@
-import {CreateVotingRequest} from '../create-voting-request';
-import {Subject} from 'rxjs';
-import {CreateVotingBasicDataType} from './create-voting-basic-data.component';
+import {Component, Input} from '@angular/core';
+import {CreateVotingRequest} from '../../create-voting-request';
+import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 
-export class CreateVotingTitleAndDesc {
-  validationEvent =
-    new Subject<{type: CreateVotingBasicDataType, isValid: boolean}>();
-
-  constructor(public votingRequest: CreateVotingRequest) {
-  }
+@Component({
+  selector: 'app-title-and-description',
+  imports: [
+    FormsModule,
+    NgIf
+  ],
+  templateUrl: './title-and-description.component.html',
+  styleUrl: './title-and-description.component.css'
+})
+export class TitleAndDescriptionComponent {
+  @Input()
+  votingRequest!: CreateVotingRequest
 
   set title(value: string) {
     this.votingRequest.title = value;
-    this.validationEvent.next({type: CreateVotingBasicDataType.Title, isValid: this.isTitleValid});
   }
 
   get title() {
@@ -25,7 +31,6 @@ export class CreateVotingTitleAndDesc {
 
   set description(value: string) {
     this.votingRequest.description = value;
-    this.validationEvent.next({type: CreateVotingBasicDataType.Description, isValid: this.isDescriptionValid});
   }
 
   get description() {
