@@ -1,3 +1,8 @@
-<app-title-and-description [votingRequest]="votingRequest"></app-title-and-description>
-<app-limitations [votingRequest]="votingRequest"></app-limitations>
-<app-dates [votingRequest]="votingRequest"></app-dates>
+<app-title-and-description [votingRequest]="votingRequest"
+                           (allValidChange)="onTitleAndDescriptionValid($event)"></app-title-and-description>
+
+<app-limitations [votingRequest]="votingRequest" [shouldEncrypt]="shouldEncrypt"
+                 (allValidChange)="onLimitationsValid($event)"></app-limitations>
+
+<app-dates [votingRequest]="votingRequest" (allValidChange)="onDatesValid($event)"
+           (shouldEncryptChange)="onShouldEncrypt($event)"></app-dates>

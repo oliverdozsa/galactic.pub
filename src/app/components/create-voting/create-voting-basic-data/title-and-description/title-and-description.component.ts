@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CreateVotingRequest} from '../../create-voting-request';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
@@ -12,12 +12,16 @@ import {NgIf} from '@angular/common';
   templateUrl: './title-and-description.component.html',
   styleUrl: './title-and-description.component.css'
 })
-export class TitleAndDescriptionComponent {
+export class TitleAndDescriptionComponent implements OnInit {
   @Input()
   votingRequest!: CreateVotingRequest
 
+  @Output()
+  allValidChange = new EventEmitter<boolean>();
+
   set title(value: string) {
     this.votingRequest.title = value;
+    this.checkIfAllValid();
   }
 
   get title() {
@@ -31,6 +35,7 @@ export class TitleAndDescriptionComponent {
 
   set description(value: string) {
     this.votingRequest.description = value;
+    this.checkIfAllValid();
   }
 
   get description() {
@@ -40,5 +45,13 @@ export class TitleAndDescriptionComponent {
   get isDescriptionValid() {
     return this.votingRequest.description != null &&
       this.votingRequest.description.length > 1 && this.votingRequest.description.length <= 1000;
+  }
+
+  ngOnInit() {
+    this.checkIfAllValid();
+  }
+
+  private checkIfAllValid() {
+    this.allValidChange.emit(this.isTitleValid && this.isDescriptionValid);
   }
 }

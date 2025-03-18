@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import moment from 'moment';
 import {CreateVotingRequest} from '../../create-voting-request';
 import {FormsModule} from '@angular/forms';
@@ -13,12 +13,15 @@ import {NgIf} from '@angular/common';
   templateUrl: './dates.component.html',
   styleUrl: './dates.component.css'
 })
-export class DatesComponent {
+export class DatesComponent implements OnInit {
   @Input()
   votingRequest!: CreateVotingRequest;
 
-  @Input()
-  shouldEncrypt: boolean = false;
+  @Output()
+  allValidChange = new EventEmitter<boolean>();
+
+  @Output()
+  shouldEncryptChange = new EventEmitter<boolean>();
 
   endDateValidationHint = "<NOT SET>";
   startDateValidationHint = "<NOT SET>";
@@ -26,11 +29,12 @@ export class DatesComponent {
   set startDate(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.startDate = asDate.toISOString();
+    this.checkIfAllValid();
   }
 
   get startDate() {
     if (!this.votingRequest.dates.startDate) {
-      return ""
+      return "";
     }
 
     const asDate = new Date(Date.parse(this.votingRequest.dates.startDate));
@@ -49,11 +53,12 @@ export class DatesComponent {
   set endDate(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.endDate = asDate.toISOString();
+    this.checkIfAllValid();
   }
 
   get endDate() {
     if (!this.votingRequest.dates.endDate) {
-      return ""
+      return "";
     }
 
     const asDate = new Date(Date.parse(this.votingRequest.dates.endDate));
@@ -91,11 +96,12 @@ export class DatesComponent {
   set encryptedUntil(value: string) {
     const asDate = new Date(Date.parse(value));
     this.votingRequest.dates.encryptedUntil = asDate.toISOString();
+    this.checkIfAllValid();
   }
 
   get encryptedUntil() {
     if (!this.votingRequest.dates.encryptedUntil) {
-      return ""
+      return "";
     }
 
     const asDate = new Date(Date.parse(this.votingRequest.dates.encryptedUntil));
@@ -111,5 +117,34 @@ export class DatesComponent {
     const encryptedUntilValue = Date.parse(this.encryptedUntil);
 
     return encryptedUntilValue > nowValue;
+  }
+
+  set shouldEncrypt(value: boolean) {
+    this._shouldEncrypt = value;
+    this.shouldEncryptChange.emit(value);
+    this.checkIfAllValid();
+  }
+
+  get shouldEncrypt(): boolean {
+    return this._shouldEncrypt;
+  }
+
+  ngOnInit() {
+    if (this.votingRequest.dates.encryptedUntil) {
+      this.shouldEncrypt = true;
+    }
+
+    this.checkIfAllValid();
+  }
+
+  private _shouldEncrypt = false;
+
+  private checkIfAllValid() {
+    let allValid = this.isStartDateValid && this.isEndDateValid;
+    if (this.shouldEncrypt) {
+      allValid = allValid && this.isEncryptedUntilValid;
+    }
+
+    this.allValidChange.emit(allValid);
   }
 }

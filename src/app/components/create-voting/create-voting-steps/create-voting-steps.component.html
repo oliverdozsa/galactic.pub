@@ -9,7 +9,7 @@
 </div>
 
 <div>
-  <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData" [votingRequest]="votingRequest" (isValid)="onBasicDataValid($event)"></app-create-voting-basic-data>
+  <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData" [votingRequest]="votingRequest" (isValidChange)="onBasicDataValid($event)"></app-create-voting-basic-data>
   <app-create-voting-technical-data *ngIf="currentStep == Step.TechnicalData"></app-create-voting-technical-data>
   <app-create-voting-polls *ngIf="currentStep == Step.Polls"></app-create-voting-polls>
 </div>

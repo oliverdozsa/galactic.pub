@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BallotType, CreateVotingRequest, VotingVisibility} from '../../create-voting-request';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
@@ -12,9 +12,12 @@ import {NgIf} from '@angular/common';
   templateUrl: './limitations.component.html',
   styleUrl: './limitations.component.css'
 })
-export class LimitationsComponent {
+export class LimitationsComponent implements OnInit {
   @Input()
   votingRequest!: CreateVotingRequest;
+
+  @Output()
+  allValidChange = new EventEmitter<boolean>();
 
   VotingVisibility = VotingVisibility;
   BallotType = BallotType;
@@ -32,6 +35,7 @@ export class LimitationsComponent {
     }
   }
 
+  @Input()
   set shouldEncrypt(value: boolean) {
     if (!value) {
       this.votingRequest.dates.encryptedUntil = "";
@@ -55,10 +59,12 @@ export class LimitationsComponent {
 
   set maxChoices(value: number) {
     this.votingRequest.maxChoices = value;
+    this.checkIfAllValid();
   }
 
   set maxVoters(value: number) {
     this.votingRequest.maxVoters = value;
+    this.checkIfAllValid();
   }
 
   get maxVoters() {
@@ -89,15 +95,16 @@ export class LimitationsComponent {
     return "<UNKOWN BALLOT TYPE>";
   }
 
-  constructor() {
-  }
-
   determineMaxChoicesUpperLimit() {
     if (this.shouldEncrypt) {
       this.upperLimit = 1;
     } else {
       this.upperLimit = 4;
     }
+  }
+
+  ngOnInit() {
+    this.checkIfAllValid();
   }
 
   private checkMaxChoicesValidityWhenEncrypted() {
@@ -117,5 +124,9 @@ export class LimitationsComponent {
 
     this.validationHint = "Must be between 1 and 4.";
     return false;
+  }
+
+  private checkIfAllValid() {
+    this.allValidChange.emit(this.isMaxChoicesValid && this.isMaxVotersValid);
   }
 }
