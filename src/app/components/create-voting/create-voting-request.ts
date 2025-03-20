@@ -22,5 +22,6 @@ export class CreateVotingRequest {
     startDate: "",
     endDate: ""
   };
-  ballotType?: string
+  ballotType?: string;
+  tokenId: string = "";
 }

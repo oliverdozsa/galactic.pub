@@ -1,0 +1,20 @@
+<label>Funding account</label>
+<div class="flex">
+  <div class="grow">
+    <input type="text" class="input validator w-full" minlength="2" maxlength="1000"
+           placeholder="funding account secret" [class.input-error]="!isValid" [class.input-success]="isValid"/>
+  </div>
+  <div>
+
+  </div>
+</div>
+<div *ngIf="!isValid" class="text-error">TODO: Funding account validation</div>
+
+<div class="grid justify-items-end">
+  <div>
+    <label class="fieldset-label">
+      <input type="checkbox" checked="checked" class="toggle" />
+      on test net?
+    </label>
+  </div>
+</div>

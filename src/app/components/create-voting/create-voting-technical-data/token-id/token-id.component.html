@@ -1,0 +1,12 @@
+<label>Token id</label>
+<div class="flex">
+  <div class="grow">
+    <input type="text" class="input validator w-full border-e-0 rounded-e-none" minlength="2" maxlength="1000"
+           placeholder="token id" [class.input-error]="!isValid" [class.input-success]="isValid"/>
+  </div>
+  <div>
+    <button class="btn rounded-s-none">generate</button>
+  </div>
+</div>
+
+<div *ngIf="!isValid" class="text-error">TODO: token id validation</div>

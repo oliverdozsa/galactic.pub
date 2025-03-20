@@ -27,18 +27,8 @@ export enum Step {
 export class CreateVotingStepsComponent {
   Step = Step;
 
-  currentStep = Step.BasicData;
-  votingRequest: CreateVotingRequest = {
-    title: "",
-    description: "",
-    maxVoters: 0,
-    visibility: VotingVisibility.Unlisted,
-    ballotType: BallotType.MultiChoice,
-    dates: {
-      startDate: "",
-      endDate: ""
-    }
-  };
+  currentStep = Step.TechnicalData;
+  votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   get isNextAvailable() {
     if(this.currentStep == Step.BasicData) {
