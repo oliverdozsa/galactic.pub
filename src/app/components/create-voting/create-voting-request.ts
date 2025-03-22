@@ -13,7 +13,7 @@ export class CreateVotingRequest {
   description: string = "";
   maxVoters: number = 0;
   maxChoices?: number;
-  visibility: string = "";
+  visibility: string = VotingVisibility.Private;
   dates: {
     encryptedUntil?: string,
     startDate: string,
@@ -22,6 +22,6 @@ export class CreateVotingRequest {
     startDate: "",
     endDate: ""
   };
-  ballotType?: string;
+  ballotType = BallotType.MultiPoll;
   tokenId: string = "";
 }

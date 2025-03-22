@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {BallotType, CreateVotingRequest, VotingVisibility} from '../create-voting-request';
+import {CreateVotingRequest} from '../create-voting-request';
 import {CreateVotingBasicDataComponent} from '../create-voting-basic-data/create-voting-basic-data.component';
 import {NgIf} from '@angular/common';
 import {
