@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {CreateVotingRequest} from '../create-voting-request';
 import {CreateVotingBasicDataComponent} from '../create-voting-basic-data/create-voting-basic-data.component';
 import {NgIf} from '@angular/common';
@@ -31,8 +31,12 @@ export class CreateVotingStepsComponent {
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   get isNextAvailable() {
-    if(this.currentStep == Step.BasicData) {
+    if (this.currentStep == Step.BasicData) {
       return this.isBasicDataValid;
+    }
+
+    if (this.currentStep == Step.TechnicalData) {
+      return this.isTechnicalDataValid;
     }
 
     return this.currentStep < Step.Polls;
@@ -47,20 +51,25 @@ export class CreateVotingStepsComponent {
   }
 
   isBasicDataValid = false;
+  isTechnicalDataValid = false;
 
   onNextClicked() {
-    if(this.currentStep < Step.Polls) {
+    if (this.currentStep < Step.Polls) {
       this.currentStep++;
     }
   }
 
   onPreviousClicked() {
-    if(this.currentStep > Step.BasicData) {
+    if (this.currentStep > Step.BasicData) {
       this.currentStep--;
     }
   }
 
   onBasicDataValid(isValid: boolean) {
     this.isBasicDataValid = isValid;
+  }
+
+  onTechnicalDataValid(isValid: boolean) {
+    this.isTechnicalDataValid = isValid;
   }
 }

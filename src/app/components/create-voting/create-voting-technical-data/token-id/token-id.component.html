@@ -1,7 +1,7 @@
 <label>Token id</label>
 <div class="flex">
   <div class="grow">
-    <input type="text" class="input validator w-full border-e-0 rounded-e-none" minlength="2" maxlength="1000"
+    <input [(ngModel)]="tokenId" type="text" class="input w-full border-e-0 rounded-e-none"
            placeholder="token id" [class.input-error]="!isValid" [class.input-success]="isValid"/>
   </div>
   <div>
@@ -9,4 +9,6 @@
   </div>
 </div>
 
-<div *ngIf="!isValid" class="text-error">TODO: token id validation</div>
+<div *ngIf="!isValid" class="text-error">
+  Token id must consist of numbers and lowercase letters only, and must have length >=2 and <=8.
+</div>
