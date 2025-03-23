@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@stellar/stellar-sdk": "^13.1.0",
     "@tailwindcss/postcss": "^4.0.9",
     "angular-oauth2-oidc": "^19.0.0",
     "leader-line": "^1.0.7",

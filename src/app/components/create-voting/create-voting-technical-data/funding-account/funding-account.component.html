@@ -8,7 +8,7 @@
     </label>
   </div>
   <div>
-    <button class="btn rounded-s-none">generate</button>
+    <button [disabled]="!isOnTestNet" class="btn rounded-s-none">generate</button>
   </div>
   <div>
 
@@ -19,7 +19,7 @@
 <div class="grid justify-items-end">
   <div>
     <label class="fieldset-label">
-      <input type="checkbox" checked="checked" class="toggle"/>
+      <input [(ngModel)]="isOnTestNet" type="checkbox" checked="checked" class="toggle"/>
       on test net?
     </label>
   </div>
@@ -63,4 +63,3 @@
     network, and because organizing the voting requires the creation of temporary accounts.
   </div>
 </span>
-
