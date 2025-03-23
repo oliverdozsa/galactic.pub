@@ -27,7 +27,7 @@ export enum Step {
 export class CreateVotingStepsComponent {
   Step = Step;
 
-  currentStep = Step.TechnicalData;
+  currentStep = Step.BasicData;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   get isNextAvailable() {

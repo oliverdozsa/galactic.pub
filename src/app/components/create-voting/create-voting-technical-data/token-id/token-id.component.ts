@@ -20,7 +20,8 @@ export class TokenIdComponent {
   @Output()
   isValidChange = new EventEmitter<boolean>();
 
-  private validRegex = new RegExp("^[0-9a-z]+$")
+  private validRegex = /^[0-9a-z]+$/;
+  private invalidRegex = /[^0-9a-z]/g;
 
   get isValid(): boolean {
     const tokenId = this.votingRequest.tokenId;
@@ -34,5 +35,25 @@ export class TokenIdComponent {
 
   get tokenId() {
     return this.votingRequest.tokenId;
+  }
+
+  onGenerateClicked() {
+    const title = this.votingRequest.title;
+    const clearedTitle = title.toLowerCase().replaceAll(this.invalidRegex, "");
+    const tokenLetters = clearedTitle.slice(0, 4);
+    this.tokenId = tokenLetters + this.randomNumbersAsStringOfLength(4);
+  }
+
+  private randomNumbersAsStringOfLength(length: number): string {
+    let result = "";
+    for(let i = 0; i < length; i++) {
+      result += this.randomNumber0To10();
+    }
+
+    return result;
+  }
+
+  private randomNumber0To10(): number {
+    return Math.round(Math.random()*10);
   }
 }
