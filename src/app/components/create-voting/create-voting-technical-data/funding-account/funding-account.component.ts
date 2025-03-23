@@ -15,4 +15,8 @@ export class FundingAccountComponent {
   votingRequest!: CreateVotingRequest;
 
   isValid = false;
+
+  get estimatedCost() {
+    return this.votingRequest.maxVoters * 4 + 110;
+  }
 }
