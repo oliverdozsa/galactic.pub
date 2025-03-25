@@ -18,6 +18,7 @@ export class FundingAccountComponent {
   votingRequest!: CreateVotingRequest;
 
   isValid = false;
+  isGenerating = false;
 
   stellarService = inject(StellarService);
 
@@ -31,5 +32,27 @@ export class FundingAccountComponent {
 
   set isOnTestNet(value: boolean) {
     this.votingRequest.useTestNet = value;
+  }
+
+  get accountSecret(): string {
+    return this.votingRequest.fundingAccountSecret;
+  }
+
+  set accountSecret(value: string) {
+    this.votingRequest.fundingAccountSecret = value;
+    this.checkIfValid();
+  }
+
+  private checkIfValid() {
+    // TODO
+  }
+
+  onGenerateClicked() {
+    this.isGenerating = true;
+    this.stellarService.generateTestAccount().subscribe({
+      next: s => this.accountSecret = s,
+      error: () => this.isGenerating = false,
+      complete: () => this.isGenerating = false
+    });
   }
 }

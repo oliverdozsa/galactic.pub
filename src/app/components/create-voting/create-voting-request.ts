@@ -25,4 +25,5 @@ export class CreateVotingRequest {
   ballotType = BallotType.MultiPoll;
   tokenId: string = "";
   useTestNet = false;
+  fundingAccountSecret: string = "";
 }

@@ -1,14 +1,24 @@
 <label>Funding account</label>
 <div class="flex">
   <div class="grow">
-    <label class="input w-full border-e-0 rounded-e-none" [class.input-error]="!isValid"
-           [class.input-success]="isValid">
-      <input type="text" placeholder="funding account secret"/>
-      <span class="label">balance: TODO XLMs</span>
-    </label>
+    <div class="relative">
+      <label class="input w-full border-e-0 rounded-e-none" [class.input-error]="!isValid"
+             [class.input-success]="isValid">
+        <input [(ngModel)]="accountSecret" [disabled]="isGenerating" type="text" placeholder="funding account secret"/>
+        <span class="label">balance: TODO XLMs</span>
+      </label>
+      <div *ngIf="isGenerating" class="absolute top-0 left-0 w-full h-full">
+        <div class="grid place-items-center h-full">
+          <div>
+            <span class="loading loading-spinner loading-sm"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div>
-    <button [disabled]="!isOnTestNet" class="btn rounded-s-none">generate</button>
+    <button [disabled]="!isOnTestNet || isGenerating" (click)="onGenerateClicked()" class="btn rounded-s-none">generate</button>
   </div>
   <div>
 
