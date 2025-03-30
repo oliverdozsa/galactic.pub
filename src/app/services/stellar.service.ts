@@ -28,6 +28,15 @@ export class StellarService {
       .pipe(map(r => r.balances));
   }
 
+  isAccountSecretValid(accountSecret: string) {
+    try {
+      StellarSdk.Keypair.fromSecret(accountSecret);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   generateTestAccount(): Observable<string> {
     const randomKeyPair = StellarSdk.Keypair.random();
     return this.httpClient.get(`https://friendbot.stellar.org/?addr=${randomKeyPair.publicKey()}`)

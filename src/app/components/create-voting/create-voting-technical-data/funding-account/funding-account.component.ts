@@ -13,7 +13,7 @@ import {StellarService} from '../../../../services/stellar.service';
   templateUrl: './funding-account.component.html',
   styleUrl: './funding-account.component.css'
 })
-export class FundingAccountComponent {
+export class FundingAccountComponent implements OnInit {
   @Input()
   votingRequest!: CreateVotingRequest;
 
@@ -32,6 +32,7 @@ export class FundingAccountComponent {
 
   set isOnTestNet(value: boolean) {
     this.votingRequest.useTestNet = value;
+    this.setNet();
   }
 
   get accountSecret(): string {
@@ -43,8 +44,8 @@ export class FundingAccountComponent {
     this.checkIfValid();
   }
 
-  private checkIfValid() {
-    // TODO
+  ngOnInit(): void {
+    this.setNet();
   }
 
   onGenerateClicked() {
@@ -54,5 +55,20 @@ export class FundingAccountComponent {
       error: () => this.isGenerating = false,
       complete: () => this.isGenerating = false
     });
+  }
+
+  private checkIfValid() {
+    this.isValid = this.stellarService.isAccountSecretValid(this.accountSecret);
+    if(this.isValid) {
+      // TODO: query balance
+    }
+  }
+
+  private setNet() {
+    if(this.votingRequest.useTestNet) {
+      this.stellarService.useTestNet();
+    } else {
+      this.stellarService.useMainNet();
+    }
   }
 }
