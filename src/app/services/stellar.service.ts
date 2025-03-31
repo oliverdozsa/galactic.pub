@@ -25,7 +25,7 @@ export class StellarService {
 
   getBalanceOf(accountId: string) {
     return from(this.server.loadAccount(accountId))
-      .pipe(map(r => r.balances));
+      .pipe(map(r => this.findXlmBalance(r.balances)));
   }
 
   isAccountSecretValid(accountSecret: string) {
@@ -41,5 +41,14 @@ export class StellarService {
     const randomKeyPair = StellarSdk.Keypair.random();
     return this.httpClient.get(`https://friendbot.stellar.org/?addr=${randomKeyPair.publicKey()}`)
       .pipe(map(() => randomKeyPair.secret()));
+  }
+
+  publicFromSecret(accountSecret: string) {
+    return StellarSdk.Keypair.fromSecret(accountSecret).publicKey();
+  }
+
+  private findXlmBalance(balances: StellarSdk.Horizon.HorizonApi.BalanceLine[]) {
+    const xlmBalance = balances.filter(b => b.asset_type == "native")[0];
+    return xlmBalance.balance;
   }
 }

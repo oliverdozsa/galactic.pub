@@ -5,7 +5,11 @@
       <label class="input w-full border-e-0 rounded-e-none" [class.input-error]="!isValid"
              [class.input-success]="isValid">
         <input [(ngModel)]="accountSecret" [disabled]="isGenerating" type="text" placeholder="funding account secret"/>
-        <span class="label">balance: TODO XLMs</span>
+        <span class="label">
+          <ng-container *ngIf="!isLoadingBalance">balance</ng-container>
+          <ng-container *ngIf="balance">: {{balance}} XLM</ng-container>
+          <span *ngIf="isLoadingBalance" class="loading loading-spinner loading-xs"></span>
+        </span>
       </label>
       <div *ngIf="isGenerating" class="absolute top-0 left-0 w-full h-full">
         <div class="grid place-items-center h-full">

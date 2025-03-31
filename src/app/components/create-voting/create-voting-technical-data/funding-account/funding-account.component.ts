@@ -19,8 +19,11 @@ export class FundingAccountComponent implements OnInit {
 
   isValid = false;
   isGenerating = false;
+  isLoadingBalance = false;
 
   stellarService = inject(StellarService);
+
+  balance = "";
 
   get estimatedCost() {
     return this.votingRequest.maxVoters * 4 + 110;
@@ -59,16 +62,34 @@ export class FundingAccountComponent implements OnInit {
 
   private checkIfValid() {
     this.isValid = this.stellarService.isAccountSecretValid(this.accountSecret);
-    if(this.isValid) {
-      // TODO: query balance
+    // TODO: isValid should consider the net used.
+    if (this.isValid) {
+      this.queryBalance();
     }
   }
 
   private setNet() {
-    if(this.votingRequest.useTestNet) {
+    if (this.votingRequest.useTestNet) {
       this.stellarService.useTestNet();
     } else {
       this.stellarService.useMainNet();
     }
+
+    this.checkIfValid();
+  }
+
+  private queryBalance() {
+    this.isLoadingBalance = true;
+    const accountId = this.stellarService.publicFromSecret(this.accountSecret);
+    this.stellarService.getBalanceOf(accountId).subscribe({
+      next: b => this.onBalanceQueried(b),
+      error: () => this.isLoadingBalance = false
+    });
+  }
+
+  private onBalanceQueried(balance: string) {
+    const formattedBalance = Number.parseFloat(balance).toLocaleString("en-US");
+    this.balance = formattedBalance;
+    this.isLoadingBalance = false;
   }
 }
