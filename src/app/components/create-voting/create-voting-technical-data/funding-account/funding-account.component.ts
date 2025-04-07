@@ -17,7 +17,6 @@ export class FundingAccountComponent implements OnInit {
   @Input()
   votingRequest!: CreateVotingRequest;
 
-  isValid = false;
   isGenerating = false;
   isLoadingBalance = false;
 
@@ -47,6 +46,34 @@ export class FundingAccountComponent implements OnInit {
     this.checkIfValid();
   }
 
+  get fundingAccountValidationMessage() {
+    if(!this.isFundingAccountValid) {
+      return "Funding account secret is not valid.";
+    } else if(!this.doesAccountExist) {
+      return "Account doesn't exist.";
+    } else if(this.isBalanceInsufficient) {
+      return "Insufficient funds."
+    }
+
+    return "";
+  }
+
+  get isValid() {
+    return this.isFundingAccountValid && this.doesAccountExist && !this.isBalanceInsufficient;
+  }
+
+  balanceAsNumber: number = -1;
+
+  private get isFundingAccountValid() {
+    return this.stellarService.isAccountSecretValid(this.accountSecret);
+  }
+
+  private get isBalanceInsufficient() {
+    return this.balanceAsNumber < this.estimatedCost;
+  }
+
+  private doesAccountExist = false;
+
   ngOnInit(): void {
     this.setNet();
   }
@@ -61,9 +88,7 @@ export class FundingAccountComponent implements OnInit {
   }
 
   private checkIfValid() {
-    this.isValid = this.stellarService.isAccountSecretValid(this.accountSecret);
-    // TODO: isValid should consider the net used.
-    if (this.isValid) {
+    if (this.isFundingAccountValid) {
       this.queryBalance();
     }
   }
@@ -80,16 +105,28 @@ export class FundingAccountComponent implements OnInit {
 
   private queryBalance() {
     this.isLoadingBalance = true;
+    this.balanceAsNumber = -1;
+    this.doesAccountExist = false;
     const accountId = this.stellarService.publicFromSecret(this.accountSecret);
     this.stellarService.getBalanceOf(accountId).subscribe({
       next: b => this.onBalanceQueried(b),
-      error: () => this.isLoadingBalance = false
+      error: e => this.onBalanceError(e)
     });
   }
 
   private onBalanceQueried(balance: string) {
-    const formattedBalance = Number.parseFloat(balance).toLocaleString("en-US");
-    this.balance = formattedBalance;
+    this.balanceAsNumber = Number.parseFloat(balance);
+    this.balance = this.balanceAsNumber.toLocaleString("en-US");
     this.isLoadingBalance = false;
+    this.doesAccountExist = true;
+  }
+
+  private onBalanceError(e: any) {
+    this.isLoadingBalance = false;
+    this.balanceAsNumber = - 1;
+    this.balance = "";
+    if(e.response.status == 404) {
+      this.doesAccountExist = false;
+    }
   }
 }

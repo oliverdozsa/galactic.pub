@@ -28,9 +28,9 @@
 
   </div>
 </div>
-<div *ngIf="!isValid" class="text-error">TODO: Funding account validation</div>
+<div *ngIf="!isValid" class="text-error">{{fundingAccountValidationMessage}}</div>
 
-<div class="grid justify-items-end">
+<div class="grid justify-items-end" [class.mt-4]="isValid">
   <div>
     <label class="fieldset-label">
       <input [(ngModel)]="isOnTestNet" type="checkbox" checked="checked" class="toggle"/>
