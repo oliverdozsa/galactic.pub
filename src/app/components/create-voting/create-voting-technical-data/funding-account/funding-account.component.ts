@@ -1,4 +1,4 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {NgIf} from "@angular/common";
 import {CreateVotingRequest} from '../../create-voting-request';
 import {FormsModule} from '@angular/forms';
@@ -17,12 +17,15 @@ export class FundingAccountComponent implements OnInit {
   @Input()
   votingRequest!: CreateVotingRequest;
 
-  isGenerating = false;
-  isLoadingBalance = false;
+  @Output()
+  isValidChange = new EventEmitter<boolean>();
 
   stellarService = inject(StellarService);
 
+  isGenerating = false;
+  isLoadingBalance = false;
   balance = "";
+  balanceAsNumber: number = -1;
 
   get estimatedCost() {
     return this.votingRequest.maxVoters * 4 + 110;
@@ -47,24 +50,22 @@ export class FundingAccountComponent implements OnInit {
   }
 
   get fundingAccountValidationMessage() {
-    if(!this.isFundingAccountValid) {
+    if (!this.isFundingAccountTechnicallyValid) {
       return "Funding account secret is not valid.";
-    } else if(!this.doesAccountExist) {
+    } else if (!this.doesAccountExist) {
       return "Account doesn't exist.";
-    } else if(this.isBalanceInsufficient) {
-      return "Insufficient funds."
+    } else if (this.isBalanceInsufficient) {
+      return "Insufficient funds. See estimated cost below."
     }
 
     return "";
   }
 
   get isValid() {
-    return this.isFundingAccountValid && this.doesAccountExist && !this.isBalanceInsufficient;
+    return this.isFundingAccountTechnicallyValid && this.doesAccountExist && !this.isBalanceInsufficient;
   }
 
-  balanceAsNumber: number = -1;
-
-  private get isFundingAccountValid() {
+  private get isFundingAccountTechnicallyValid() {
     return this.stellarService.isAccountSecretValid(this.accountSecret);
   }
 
@@ -75,6 +76,7 @@ export class FundingAccountComponent implements OnInit {
   private doesAccountExist = false;
 
   ngOnInit(): void {
+    this.isValidChange.emit(this.isValid);
     this.setNet();
   }
 
@@ -88,8 +90,8 @@ export class FundingAccountComponent implements OnInit {
   }
 
   private checkIfValid() {
-    if (this.isFundingAccountValid) {
-      this.queryBalance();
+    if (this.isFundingAccountTechnicallyValid) {
+      this.queryBalanceForValidation();
     }
   }
 
@@ -103,9 +105,10 @@ export class FundingAccountComponent implements OnInit {
     this.checkIfValid();
   }
 
-  private queryBalance() {
+  private queryBalanceForValidation() {
     this.isLoadingBalance = true;
     this.balanceAsNumber = -1;
+    this.balance = "";
     this.doesAccountExist = false;
     const accountId = this.stellarService.publicFromSecret(this.accountSecret);
     this.stellarService.getBalanceOf(accountId).subscribe({
@@ -119,14 +122,18 @@ export class FundingAccountComponent implements OnInit {
     this.balance = this.balanceAsNumber.toLocaleString("en-US");
     this.isLoadingBalance = false;
     this.doesAccountExist = true;
+
+    this.isValidChange.emit(this.isValid);
   }
 
   private onBalanceError(e: any) {
     this.isLoadingBalance = false;
-    this.balanceAsNumber = - 1;
+    this.balanceAsNumber = -1;
     this.balance = "";
-    if(e.response.status == 404) {
+    if (e.response.status == 404) {
       this.doesAccountExist = false;
     }
+
+    this.isValidChange.emit(this.isValid);
   }
 }

@@ -18,4 +18,21 @@ export class CreateVotingTechnicalDataComponent {
 
   @Output()
   isValidChange = new EventEmitter<boolean>;
+
+  private isTokenIdValid = false;
+  private isFundingAccountValid = false;
+
+  private get isAllValid() {
+    return this.isTokenIdValid && this.isFundingAccountValid;
+  }
+
+  onTokenIdValid(isValid: boolean) {
+    this.isTokenIdValid = isValid;
+    this.isValidChange.emit(this.isAllValid);
+  }
+
+  onFundingAccountValid(isValid: boolean) {
+    this.isFundingAccountValid = isValid;
+    this.isValidChange.emit(this.isAllValid);
+  }
 }

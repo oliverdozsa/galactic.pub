@@ -2,8 +2,8 @@
 <div class="flex">
   <div class="grow">
     <div class="relative">
-      <label class="input w-full border-e-0 rounded-e-none" [class.input-error]="!isValid"
-             [class.input-success]="isValid">
+      <label class="input w-full border-e-0 rounded-e-none" [class.input-error]="!isValid && !isLoadingBalance && !isGenerating"
+             [class.input-success]="isValid && !isLoadingBalance && !isGenerating">
         <input [(ngModel)]="accountSecret" [disabled]="isGenerating" type="text" placeholder="funding account secret"/>
         <span class="label">
           <ng-container *ngIf="!isLoadingBalance">balance</ng-container>
@@ -28,9 +28,9 @@
 
   </div>
 </div>
-<div *ngIf="!isValid" class="text-error">{{fundingAccountValidationMessage}}</div>
+<div *ngIf="!isValid && !isLoadingBalance && !isGenerating" class="text-error">{{fundingAccountValidationMessage}}</div>
 
-<div class="grid justify-items-end" [class.mt-4]="isValid">
+<div class="grid justify-items-end" [class.mt-4]="isValid || isLoadingBalance || isGenerating">
   <div>
     <label class="fieldset-label">
       <input [(ngModel)]="isOnTestNet" type="checkbox" checked="checked" class="toggle"/>

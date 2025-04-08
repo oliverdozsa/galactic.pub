@@ -2,7 +2,7 @@
   <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
     <legend class="fieldset-legend">Technical data</legend>
 
-    <app-token-id [votingRequest]="votingRequest"></app-token-id>
-    <app-funding-account [votingRequest]="votingRequest"></app-funding-account>
+    <app-token-id [votingRequest]="votingRequest" (isValidChange)="onTokenIdValid($event)"></app-token-id>
+    <app-funding-account [votingRequest]="votingRequest" (isValidChange)="onFundingAccountValid($event)"></app-funding-account>
   </fieldset>
 </div>

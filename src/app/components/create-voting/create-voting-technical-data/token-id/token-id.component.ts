@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CreateVotingRequest} from '../../create-voting-request';
@@ -13,7 +13,7 @@ import {CreateVotingRequest} from '../../create-voting-request';
   templateUrl: './token-id.component.html',
   styleUrl: './token-id.component.css'
 })
-export class TokenIdComponent {
+export class TokenIdComponent implements OnInit {
   @Input()
   votingRequest!: CreateVotingRequest;
 
@@ -44,9 +44,13 @@ export class TokenIdComponent {
     this.tokenId = tokenLetters + this.randomNumbersAsStringOfLength(4);
   }
 
+  ngOnInit() {
+    this.isValidChange.emit(this.isValid);
+  }
+
   private randomNumbersAsStringOfLength(length: number): string {
     let result = "";
-    for(let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
       result += this.randomNumber0To10();
     }
 
@@ -54,6 +58,6 @@ export class TokenIdComponent {
   }
 
   private randomNumber0To10(): number {
-    return Math.round(Math.random()*10);
+    return Math.round(Math.random() * 10);
   }
 }
