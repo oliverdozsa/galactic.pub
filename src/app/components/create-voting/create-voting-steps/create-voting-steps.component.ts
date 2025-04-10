@@ -10,7 +10,8 @@ import {CreateVotingPollsComponent} from '../create-voting-polls/create-voting-p
 export enum Step {
   BasicData,
   TechnicalData,
-  Polls
+  Polls,
+  Participants
 }
 
 @Component({
@@ -27,7 +28,7 @@ export enum Step {
 export class CreateVotingStepsComponent {
   Step = Step;
 
-  currentStep = Step.BasicData;
+  currentStep = Step.Polls;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   get isNextAvailable() {

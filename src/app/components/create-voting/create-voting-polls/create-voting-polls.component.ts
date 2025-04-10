@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {CreateVotingRequest} from '../create-voting-request';
 
 @Component({
   selector: 'app-create-voting-polls',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './create-voting-polls.component.css'
 })
 export class CreateVotingPollsComponent {
-
+  @Input()
+  votingRequest!: CreateVotingRequest
 }

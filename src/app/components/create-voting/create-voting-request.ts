@@ -1,3 +1,5 @@
+import {CreatePollRequest} from './create-poll-request';
+
 export enum VotingVisibility {
   Unlisted = "UNLISTED",
   Private = "PRIVATE"
@@ -26,4 +28,5 @@ export class CreateVotingRequest {
   tokenId: string = "";
   useTestNet = false;
   fundingAccountSecret: string = "";
+  polls: CreatePollRequest[] = [];
 }

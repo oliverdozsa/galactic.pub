@@ -4,6 +4,7 @@
       <li [class.step-primary]="currentStep >= Step.BasicData" class="step">Basic data</li>
       <li [class.step-primary]="currentStep >= Step.TechnicalData" class="step">Technical data</li>
       <li [class.step-primary]="currentStep >= Step.Polls" class="step">Polls</li>
+      <li [class.step-primary]="currentStep >= Step.Participants" class="step">Participants</li>
     </ul>
   </div>
 </div>
@@ -11,7 +12,7 @@
 <div>
   <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData" [votingRequest]="votingRequest" (isValidChange)="onBasicDataValid($event)"></app-create-voting-basic-data>
   <app-create-voting-technical-data *ngIf="currentStep == Step.TechnicalData" [votingRequest]="votingRequest" (isValidChange)="onTechnicalDataValid($event)"></app-create-voting-technical-data>
-  <app-create-voting-polls *ngIf="currentStep == Step.Polls"></app-create-voting-polls>
+  <app-create-voting-polls *ngIf="currentStep == Step.Polls" [votingRequest]="votingRequest"></app-create-voting-polls>
 </div>
 
 <div class="flex justify-between mt-10">
