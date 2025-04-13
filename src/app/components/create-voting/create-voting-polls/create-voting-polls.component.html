@@ -5,6 +5,4 @@
   add a question
 </button>
 
-<div>
-  <app-create-voting-question *ngFor="let poll of votingRequest.polls" [pollRequest]="poll"></app-create-voting-question>
-</div>
+<app-create-voting-question *ngFor="let poll of votingRequest.polls" [pollRequest]="poll"></app-create-voting-question>

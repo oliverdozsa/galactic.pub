@@ -1,8 +1,15 @@
-<fieldset class="fieldset">
-  <legend class="fieldset-legend">Question</legend>
-  <input type="text" class="input" placeholder="question" />
-  <p class="fieldset-label">Optional</p>
+<div class="flex justify-center">
+  <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
+    <legend class="fieldset-legend">Poll question</legend>
 
-  <legend class="fieldset-legend">Question</legend>
-  <input type="text" class="input" placeholder="question" />
-</fieldset>
+    <label class="fieldset-label">Question</label>
+    <input [(ngModel)]="pollRequest.question" type="text" class="input w-full" [class.input-error]="!isQuestionValid"
+           [class.input-success]="isQuestionValid" placeholder="question"/>
+    <div *ngIf="!isQuestionValid" class="text-error">Length must be >= 2 and <= 1000.</div>
+
+    <label class="fieldset-label">Description</label>
+    <textarea [(ngModel)]="pollRequest.description" class="textarea w-full" [class.input-error]="!isDescriptionValid"
+              [class.input-success]="isDescriptionValid" rows="4" placeholder="description"></textarea>
+    <div *ngIf="!isDescriptionValid" class="text-error">Length must be <= 1000.</div>
+  </fieldset>
+</div>
