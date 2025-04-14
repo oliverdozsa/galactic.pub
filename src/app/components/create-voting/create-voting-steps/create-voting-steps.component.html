@@ -12,7 +12,7 @@
 <div>
   <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData" [votingRequest]="votingRequest" (isValidChange)="onBasicDataValid($event)"></app-create-voting-basic-data>
   <app-create-voting-technical-data *ngIf="currentStep == Step.TechnicalData" [votingRequest]="votingRequest" (isValidChange)="onTechnicalDataValid($event)"></app-create-voting-technical-data>
-  <app-create-voting-polls *ngIf="currentStep == Step.Polls" [votingRequest]="votingRequest"></app-create-voting-polls>
+  <app-create-voting-polls *ngIf="currentStep == Step.Polls" [votingRequest]="votingRequest" (isValidChange)="onPollsValid($event)"></app-create-voting-polls>
 </div>
 
 <div class="flex justify-between mt-10">

@@ -17,8 +17,26 @@ export class CreateVotingQuestionComponent {
   @Input()
   pollRequest!: CreatePollRequest;
 
+  @Input()
+  index = -1;
+
+  get question() {
+    return this.pollRequest.question;
+  }
+
+  set question(value) {
+    this.pollRequest.question = value;
+  }
+
+  get description() {
+    return this.pollRequest.description;
+  }
+
+  set description(value) {
+    this.pollRequest.description = value;
+  }
+
   get isQuestionValid() {
-    // TODO
     const question = this.pollRequest.question;
     return question && question.length >= 2 && question.length <= 1000;
   }

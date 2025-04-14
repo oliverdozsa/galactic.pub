@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CreateVotingRequest} from '../create-voting-request';
 import {CreatePollRequest} from '../create-poll-request';
 import {NgForOf} from '@angular/common';
@@ -17,7 +17,14 @@ export class CreateVotingPollsComponent {
   @Input()
   votingRequest!: CreateVotingRequest
 
+  @Output()
+  isValidChange = new EventEmitter<boolean>;
+
   onAddQuestionClicked() {
     this.votingRequest.polls.push(new CreatePollRequest())
+  }
+
+  onPollValid(index: number, isValid: boolean) {
+    // TODO
   }
 }

@@ -40,7 +40,11 @@ export class CreateVotingStepsComponent {
       return this.isTechnicalDataValid;
     }
 
-    return this.currentStep < Step.Polls;
+    if(this.currentStep == Step.Polls) {
+      return this.arePollsValid;
+    }
+
+    return this.currentStep < Step.Participants;
   }
 
   get isPreviousAvailable() {
@@ -48,11 +52,12 @@ export class CreateVotingStepsComponent {
   }
 
   get isCreateAvailable() {
-    return this.currentStep == Step.Polls;
+    return this.currentStep == Step.Participants;
   }
 
   isBasicDataValid = false;
   isTechnicalDataValid = false;
+  arePollsValid = false;
 
   onNextClicked() {
     if (this.currentStep < Step.Polls) {
@@ -72,5 +77,9 @@ export class CreateVotingStepsComponent {
 
   onTechnicalDataValid(isValid: boolean) {
     this.isTechnicalDataValid = isValid;
+  }
+
+  onPollsValid(areValid: boolean) {
+    this.arePollsValid = areValid;
   }
 }
