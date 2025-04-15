@@ -20,11 +20,27 @@ export class CreateVotingPollsComponent {
   @Output()
   isValidChange = new EventEmitter<boolean>;
 
+  private pollValidations: boolean[] = [];
+
   onAddQuestionClicked() {
     this.votingRequest.polls.push(new CreatePollRequest())
+    this.pollValidations.push(false);
+    this.checkIfAllPollsAreValid();
   }
 
-  onPollValid(index: number, isValid: boolean) {
-    // TODO
+  onPollValid(validEvent: { index: number, isValid: boolean }) {
+    this.pollValidations[validEvent.index] = validEvent.isValid;
+    this.checkIfAllPollsAreValid();
+  }
+
+  onQuestionDelete(index: number) {
+    this.votingRequest.polls.splice(index, 1);
+    this.pollValidations.splice(index, 1);
+    this.checkIfAllPollsAreValid();
+  }
+
+  private checkIfAllPollsAreValid() {
+    const areAllValid = this.pollValidations.reduce((prev, current) => prev && current, true);
+    this.isValidChange.emit(areAllValid);
   }
 }

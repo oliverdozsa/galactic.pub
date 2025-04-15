@@ -1,8 +1,10 @@
 <button class="btn btn-primary" (click)="onAddQuestionClicked()">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+       class="size-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
   </svg>
   add a question
 </button>
 
-<app-create-voting-question *ngFor="let poll of votingRequest.polls" [pollRequest]="poll"></app-create-voting-question>
+<app-create-voting-question *ngFor="let poll of votingRequest.polls; index as i" [index]="i" [pollRequest]="poll"
+                            (allValidChange)="onPollValid($event)" (deleted)="onQuestionDelete($event)"></app-create-voting-question>

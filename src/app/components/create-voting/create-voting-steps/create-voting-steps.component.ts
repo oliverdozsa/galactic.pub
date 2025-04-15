@@ -52,6 +52,7 @@ export class CreateVotingStepsComponent {
   }
 
   get isCreateAvailable() {
+    // TODO: check if participants are valid
     return this.currentStep == Step.Participants;
   }
 
