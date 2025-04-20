@@ -40,7 +40,11 @@ export class CreateVotingPollsComponent {
   }
 
   private checkIfAllPollsAreValid() {
-    const areAllValid = this.pollValidations.reduce((prev, current) => prev && current, true);
-    this.isValidChange.emit(areAllValid);
+    if (this.votingRequest.polls.length == 0) {
+      this.isValidChange.emit(false);
+    } else {
+      const areAllValid = this.pollValidations.reduce((prev, current) => prev && current, true);
+      this.isValidChange.emit(areAllValid);
+    }
   }
 }

@@ -3,12 +3,14 @@ import {CreateVotingRequest} from '../../create-voting-request';
 import {CreatePollRequest} from '../../create-poll-request';
 import {NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {CreateVotingOptionsComponent} from '../create-voting-options/create-voting-options.component';
 
 @Component({
   selector: 'app-create-voting-question',
   imports: [
     NgIf,
-    FormsModule
+    FormsModule,
+    CreateVotingOptionsComponent
   ],
   templateUrl: './create-voting-question.component.html',
   styleUrl: './create-voting-question.component.css'
@@ -59,12 +61,14 @@ export class CreateVotingQuestionComponent {
     return true;
   }
 
+  arePollOptionsValid = false;
+
   onQuestionDeleteClicked() {
     this.deleted.emit(this.index);
   }
 
   private checkIfAllValid() {
-    const allValid = this.isQuestionValid && this.isDescriptionValid;
+    const allValid = this.isQuestionValid && this.isDescriptionValid && this.arePollOptionsValid;
     this.allValidChange.emit({index: this.index, isValid: allValid});
   }
 }
