@@ -1,6 +1,20 @@
-<button class="btn btn-outline btn-primary">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+<label class="fieldset-label">Options</label>
+
+<div *ngFor="let option of pollRequest.options" class="mt-3">
+  <div class="flex">
+    <div class="p-3 text-base">{{ option.code }}.</div>
+    <div class="w-full">
+      <input [(ngModel)]="option.name" type="text" class="input w-full" [class.input-error]="!isOptionNameValid(option)"
+             [class.input-success]="isOptionNameValid(option)" placeholder="question"/>
+      <div *ngIf="!isOptionNameValid(option)" class="text-error">Name length must be >= 2 and <= 300.</div>
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-outline btn-primary" (click)="onAddOptionClicked()">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+       class="size-4">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
   </svg>
   add option
 </button>
