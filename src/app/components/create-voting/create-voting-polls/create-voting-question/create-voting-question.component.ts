@@ -67,6 +67,11 @@ export class CreateVotingQuestionComponent {
     this.deleted.emit(this.index);
   }
 
+  onAllOptionsValid(areAllValid: boolean) {
+    this.arePollOptionsValid = areAllValid;
+    this.checkIfAllValid();
+  }
+
   private checkIfAllValid() {
     const allValid = this.isQuestionValid && this.isDescriptionValid && this.arePollOptionsValid;
     this.allValidChange.emit({index: this.index, isValid: allValid});

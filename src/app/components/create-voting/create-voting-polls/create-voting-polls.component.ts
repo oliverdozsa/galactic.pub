@@ -43,7 +43,7 @@ export class CreateVotingPollsComponent {
     if (this.votingRequest.polls.length == 0) {
       this.isValidChange.emit(false);
     } else {
-      const areAllValid = this.pollValidations.reduce((prev, current) => prev && current, true);
+      const areAllValid = this.pollValidations.reduce((prev, current) => prev && current);
       this.isValidChange.emit(areAllValid);
     }
   }

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CreatePollRequest} from '../../create-poll-request';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -18,11 +18,44 @@ export class CreateVotingOptionsComponent {
   @Input()
   pollRequest!: CreatePollRequest;
 
+  @Output()
+  allValidChange = new EventEmitter<boolean>();
+
   onAddOptionClicked() {
     this.pollRequest.options.push({name: "", code: this.pollRequest.options.length + 1});
+    this.checkIfAllValid();
   }
 
   isOptionNameValid(option: CreatePollOptionRequest) {
     return option.name.length >= 2 && option.name.length <= 300;
+  }
+
+  onDeleteOptionClicked(index: number) {
+    this.pollRequest.options.splice(index, 1);
+    this.recalculateCodes();
+    this.checkIfAllValid();
+  }
+
+  onNameChange() {
+    this.checkIfAllValid();
+  }
+
+  private recalculateCodes() {
+    for (let i = 1; i <= this.pollRequest.options.length; i++) {
+      this.pollRequest.options[i - 1].code = i;
+    }
+  }
+
+  private checkIfAllValid() {
+    const options = this.pollRequest.options;
+
+    if (options.length == 0) {
+      this.allValidChange.emit(false)
+    } else {
+      const areAllValid = options
+        .map(o => this.isOptionNameValid(o))
+        .reduce((p, c) => p && c);
+      this.allValidChange.emit(areAllValid);
+    }
   }
 }
