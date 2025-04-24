@@ -1,19 +1,24 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CreateVotingRequest} from '../create-voting-request';
+import {BallotType, CreateVotingRequest} from '../create-voting-request';
 import {CreatePollRequest} from '../create-poll-request';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {CreateVotingQuestionComponent} from './create-voting-question/create-voting-question.component';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-create-voting-polls',
   imports: [
     NgForOf,
-    CreateVotingQuestionComponent
+    CreateVotingQuestionComponent,
+    FormsModule,
+    NgIf
   ],
   templateUrl: './create-voting-polls.component.html',
   styleUrl: './create-voting-polls.component.css'
 })
 export class CreateVotingPollsComponent {
+  BallotType= BallotType;
+
   @Input()
   votingRequest!: CreateVotingRequest
 
