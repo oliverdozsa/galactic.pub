@@ -13,6 +13,7 @@
     <div *ngIf="!isDescriptionValid" class="text-error">Length must be <= 1000.</div>
 
     <app-create-voting-options [pollRequest]="pollRequest" (allValidChange)="onAllOptionsValid($event)"></app-create-voting-options>
+    <div *ngIf="pollRequest.options.length < 2" class="text-error">Must have at least 2 options.</div>
 
     <button class="btn btn-outline btn-error" (click)="onQuestionDeleteClicked()">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">

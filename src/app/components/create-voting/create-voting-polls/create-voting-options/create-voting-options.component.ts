@@ -49,7 +49,7 @@ export class CreateVotingOptionsComponent {
   private checkIfAllValid() {
     const options = this.pollRequest.options;
 
-    if (options.length == 0) {
+    if (options.length < 2) {
       this.allValidChange.emit(false)
     } else {
       const areAllValid = options

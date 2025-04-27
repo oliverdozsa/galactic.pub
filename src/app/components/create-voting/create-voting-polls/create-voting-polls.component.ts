@@ -25,31 +25,48 @@ export class CreateVotingPollsComponent {
   @Output()
   isValidChange = new EventEmitter<boolean>;
 
+  isBallotInvalid = false;
+
   private pollValidations: boolean[] = [];
 
   onAddQuestionClicked() {
     this.votingRequest.polls.push(new CreatePollRequest())
     this.pollValidations.push(false);
-    this.checkIfAllPollsAreValid();
+    this.checkIfAllIsValid();
   }
 
   onPollValid(validEvent: { index: number, isValid: boolean }) {
     this.pollValidations[validEvent.index] = validEvent.isValid;
-    this.checkIfAllPollsAreValid();
+    this.checkIfAllIsValid();
   }
 
   onQuestionDelete(index: number) {
     this.votingRequest.polls.splice(index, 1);
     this.pollValidations.splice(index, 1);
-    this.checkIfAllPollsAreValid();
+    this.checkIfAllIsValid();
   }
 
-  private checkIfAllPollsAreValid() {
+  onBallotTypeChange() {
+    this.checkIfAllIsValid();
+  }
+
+  private checkIfAllIsValid() {
+    this.checkIfBallotTypeIsInvalid();
+
     if (this.votingRequest.polls.length == 0) {
       this.isValidChange.emit(false);
     } else {
-      const areAllValid = this.pollValidations.reduce((prev, current) => prev && current);
+      let areAllValid = this.pollValidations.reduce((prev, current) => prev && current);
+      areAllValid = areAllValid && !this.isBallotInvalid;
       this.isValidChange.emit(areAllValid);
+    }
+  }
+
+  private checkIfBallotTypeIsInvalid() {
+    if(this.votingRequest.ballotType == BallotType.MultiChoice) {
+      this.isBallotInvalid = this.votingRequest.polls.length > 1;
+    } else {
+      this.isBallotInvalid = false;
     }
   }
 }
