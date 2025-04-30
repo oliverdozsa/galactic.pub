@@ -6,6 +6,7 @@ import {
   CreateVotingTechnicalDataComponent
 } from '../create-voting-technical-data/create-voting-technical-data.component';
 import {CreateVotingPollsComponent} from '../create-voting-polls/create-voting-polls.component';
+import {CreateVotingParticipantsComponent} from '../create-voting-participants/create-voting-participants.component';
 
 export enum Step {
   BasicData,
@@ -20,7 +21,8 @@ export enum Step {
     CreateVotingBasicDataComponent,
     NgIf,
     CreateVotingTechnicalDataComponent,
-    CreateVotingPollsComponent
+    CreateVotingPollsComponent,
+    CreateVotingParticipantsComponent
   ],
   templateUrl: './create-voting-steps.component.html',
   styleUrl: './create-voting-steps.component.css'
@@ -28,7 +30,7 @@ export enum Step {
 export class CreateVotingStepsComponent {
   Step = Step;
 
-  currentStep = Step.Polls;
+  currentStep = Step.Participants;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   get isNextAvailable() {
@@ -61,7 +63,7 @@ export class CreateVotingStepsComponent {
   arePollsValid = false;
 
   onNextClicked() {
-    if (this.currentStep < Step.Polls) {
+    if (this.currentStep < Step.Participants) {
       this.currentStep++;
     }
   }
