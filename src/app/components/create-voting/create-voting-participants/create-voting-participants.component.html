@@ -10,10 +10,12 @@
     </svg>
   </button>
 
+  <div class="flex grow gap-x-2">
   <input type="text" class="input input-sm grow" placeholder="enter an email address" [(ngModel)]="emailInput"
          [class.input-error]="!isEmailValid"
          [class.input-success]="isEmailValid"
          (keydown.enter)="onAddEvent()"/>
   <button class="btn btn-sm btn-primary join-item" [disabled]="!isEmailValid" (click)="onAddEvent()">add</button>
 
+  </div>
 </fieldset>

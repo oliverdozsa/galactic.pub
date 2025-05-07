@@ -30,7 +30,7 @@ export enum Step {
 export class CreateVotingStepsComponent {
   Step = Step;
 
-  currentStep = Step.Participants;
+  currentStep = Step.BasicData;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   get isNextAvailable() {
@@ -42,7 +42,7 @@ export class CreateVotingStepsComponent {
       return this.isTechnicalDataValid;
     }
 
-    if(this.currentStep == Step.Polls) {
+    if (this.currentStep == Step.Polls) {
       return this.arePollsValid;
     }
 
@@ -54,13 +54,17 @@ export class CreateVotingStepsComponent {
   }
 
   get isCreateAvailable() {
-    // TODO: check if participants are valid
     return this.currentStep == Step.Participants;
+  }
+
+  get isCreateDisabled() {
+    return !this.areParticipantsValid;
   }
 
   isBasicDataValid = false;
   isTechnicalDataValid = false;
   arePollsValid = false;
+  areParticipantsValid = false;
 
   onNextClicked() {
     if (this.currentStep < Step.Participants) {
@@ -84,5 +88,9 @@ export class CreateVotingStepsComponent {
 
   onPollsValid(areValid: boolean) {
     this.arePollsValid = areValid;
+  }
+
+  onParticipantsValid(areValid: boolean) {
+    this.areParticipantsValid = areValid;
   }
 }

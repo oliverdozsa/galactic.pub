@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CreateVotingRequest} from '../create-voting-request';
 import {FormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
@@ -16,6 +16,9 @@ export class CreateVotingParticipantsComponent {
   @Input()
   votingRequest!: CreateVotingRequest;
 
+  @Output()
+  isValidChange = new EventEmitter<boolean>();
+
   participants: string[] = [];
 
   emailInput = "";
@@ -29,12 +32,16 @@ export class CreateVotingParticipantsComponent {
   onAddEvent() {
     if (this.isEmailValid) {
       this.participants.push(this.emailInput)
+      this.emailInput = "";
+      this.isValidChange.emit(true);
     }
-
-    this.emailInput = "";
   }
 
   onDelete(index: number) {
     this.participants.splice(index, 1);
+
+    if (this.participants.length == 0) {
+      this.isValidChange.emit(false);
+    }
   }
 }

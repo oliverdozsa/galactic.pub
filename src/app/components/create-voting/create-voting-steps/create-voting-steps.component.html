@@ -10,10 +10,14 @@
 </div>
 
 <div>
-  <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData" [votingRequest]="votingRequest" (isValidChange)="onBasicDataValid($event)"></app-create-voting-basic-data>
-  <app-create-voting-technical-data *ngIf="currentStep == Step.TechnicalData" [votingRequest]="votingRequest" (isValidChange)="onTechnicalDataValid($event)"></app-create-voting-technical-data>
-  <app-create-voting-polls *ngIf="currentStep == Step.Polls" [votingRequest]="votingRequest" (isValidChange)="onPollsValid($event)"></app-create-voting-polls>
-  <app-create-voting-participants *ngIf="currentStep == Step.Participants" [votingRequest]="votingRequest"></app-create-voting-participants>
+  <app-create-voting-basic-data *ngIf="currentStep == Step.BasicData" [votingRequest]="votingRequest"
+                                (isValidChange)="onBasicDataValid($event)"></app-create-voting-basic-data>
+  <app-create-voting-technical-data *ngIf="currentStep == Step.TechnicalData" [votingRequest]="votingRequest"
+                                    (isValidChange)="onTechnicalDataValid($event)"></app-create-voting-technical-data>
+  <app-create-voting-polls *ngIf="currentStep == Step.Polls" [votingRequest]="votingRequest"
+                           (isValidChange)="onPollsValid($event)"></app-create-voting-polls>
+  <app-create-voting-participants *ngIf="currentStep == Step.Participants" [votingRequest]="votingRequest"
+                                  (isValidChange)="onParticipantsValid($event)"></app-create-voting-participants>
 </div>
 
 <div class="flex justify-between mt-10">
@@ -23,10 +27,12 @@
     </button>
   </div>
   <div>
-    <button *ngIf="!isCreateAvailable" (click)="onNextClicked()" [class.btn-disabled]="!isNextAvailable" [class.btn-active]="isNextAvailable"
+    <button *ngIf="!isCreateAvailable" (click)="onNextClicked()" [class.btn-disabled]="!isNextAvailable"
+            [class.btn-active]="isNextAvailable"
             class="btn btn-primary">Next
     </button>
-    <button *ngIf="isCreateAvailable" (click)="onNextClicked()" class="btn btn-success btn-active">Create
+    <button *ngIf="isCreateAvailable" (click)="onNextClicked()" class="btn btn-success btn-active"
+            [class.btn-disabled]="isCreateDisabled" [class.btn-active]="!isCreateDisabled">Create
     </button>
   </div>
 </div>
