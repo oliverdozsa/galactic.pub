@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BallotType, CreateVotingRequest, VotingVisibility} from '../../create-voting-request';
+import {CreateVotingRequest, VotingVisibility} from '../../create-voting-request';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 
@@ -20,7 +20,6 @@ export class LimitationsComponent implements OnInit {
   allValidChange = new EventEmitter<boolean>();
 
   VotingVisibility = VotingVisibility;
-  BallotType = BallotType;
 
   validationHint = "<NOT SET>";
   upperLimit = 4;
@@ -83,16 +82,6 @@ export class LimitationsComponent implements OnInit {
     }
 
     return "<UNKOWN VISIBILITY>";
-  }
-
-  get ballotTypeHint(): string {
-    if (this.votingRequest.ballotType == BallotType.MultiPoll) {
-      return "Voting can have multiple polls with 1 choice / poll.";
-    } else if (this.votingRequest.ballotType == BallotType.MultiChoice) {
-      return "Voting can have only 1 poll with multiple choices."
-    }
-
-    return "<UNKOWN BALLOT TYPE>";
   }
 
   determineMaxChoicesUpperLimit() {

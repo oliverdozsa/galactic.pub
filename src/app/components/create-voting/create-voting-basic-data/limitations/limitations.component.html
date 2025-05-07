@@ -15,13 +15,6 @@
     </select>
     <span class="fieldset-label">{{ visibilityHint }}</span>
 
-    <label class="fieldset-label mt-2">Ballot type</label>
-    <select [(ngModel)]="votingRequest.ballotType" class="select w-full">
-      <option [value]="BallotType.MultiPoll">Multiple polls</option>
-      <option [value]="BallotType.MultiChoice">Multiple choices</option>
-    </select>
-    <span class="fieldset-label">{{ ballotTypeHint }}</span>
-
     <label class="fieldset-label">Maximum choices</label>
     <input [(ngModel)]="maxChoices" type="number" class="input w-full" min="1" [max]="upperLimit"
            placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
