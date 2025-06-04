@@ -31,7 +31,7 @@
             [class.btn-active]="isNextAvailable"
             class="btn btn-primary">Next
     </button>
-    <button *ngIf="isCreateAvailable" (click)="onNextClicked()" class="btn btn-success btn-active"
+    <button *ngIf="isCreateAvailable" (click)="onCreateClicked()" class="btn btn-success btn-active"
             [class.btn-disabled]="isCreateDisabled" [class.btn-active]="!isCreateDisabled">Create
     </button>
   </div>

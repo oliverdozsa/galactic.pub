@@ -26,8 +26,42 @@ export class CreateVotingPollsComponent {
   isValidChange = new EventEmitter<boolean>;
 
   isBallotInvalid = false;
+  validationHint = "<NOT SET>";
 
   private pollValidations: boolean[] = [];
+
+  get maxChoices(): number {
+    if (!this.votingRequest.maxChoices) {
+      return 0;
+    }
+
+    return this.votingRequest.maxChoices;
+  }
+
+  set maxChoices(value: number) {
+    this.votingRequest.maxChoices = value;
+    this.checkIfAllIsValid();
+  }
+
+  get isMaxChoicesValid(): boolean {
+    const shouldEncrypt = this.votingRequest.dates.encryptedUntil != undefined;
+
+    if (shouldEncrypt) {
+      return this.checkMaxChoicesValidityWhenEncrypted();
+    } else {
+      return this.checkMaxChoicesValidityWhenUnencrypted();
+    }
+  }
+
+  get maxChoicesUpperLimit() {
+    const shouldEncrypt = this.votingRequest.dates.encryptedUntil != undefined;
+
+    if (shouldEncrypt) {
+      return 1;
+    } else {
+      return 4;
+    }
+  }
 
   onAddQuestionClicked() {
     this.votingRequest.polls.push(new CreatePollRequest())
@@ -57,7 +91,7 @@ export class CreateVotingPollsComponent {
       this.isValidChange.emit(false);
     } else {
       let areAllValid = this.pollValidations.reduce((prev, current) => prev && current);
-      areAllValid = areAllValid && !this.isBallotInvalid;
+      areAllValid = areAllValid && !this.isBallotInvalid && this.isMaxChoicesValid;
       this.isValidChange.emit(areAllValid);
     }
   }
@@ -68,5 +102,24 @@ export class CreateVotingPollsComponent {
     } else {
       this.isBallotInvalid = false;
     }
+  }
+
+  private checkMaxChoicesValidityWhenEncrypted() {
+    if (this.votingRequest.maxChoices != 1) {
+      this.validationHint = "When voting is encrypted, maximum choices is limited to 1."
+      return false;
+    }
+
+    return true;
+  }
+
+  private checkMaxChoicesValidityWhenUnencrypted() {
+    if (this.votingRequest.maxChoices &&
+      this.votingRequest.maxChoices > 0 && this.votingRequest.maxChoices <= 4) {
+      return true;
+    }
+
+    this.validationHint = "Must be between 1 and 4.";
+    return false;
   }
 }

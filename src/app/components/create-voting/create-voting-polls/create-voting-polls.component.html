@@ -7,6 +7,12 @@
       <option [value]="BallotType.MultiChoice">multiple choices</option>
     </select>
 
+    <label class="fieldset-label">Maximum choices</label>
+    <input [(ngModel)]="maxChoices" type="number" class="input w-full" min="1" [max]="maxChoicesUpperLimit"
+           placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
+           [class.input-success]="isMaxChoicesValid"/>
+    <div *ngIf="!isMaxChoicesValid" class="text-error">{{validationHint}}</div>
+
     <span class="fieldset-label">
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

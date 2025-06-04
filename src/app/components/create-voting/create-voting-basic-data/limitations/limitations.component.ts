@@ -22,43 +22,20 @@ export class LimitationsComponent implements OnInit {
   VotingVisibility = VotingVisibility;
 
   validationHint = "<NOT SET>";
-  upperLimit = 4;
 
   private _shouldEncrypt = false;
-
-  get isMaxChoicesValid(): boolean {
-    if (this.shouldEncrypt) {
-      return this.checkMaxChoicesValidityWhenEncrypted();
-    } else {
-      return this.checkMaxChoicesValidityWhenUnencrypted();
-    }
-  }
 
   @Input()
   set shouldEncrypt(value: boolean) {
     if (!value) {
-      this.votingRequest.dates.encryptedUntil = "";
+      this.votingRequest.dates.encryptedUntil = undefined;
     }
 
     this._shouldEncrypt = value;
-    this.determineMaxChoicesUpperLimit();
   }
 
   get shouldEncrypt() {
     return this._shouldEncrypt;
-  }
-
-  get maxChoices(): number {
-    if (!this.votingRequest.maxChoices) {
-      return 0;
-    }
-
-    return this.votingRequest.maxChoices;
-  }
-
-  set maxChoices(value: number) {
-    this.votingRequest.maxChoices = value;
-    this.checkIfAllValid();
   }
 
   set maxVoters(value: number) {
@@ -82,14 +59,6 @@ export class LimitationsComponent implements OnInit {
     }
 
     return "<UNKOWN VISIBILITY>";
-  }
-
-  determineMaxChoicesUpperLimit() {
-    if (this.shouldEncrypt) {
-      this.upperLimit = 1;
-    } else {
-      this.upperLimit = 4;
-    }
   }
 
   ngOnInit() {
@@ -116,6 +85,6 @@ export class LimitationsComponent implements OnInit {
   }
 
   private checkIfAllValid() {
-    this.allValidChange.emit(this.isMaxChoicesValid && this.isMaxVotersValid);
+    this.allValidChange.emit(this.isMaxVotersValid);
   }
 }

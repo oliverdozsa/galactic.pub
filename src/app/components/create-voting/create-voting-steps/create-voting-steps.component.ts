@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CreateVotingRequest} from '../create-voting-request';
 import {CreateVotingBasicDataComponent} from '../create-voting-basic-data/create-voting-basic-data.component';
 import {NgIf} from '@angular/common';
@@ -7,6 +7,7 @@ import {
 } from '../create-voting-technical-data/create-voting-technical-data.component';
 import {CreateVotingPollsComponent} from '../create-voting-polls/create-voting-polls.component';
 import {CreateVotingParticipantsComponent} from '../create-voting-participants/create-voting-participants.component';
+import {VotingService} from '../../../services/voting.service';
 
 export enum Step {
   BasicData,
@@ -32,6 +33,8 @@ export class CreateVotingStepsComponent {
 
   currentStep = Step.BasicData;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
+
+  votingService = inject(VotingService);
 
   get isNextAvailable() {
     if (this.currentStep == Step.BasicData) {
@@ -70,6 +73,10 @@ export class CreateVotingStepsComponent {
     if (this.currentStep < Step.Participants) {
       this.currentStep++;
     }
+  }
+
+  onCreateClicked() {
+    this.votingService.create(this.votingRequest);
   }
 
   onPreviousClicked() {

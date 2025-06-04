@@ -14,11 +14,5 @@
       <option [value]="VotingVisibility.Private">Private</option>
     </select>
     <span class="fieldset-label">{{ visibilityHint }}</span>
-
-    <label class="fieldset-label">Maximum choices</label>
-    <input [(ngModel)]="maxChoices" type="number" class="input w-full" min="1" [max]="upperLimit"
-           placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
-           [class.input-success]="isMaxChoicesValid"/>
-    <div *ngIf="!isMaxChoicesValid" class="text-error">{{validationHint}}</div>
   </fieldset>
 </div>
