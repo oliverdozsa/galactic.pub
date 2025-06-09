@@ -63,6 +63,22 @@ export class CreateVotingPollsComponent {
     }
   }
 
+  get isAddingMoreQuestionsDisabled() {
+    if(this.votingRequest.ballotType == BallotType.MultiChoice) {
+      return this.votingRequest.polls.length >= 1;
+    } else {
+      return this.votingRequest.polls.length >= 4;
+    }
+  }
+
+  get maxNumberOfPossibleQuestions() {
+    if(this.votingRequest.ballotType == BallotType.MultiChoice) {
+      return 1;
+    } else {
+      return 4;
+    }
+  }
+
   onAddQuestionClicked() {
     this.votingRequest.polls.push(new CreatePollRequest())
     this.pollValidations.push(false);
@@ -84,7 +100,7 @@ export class CreateVotingPollsComponent {
     this.checkIfAllIsValid();
   }
 
-  private checkIfAllIsValid() {
+  checkIfAllIsValid() {
     this.checkIfBallotTypeIsInvalid();
 
     if (this.votingRequest.polls.length == 0) {
