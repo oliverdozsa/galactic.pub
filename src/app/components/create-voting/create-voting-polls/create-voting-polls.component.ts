@@ -17,7 +17,7 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './create-voting-polls.component.css'
 })
 export class CreateVotingPollsComponent {
-  BallotType= BallotType;
+  BallotType = BallotType;
 
   @Input()
   votingRequest!: CreateVotingRequest
@@ -64,7 +64,7 @@ export class CreateVotingPollsComponent {
   }
 
   get isAddingMoreQuestionsDisabled() {
-    if(this.votingRequest.ballotType == BallotType.MultiChoice) {
+    if (this.votingRequest.ballotType == BallotType.MultiChoice) {
       return this.votingRequest.polls.length >= 1;
     } else {
       return this.votingRequest.polls.length >= 4;
@@ -72,7 +72,7 @@ export class CreateVotingPollsComponent {
   }
 
   get maxNumberOfPossibleQuestions() {
-    if(this.votingRequest.ballotType == BallotType.MultiChoice) {
+    if (this.votingRequest.ballotType == BallotType.MultiChoice) {
       return 1;
     } else {
       return 4;
@@ -107,13 +107,16 @@ export class CreateVotingPollsComponent {
       this.isValidChange.emit(false);
     } else {
       let areAllValid = this.pollValidations.reduce((prev, current) => prev && current);
-      areAllValid = areAllValid && !this.isBallotInvalid && this.isMaxChoicesValid;
+      areAllValid = areAllValid && !this.isBallotInvalid;
+      areAllValid = areAllValid &&
+        (this.votingRequest.ballotType == BallotType.MultiChoice ? this.isMaxChoicesValid : true);
+
       this.isValidChange.emit(areAllValid);
     }
   }
 
   private checkIfBallotTypeIsInvalid() {
-    if(this.votingRequest.ballotType == BallotType.MultiChoice) {
+    if (this.votingRequest.ballotType == BallotType.MultiChoice) {
       this.isBallotInvalid = this.votingRequest.polls.length > 1;
     } else {
       this.isBallotInvalid = false;

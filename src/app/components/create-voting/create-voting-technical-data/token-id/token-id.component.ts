@@ -58,6 +58,6 @@ export class TokenIdComponent implements OnInit {
   }
 
   private randomNumber0To10(): number {
-    return Math.round(Math.random() * 10);
+    return Math.floor(Math.random() * 10);
   }
 }

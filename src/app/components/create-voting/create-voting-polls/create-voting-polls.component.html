@@ -7,16 +7,17 @@
       <option [value]="BallotType.MultiChoice">multiple choices</option>
     </select>
 
-    <label *ngIf="votingRequest.ballotType == BallotType.MultiChoice" class="fieldset-label">
-      Maximum choices
-    </label>
-    <input *ngIf="votingRequest.ballotType == BallotType.MultiChoice" [(ngModel)]="maxChoices" type="number"
-           class="input w-full" min="1" [max]="maxChoicesUpperLimit"
-           placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
-           [class.input-success]="isMaxChoicesValid"/>
-    <div *ngIf="!isMaxChoicesValid" class="text-error">{{ validationHint }}</div>
+    <ng-container *ngIf="votingRequest.ballotType == BallotType.MultiChoice">
+      <label class="fieldset-label">
+        Maximum choices
+      </label>
+      <input [(ngModel)]="maxChoices" type="number"
+             class="input w-full" min="1" [max]="maxChoicesUpperLimit"
+             placeholder="maximum choices" [class.input-error]="!isMaxChoicesValid"
+             [class.input-success]="isMaxChoicesValid"/>
+      <div *ngIf="!isMaxChoicesValid" class="text-error">{{ validationHint }}</div>
 
-    <span class="fieldset-label">
+      <span class="fieldset-label">
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
              class="size-5">
@@ -26,15 +27,13 @@
       </div>
 
       <div>
-        <ng-container *ngIf="votingRequest.ballotType == BallotType.MultiPoll">
-          Multiple poll questions, with one choice per question.
-        </ng-container>
-
         <ng-container *ngIf="votingRequest.ballotType == BallotType.MultiChoice">
           One poll with multiple possible choices.
         </ng-container>
       </div>
     </span>
+    </ng-container>
+
 
     <span *ngIf="isBallotInvalid" class="fieldset-label text-error">
       <div>
@@ -60,7 +59,7 @@
   add a question
 </button>
 
-<span *ngIf="isAddingMoreQuestionsDisabled" class="text-warning mt-2">
+<div *ngIf="isAddingMoreQuestionsDisabled" class="text-warning mt-2 text-sm">
   <div>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
          class="size-5 inline-block">
@@ -69,9 +68,9 @@
     </svg>
     Cannot add more questions, you've reached the maximum allowed ({{ maxNumberOfPossibleQuestions }}).
   </div>
-</span>
+</div>
 
-<div *ngIf="votingRequest.polls.length < 1" class="text-error mt-2">Must have at least 1 question.</div>
+<div *ngIf="votingRequest.polls.length < 1" class="text-error mt-2 text-sm">Must have at least 1 question.</div>
 
 <app-create-voting-question *ngFor="let poll of votingRequest.polls; index as i" [index]="i" [pollRequest]="poll"
                             (allValidChange)="onPollValid($event)"
