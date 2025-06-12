@@ -16,6 +16,7 @@ export class VotingService {
   }
 
   public create(request: CreateVotingRequest) {
-    return this.httpClient.post(this.apiUrl, request);
+    const url = this.apiUrl + `/stellar/votings`;
+    return this.httpClient.post(url, request);
   }
 }

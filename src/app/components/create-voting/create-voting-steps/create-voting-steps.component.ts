@@ -76,7 +76,10 @@ export class CreateVotingStepsComponent {
   }
 
   onCreateClicked() {
-    this.votingService.create(this.votingRequest);
+    this.votingService.create(this.votingRequest).subscribe({
+      next: () => console.log(`success`),
+      error: e => console.log(`error: ${JSON.stringify(e)}`)
+    });
   }
 
   onPreviousClicked() {
