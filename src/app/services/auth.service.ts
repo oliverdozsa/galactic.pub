@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   login() {
-    this.oauthService.initImplicitFlow(this.router.url);
+    this.oauthService.initLoginFlow(this.router.url);
   }
 
   logout() {
