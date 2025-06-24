@@ -31,7 +31,7 @@ export enum Step {
 export class CreateVotingStepsComponent {
   Step = Step;
 
-  currentStep = Step.Participants;
+  currentStep = Step.BasicData;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   votingService = inject(VotingService);
