@@ -8,6 +8,7 @@ import {
 import {CreateVotingPollsComponent} from '../create-voting-polls/create-voting-polls.component';
 import {CreateVotingParticipantsComponent} from '../create-voting-participants/create-voting-participants.component';
 import {VotingService} from '../../../services/voting.service';
+import {ToastsService, ToastType} from '../../../services/toasts.service';
 
 export enum Step {
   BasicData,
@@ -35,6 +36,7 @@ export class CreateVotingStepsComponent {
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
 
   votingService = inject(VotingService);
+  toastsService = inject(ToastsService);
 
   get isNextAvailable() {
     if (this.currentStep == Step.BasicData) {
@@ -77,8 +79,9 @@ export class CreateVotingStepsComponent {
 
   onCreateClicked() {
     this.votingService.create(this.votingRequest).subscribe({
-      next: () => console.log(`success`),
-      error: e => console.log(`error: ${JSON.stringify(e)}`)
+      next: () => this.onCreatedSuccessfully(),
+      error: e => this.onCreateFailed(e)
+
     });
   }
 
@@ -102,5 +105,14 @@ export class CreateVotingStepsComponent {
 
   onParticipantsValid(areValid: boolean) {
     this.areParticipantsValid = areValid;
+  }
+
+  onCreatedSuccessfully() {
+    this.toastsService.push({message: "successfully created voting!", type: ToastType.Success});
+  }
+
+  onCreateFailed(error: any) {
+    console.log(`error: ${JSON.stringify(error)}`);
+    this.toastsService.push({message: "failed to create voting!", type: ToastType.Error});
   }
 }

@@ -1,0 +1,5 @@
+<div class="toast toast-top toast-end">
+  <div *ngFor="let toast of toastsService.toasts" [class]="'alert ' + classOf(toast)">
+    <span>{{toast.message}}</span>
+  </div>
+</div>
