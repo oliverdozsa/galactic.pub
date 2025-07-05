@@ -2,10 +2,11 @@ import {Component} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
 import {ToastsComponent} from './components/toasts/toasts.component';
+import {NgxSpinnerComponent} from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, LoginComponent, ToastsComponent],
+  imports: [RouterOutlet, RouterLink, LoginComponent, ToastsComponent, NgxSpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

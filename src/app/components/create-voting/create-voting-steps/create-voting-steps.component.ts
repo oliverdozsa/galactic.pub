@@ -9,6 +9,7 @@ import {CreateVotingPollsComponent} from '../create-voting-polls/create-voting-p
 import {CreateVotingParticipantsComponent} from '../create-voting-participants/create-voting-participants.component';
 import {VotingService} from '../../../services/voting.service';
 import {ToastsService, ToastType} from '../../../services/toasts.service';
+import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
 
 export enum Step {
   BasicData,
@@ -24,7 +25,8 @@ export enum Step {
     NgIf,
     CreateVotingTechnicalDataComponent,
     CreateVotingPollsComponent,
-    CreateVotingParticipantsComponent
+    CreateVotingParticipantsComponent,
+    NgxSpinnerComponent
   ],
   templateUrl: './create-voting-steps.component.html',
   styleUrl: './create-voting-steps.component.css'
@@ -37,6 +39,7 @@ export class CreateVotingStepsComponent {
 
   votingService = inject(VotingService);
   toastsService = inject(ToastsService);
+  spinnerService = inject(NgxSpinnerService);
 
   get isNextAvailable() {
     if (this.currentStep == Step.BasicData) {
@@ -78,10 +81,11 @@ export class CreateVotingStepsComponent {
   }
 
   onCreateClicked() {
+    this.spinnerService.show();
     this.votingService.create(this.votingRequest).subscribe({
       next: () => this.onCreatedSuccessfully(),
-      error: e => this.onCreateFailed(e)
-
+      error: e => this.onCreateFailed(e),
+      complete: () => this.spinnerService.hide()
     });
   }
 
