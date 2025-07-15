@@ -1,0 +1,9 @@
+<div *ngIf="votings.length == 0">
+  nothing to see here
+</div>
+
+<div *ngIf="votings.length > 0">
+  <div *ngFor="let voting of votings">
+    {{voting.title}}
+  </div>
+</div>
