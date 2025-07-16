@@ -14,4 +14,7 @@ import {NgForOf, NgIf} from '@angular/common';
 export class VotingListComponent {
   @Input()
   votings: Voting[] = [];
+
+  @Input()
+  isLoading: boolean = true;
 }

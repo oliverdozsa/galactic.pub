@@ -1,7 +1,5 @@
 <app-not-logged-in *ngIf="!authService.isLoggedIn"></app-not-logged-in>
 <div *ngIf="authService.isLoggedIn">
   <h3 class="text-3xl text-center">my created votings</h3>
-  <div *ngIf="!isLoading">
-    <app-voting-list [votings]="votings"></app-voting-list>
-  </div>
+  <app-voting-list [votings]="votings" [isLoading]="isLoading"></app-voting-list>
 </div>
