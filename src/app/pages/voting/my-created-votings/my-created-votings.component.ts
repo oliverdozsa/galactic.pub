@@ -23,6 +23,7 @@ export class MyCreatedVotingsComponent implements OnInit{
   votingService = inject(VotingService);
   votings: Voting[] = [];
   isLoading: boolean = true;
+  isLoadingFirstTime = true;
 
   totalPages = 0;
   currentPage = 0;
@@ -52,7 +53,10 @@ export class MyCreatedVotingsComponent implements OnInit{
     this.votingService.getCreated(this.currentPage)
       .subscribe({
         next: p => this.onPageReceived(p),
-        complete: () => this.isLoading = false
+        complete: () => {
+          this.isLoading = false;
+          this.isLoadingFirstTime = false;
+        }
       });
   }
 }

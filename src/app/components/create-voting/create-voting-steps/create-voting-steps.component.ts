@@ -25,8 +25,7 @@ export enum Step {
     NgIf,
     CreateVotingTechnicalDataComponent,
     CreateVotingPollsComponent,
-    CreateVotingParticipantsComponent,
-    NgxSpinnerComponent
+    CreateVotingParticipantsComponent
   ],
   templateUrl: './create-voting-steps.component.html',
   styleUrl: './create-voting-steps.component.css'

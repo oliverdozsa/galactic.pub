@@ -18,12 +18,20 @@ export class VotingListComponent {
 
   @Input()
   set isLoading(value: boolean) {
-    if(value) {
+    this._isLoading = value;
+
+    if(this.isLoading) {
       this.spinnerService.show();
     } else {
       this.spinnerService.hide();
     }
   };
+
+  get isLoading(): boolean {
+    return this._isLoading
+  }
+
+  private _isLoading = false;
 
   spinnerService = inject(NgxSpinnerService);
 }
