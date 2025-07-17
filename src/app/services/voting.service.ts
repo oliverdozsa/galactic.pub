@@ -23,10 +23,10 @@ export class VotingService {
 
   public getCreated(page: number = 0) {
     const url = this.apiUrl + `/stellar/votings/created`;
-    const queryParams = new HttpParams();
+    let queryParams = new HttpParams();
 
     if(page > 0) {
-      queryParams.set("page", page);
+      queryParams = queryParams.set("page", page);
     }
 
     return this.httpClient.get<Page<Voting>>(url, {params: queryParams});

@@ -1,0 +1,8 @@
+<div class="grid justify-items-center">
+  <div class="join">
+    <button class="join-item btn" [disabled]="currentPage == 0" (click)="onPrevClicked.emit()">«</button>
+    <button class="join-item btn">page {{currentPage + 1}}</button>
+    <button class="join-item btn" [disabled]="currentPage == totalPages - 1" (click)="onNextClicked.emit()">»</button>
+  </div>
+</div>
+

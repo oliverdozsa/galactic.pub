@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {Voting} from '../../services/responses';
 import {NgForOf, NgIf} from '@angular/common';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-voting-list',
@@ -16,5 +17,13 @@ export class VotingListComponent {
   votings: Voting[] = [];
 
   @Input()
-  isLoading: boolean = true;
+  set isLoading(value: boolean) {
+    if(value) {
+      this.spinnerService.show();
+    } else {
+      this.spinnerService.hide();
+    }
+  };
+
+  spinnerService = inject(NgxSpinnerService);
 }
