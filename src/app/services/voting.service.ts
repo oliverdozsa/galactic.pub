@@ -18,7 +18,7 @@ export class VotingService {
 
   public create(request: CreateVotingRequest) {
     const url = this.apiUrl + `/stellar/votings`;
-    return this.httpClient.post(url, request);
+    return this.httpClient.post(url, request, {observe: "response"});
   }
 
   public getCreated(page: number = 0) {
@@ -41,5 +41,10 @@ export class VotingService {
     }
 
     return this.httpClient.get<Page<Voting>>(url, {params: queryParams});
+  }
+
+  public addVotersTo(votingId: number, emails: string[]) {
+    const url = this.apiUrl + `/stellar/votings/addvoters/${votingId}`;
+    return this.httpClient.post(url, {emails: emails});
   }
 }

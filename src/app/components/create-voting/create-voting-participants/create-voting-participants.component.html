@@ -11,11 +11,28 @@
   </button>
 
   <div class="flex grow gap-x-2">
-  <input type="text" class="input input-sm grow" placeholder="enter an email address" [(ngModel)]="emailInput"
-         [class.input-error]="!isEmailValid"
-         [class.input-success]="isEmailValid"
-         (keydown.enter)="onAddEvent()"/>
-  <button class="btn btn-sm btn-primary join-item" [disabled]="!isEmailValid" (click)="onAddEvent()">add</button>
-
+    <input type="text" class="input input-sm grow" placeholder="enter an email address" [(ngModel)]="emailInput"
+           [disabled]="isMaxVotersReached"
+           [class.input-error]="!isEmailValid || isMaxVotersReached"
+           [class.input-success]="isEmailValid && !isMaxVotersReached"
+           (keydown.enter)="onAddEvent()"/>
+    <button class="btn btn-sm btn-primary join-item" [disabled]="!isEmailValid" (click)="onAddEvent()">add</button>
   </div>
 </fieldset>
+<div *ngIf="isMaxVotersReached" class="text-error">Cannot add more voters, already at full capacity
+  ({{ votingRequest.maxVoters }})!
+</div>
+<div *ngIf="!isMaxVotersReached" class="fieldset-label">
+  <div>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor"
+         class="size-5">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+    </svg>
+  </div>
+
+  <div>
+    You can still add {{ votingRequest.maxVoters - participants.length }} voter(s).
+  </div>
+</div>

@@ -17,7 +17,7 @@
   <app-create-voting-polls *ngIf="currentStep == Step.Polls" [votingRequest]="votingRequest"
                            (isValidChange)="onPollsValid($event)"></app-create-voting-polls>
   <app-create-voting-participants *ngIf="currentStep == Step.Participants" [votingRequest]="votingRequest"
-                                  (isValidChange)="onParticipantsValid($event)"></app-create-voting-participants>
+                                  (participantsChange)="onParticipantsChanged($event)"></app-create-voting-participants>
 </div>
 
 <div class="flex justify-between mt-10">

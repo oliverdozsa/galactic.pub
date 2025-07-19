@@ -10,6 +10,8 @@ import {CreateVotingParticipantsComponent} from '../create-voting-participants/c
 import {VotingService} from '../../../services/voting.service';
 import {ToastsService, ToastType} from '../../../services/toasts.service';
 import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
+import {mergeMap} from 'rxjs';
+import {HttpResponse} from '@angular/common/http';
 
 export enum Step {
   BasicData,
@@ -35,6 +37,7 @@ export class CreateVotingStepsComponent {
 
   currentStep = Step.BasicData;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
+  participants: string[] = [];
 
   votingService = inject(VotingService);
   toastsService = inject(ToastsService);
@@ -68,10 +71,14 @@ export class CreateVotingStepsComponent {
     return !this.areParticipantsValid;
   }
 
+  get areParticipantsValid() {
+    return this.participants.length > 0;
+  }
+
   isBasicDataValid = false;
   isTechnicalDataValid = false;
   arePollsValid = false;
-  areParticipantsValid = false;
+
 
   onNextClicked() {
     if (this.currentStep < Step.Participants) {
@@ -81,7 +88,13 @@ export class CreateVotingStepsComponent {
 
   onCreateClicked() {
     this.spinnerService.show();
-    this.votingService.create(this.votingRequest).subscribe({
+
+    this.votingService.create(this.votingRequest).pipe(
+      mergeMap(r => {
+        const votingId = this.getVotingIdFromResponse(r);
+        return this.votingService.addVotersTo(votingId, this.participants);
+      })
+    ).subscribe({
       next: () => this.onCreatedSuccessfully(),
       error: e => this.onCreateFailed(e),
       complete: () => this.spinnerService.hide()
@@ -106,8 +119,8 @@ export class CreateVotingStepsComponent {
     this.arePollsValid = areValid;
   }
 
-  onParticipantsValid(areValid: boolean) {
-    this.areParticipantsValid = areValid;
+  onParticipantsChanged(participants: string[]) {
+    this.participants = participants;
   }
 
   onCreatedSuccessfully() {
@@ -116,6 +129,13 @@ export class CreateVotingStepsComponent {
 
   onCreateFailed(error: any) {
     console.log(`error: ${JSON.stringify(error)}`);
+    this.spinnerService.hide();
     this.toastsService.push({message: "failed to create voting!", type: ToastType.Error});
+  }
+
+  private getVotingIdFromResponse(response: HttpResponse<any>) {
+    const locationUrl = response.headers.get("Location");
+    const locationParts = locationUrl?.split("/");
+    return parseInt(locationParts![locationParts!.length - 1]);
   }
 }

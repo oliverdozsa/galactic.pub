@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {NotLoggedInComponent} from '../../../../components/not-logged-in/not-logged-in.component';
-import {Page, Voting} from '../../../../services/responses';
 import {VotingListComponent} from '../../../../components/voting-list/voting-list.component';
 import {PaginationComponent} from '../../../../components/pagination/pagination.component';
 import {VotingsPaging} from '../votings-paging';

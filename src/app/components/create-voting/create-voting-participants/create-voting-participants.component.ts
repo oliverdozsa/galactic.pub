@@ -1,13 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CreateVotingRequest} from '../create-voting-request';
 import {FormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-create-voting-participants',
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './create-voting-participants.component.html',
   styleUrl: './create-voting-participants.component.css'
@@ -17,7 +18,7 @@ export class CreateVotingParticipantsComponent {
   votingRequest!: CreateVotingRequest;
 
   @Output()
-  isValidChange = new EventEmitter<boolean>();
+  participantsChange = new EventEmitter<string[]>();
 
   participants: string[] = [];
 
@@ -29,19 +30,20 @@ export class CreateVotingParticipantsComponent {
     return this.emailRegex.test(this.emailInput);
   }
 
+  get isMaxVotersReached() {
+    return this.participants.length >= this.votingRequest.maxVoters;
+  }
+
   onAddEvent() {
     if (this.isEmailValid) {
       this.participants.push(this.emailInput)
       this.emailInput = "";
-      this.isValidChange.emit(true);
+      this.participantsChange.emit(this.participants);
     }
   }
 
   onDelete(index: number) {
     this.participants.splice(index, 1);
-
-    if (this.participants.length == 0) {
-      this.isValidChange.emit(false);
-    }
+    this.participantsChange.emit(this.participants);
   }
 }

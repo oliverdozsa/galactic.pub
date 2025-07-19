@@ -65,25 +65,6 @@ export class LimitationsComponent implements OnInit {
     this.checkIfAllValid();
   }
 
-  private checkMaxChoicesValidityWhenEncrypted() {
-    if (this.votingRequest.maxChoices != 1) {
-      this.validationHint = "When voting is encrypted, maximum choices is limited to 1."
-      return false;
-    }
-
-    return true;
-  }
-
-  private checkMaxChoicesValidityWhenUnencrypted() {
-    if (this.votingRequest.maxChoices &&
-      this.votingRequest.maxChoices > 0 && this.votingRequest.maxChoices <= 4) {
-      return true;
-    }
-
-    this.validationHint = "Must be between 1 and 4.";
-    return false;
-  }
-
   private checkIfAllValid() {
     this.allValidChange.emit(this.isMaxVotersValid);
   }
