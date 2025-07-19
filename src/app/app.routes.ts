@@ -5,8 +5,8 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
 import {CreateVotingComponent} from './pages/voting/create-voting/create-voting.component';
 import {
   VotingsWhereIParticipateComponent
-} from './pages/voting/votings-where-iparticipate/votings-where-iparticipate.component';
-import {MyCreatedVotingsComponent} from './pages/voting/my-created-votings/my-created-votings.component';
+} from './pages/voting/votings-listings/votings-where-iparticipate/votings-where-iparticipate.component';
+import {MyCreatedVotingsComponent} from './pages/voting/votings-listings/my-created-votings/my-created-votings.component';
 
 export const routes: Routes = [
   {path: "home", component: HomeComponent},

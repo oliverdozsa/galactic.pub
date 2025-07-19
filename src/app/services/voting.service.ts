@@ -31,4 +31,15 @@ export class VotingService {
 
     return this.httpClient.get<Page<Voting>>(url, {params: queryParams});
   }
+
+  public getWhereIParticipate(page: number = 0) {
+    const url = this.apiUrl + `/stellar/votings`;
+    let queryParams = new HttpParams();
+
+    if(page > 0) {
+      queryParams = queryParams.set("page", page);
+    }
+
+    return this.httpClient.get<Page<Voting>>(url, {params: queryParams});
+  }
 }
