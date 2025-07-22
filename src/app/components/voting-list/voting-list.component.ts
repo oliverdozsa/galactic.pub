@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, ElementRef, inject, Input, ViewChild} from '@angular/core';
 import {Voting} from '../../services/responses';
 import {NgForOf, NgIf} from '@angular/common';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -31,7 +31,25 @@ export class VotingListComponent {
     return this._isLoading
   }
 
+  @ViewChild("votingsViewerModal")
+  viewModal: ElementRef | undefined;
+
+  @ViewChild("votingsDeleteModal")
+  deleteModal: ElementRef | undefined;
+
+  openedVoting: Voting | undefined = undefined;
+
   private _isLoading = false;
 
   spinnerService = inject(NgxSpinnerService);
+
+  onOpenClicked(i: number) {
+    this.openedVoting = this.votings[i];
+    this.viewModal?.nativeElement.showModal();
+  }
+
+  onDeleteClicked(i: number) {
+    this.openedVoting = this.votings[i];
+    this.viewModal?.nativeElement.showModal();
+  }
 }
