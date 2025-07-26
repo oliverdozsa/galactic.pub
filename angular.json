@@ -30,7 +30,7 @@
               "src/styles.css",
               "node_modules/ngx-spinner/animations/ball-clip-rotate.css"
             ],
-            "scripts": ["node_modules/leader-line/leader-line.min.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {
