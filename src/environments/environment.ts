@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: "https://api.galactic.pub"
+  apiUrl: "https://host.galactic.pub"
 };
