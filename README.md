@@ -1,4 +1,6 @@
-# GalacicPubNew
+# Galactic Pub
+
+Various experimental projects, mainly targeting the stellar network.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
 
