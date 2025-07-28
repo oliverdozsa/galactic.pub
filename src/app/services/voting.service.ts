@@ -50,6 +50,6 @@ export class VotingService {
 
   public getSingle(votingId: number) {
     const url = this.apiUrl + `/stellar/votings/${votingId}`;
-    return this.httpClient.get(url);
+    return this.httpClient.get<Voting>(url);
   }
 }
