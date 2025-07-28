@@ -1,1 +1,3 @@
-<p>view-voting works!</p>
+<div *ngIf="!isLoading && !isError">
+  <h3 class="text-3xl">{{voting?.title}}</h3>
+</div>
