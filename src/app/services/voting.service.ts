@@ -47,4 +47,9 @@ export class VotingService {
     const url = this.apiUrl + `/stellar/votings/addvoters/${votingId}`;
     return this.httpClient.post(url, {emails: emails});
   }
+
+  public getSingle(votingId: number) {
+    const url = this.apiUrl + `/stellar/votings/${votingId}`;
+    return this.httpClient.get(url);
+  }
 }
