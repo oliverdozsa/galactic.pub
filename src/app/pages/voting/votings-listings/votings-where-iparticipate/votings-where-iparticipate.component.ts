@@ -23,10 +23,8 @@ export class VotingsWhereIParticipateComponent extends VotingsPaging {
     this.votingService.getWhereIParticipate(this.currentPage)
       .subscribe({
         next: p => this.onPageReceived(p),
-        complete: () => {
-          this.isLoading = false;
-          this.isLoadingFirstTime = false;
-        }
+        complete: () => this.loadingFinished(),
+        error: () => this.loadingFinishedWitError()
       });
   }
 
