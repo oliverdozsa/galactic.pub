@@ -1,3 +1,18 @@
-<div *ngIf="!isLoading && !isError">
-  <h3 class="text-3xl">{{voting?.title}}</h3>
+<app-not-logged-in *ngIf="!authService.isLoggedIn"></app-not-logged-in>
+<div *ngIf="!isLoading && !isError && authService.isLoggedIn">
+
+  <div class="tabs tabs-border">
+    <input type="radio" name="poll-data" class="tab" aria-label="basic data" checked="checked" />
+    <div class="tab-content border-base-300 bg-base-100 p-10">
+      <h3 class="text-3xl">{{voting?.title}}</h3>
+      <h4 class="text-lg font-medium underline">description</h4>
+      <p class="text-sm">{{voting?.description}}</p>
+    </div>
+
+    <input type="radio" name="poll-data" class="tab" aria-label="technical data" />
+    <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 2</div>
+
+    <input type="radio" name="poll-data" class="tab" aria-label="polls" />
+    <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
+  </div>
 </div>
