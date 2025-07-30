@@ -5,11 +5,14 @@ import {Voting} from '../../../services/responses';
 import {ToastsService, ToastType} from '../../../services/toasts.service';
 import {NgIf} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
+import {NotLoggedInComponent} from '../../../components/not-logged-in/not-logged-in.component';
 
 @Component({
   selector: 'app-view-voting',
   imports: [
-    NgIf
+    NgIf,
+    NotLoggedInComponent
   ],
   templateUrl: './view-voting.component.html',
   styleUrl: './view-voting.component.css'
@@ -19,6 +22,7 @@ export class ViewVotingComponent implements OnInit {
   spinnerService = inject(NgxSpinnerService);
   toastService = inject(ToastsService);
   activatedRoute = inject(ActivatedRoute);
+  authService = inject(AuthService);
 
   isLoading = true;
   isError = false;
@@ -26,12 +30,14 @@ export class ViewVotingComponent implements OnInit {
   voting: Voting | undefined = undefined;
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe({
-      next: pm => this.getVoting(pm.get("id"))
-    })
+    if(this.authService.isLoggedIn) {
+      this.activatedRoute.paramMap.subscribe({
+        next: pm => this.getVoting(parseInt(pm.get("id")!))
+      });
+    }
   }
 
-  getVoting(votingId) {
+  getVoting(votingId: number) {
     this.isLoading = true;
     this.spinnerService.show();
     this.votingService.getSingle(votingId).subscribe({
@@ -43,10 +49,12 @@ export class ViewVotingComponent implements OnInit {
   onVotingReceived(voting: Voting) {
     this.voting = voting;
     this.isLoading = false;
+    this.spinnerService.hide();
   }
 
   onVotingError() {
     this.isLoading = false;
+    this.spinnerService.hide();
     this.isError = true;
     this.toastService.push({type: ToastType.Error, message: "Failed to get voting :(."})
   }

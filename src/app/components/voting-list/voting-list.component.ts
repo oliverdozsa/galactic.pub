@@ -2,12 +2,14 @@ import {Component, ElementRef, inject, Input, ViewChild} from '@angular/core';
 import {Voting} from '../../services/responses';
 import {NgForOf, NgIf} from '@angular/common';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-voting-list',
   imports: [
     NgIf,
-    NgForOf
+    NgForOf,
+    RouterLink
   ],
   templateUrl: './voting-list.component.html',
   styleUrl: './voting-list.component.css'
