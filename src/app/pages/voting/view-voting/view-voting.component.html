@@ -4,31 +4,7 @@
   <div class="tabs tabs-border">
     <input type="radio" name="poll-data" class="tab" aria-label="basic data" checked="checked"/>
     <div class="tab-content border-base-300 bg-base-100 p-10">
-      <article class="prose">
-        <h2>{{ voting?.title }}</h2>
-        <h3>description</h3>
-        <p>{{ voting?.description }}</p>
-
-        <h3>limitations</h3>
-        <ul>
-          <li>number of voters: USED VOTERS / {{ voting?.maxVoters }}</li>
-          <li>
-            visibility:
-            <span *ngIf="voting!.visibility.toLowerCase() == 'private'">private <span class="text-base-content/50"> - only visible to participants</span></span>
-            <span *ngIf="voting!.visibility.toLowerCase() == 'unlisted'">unlisted <span class="text-base-content/50"> - anyone with the link can view</span></span>
-          </li>
-        </ul>
-
-        <h3>dates</h3>
-        <ul>
-          <li>start: {{toLocaleDateTime(voting!.startDate!)}}</li>
-          <li>end: {{toLocaleDateTime(voting!.endDate!)}}</li>
-          <li *ngIf="voting?.encryptedUntil">
-            encrypted until: {{toLocaleDateTime(voting!.encryptedUntil!)}}
-            <span class="text-base-content/50"> - results are not available before this date</span>
-          </li>
-        </ul>
-      </article>
+      <app-view-voting-basic-data [voting]="voting!"></app-view-voting-basic-data>
     </div>
 
     <input type="radio" name="poll-data" class="tab" aria-label="technical data"/>
