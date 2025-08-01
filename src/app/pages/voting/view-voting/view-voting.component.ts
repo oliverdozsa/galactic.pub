@@ -10,13 +10,19 @@ import {NotLoggedInComponent} from '../../../components/not-logged-in/not-logged
 import {
   ViewVotingBasicDataComponent
 } from '../../../components/view-voting/view-voting-basic-data/view-voting-basic-data.component';
+import {
+  ViewVotingTechnicalDataComponent
+} from '../../../components/view-voting/view-voting-technical-data/view-voting-technical-data.component';
+import {ViewVotingPollsComponent} from '../../../components/view-voting/view-voting-polls/view-voting-polls.component';
 
 @Component({
   selector: 'app-view-voting',
   imports: [
     NgIf,
     NotLoggedInComponent,
-    ViewVotingBasicDataComponent
+    ViewVotingBasicDataComponent,
+    ViewVotingTechnicalDataComponent,
+    ViewVotingPollsComponent
   ],
   templateUrl: './view-voting.component.html',
   styleUrl: './view-voting.component.css'
