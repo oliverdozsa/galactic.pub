@@ -1,0 +1,18 @@
+<article class="prose">
+  <div *ngFor="let poll of voting.polls">
+    <ul>
+      <li>
+        <strong>{{poll.question}}</strong>
+        <p>{{poll.description}}</p>
+
+        <h5><strong>options</strong></h5>
+        <ol>
+          <li *ngFor="let option of poll.pollOptions">
+            {{option.name}}
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </div>
+
+</article>
