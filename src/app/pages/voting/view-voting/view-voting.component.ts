@@ -7,12 +7,16 @@ import {NgIf} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {NotLoggedInComponent} from '../../../components/not-logged-in/not-logged-in.component';
+import {
+  ViewVotingBasicDataComponent
+} from '../../../components/view-voting/view-voting-basic-data/view-voting-basic-data.component';
 
 @Component({
   selector: 'app-view-voting',
   imports: [
     NgIf,
-    NotLoggedInComponent
+    NotLoggedInComponent,
+    ViewVotingBasicDataComponent
   ],
   templateUrl: './view-voting.component.html',
   styleUrl: './view-voting.component.css'
