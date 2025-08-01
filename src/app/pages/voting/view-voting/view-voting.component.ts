@@ -1,4 +1,4 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {VotingService} from '../../../services/voting.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {Voting} from '../../../services/responses';
@@ -58,4 +58,11 @@ export class ViewVotingComponent implements OnInit {
     this.isError = true;
     this.toastService.push({type: ToastType.Error, message: "Failed to get voting :(."})
   }
+
+  toLocaleDateTime(dateString: string) {
+    const date = new Date(Date.parse(dateString));
+    return date.toLocaleString();
+  }
+
+  protected readonly Date = Date;
 }
