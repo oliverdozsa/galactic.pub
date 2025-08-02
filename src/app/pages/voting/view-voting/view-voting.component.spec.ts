@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VotingsViewerComponent } from './votings-viewer.component';
+import { ViewVotingComponent } from './view-voting.component';
 
-describe('VotingsViewerComponent', () => {
-  let component: VotingsViewerComponent;
-  let fixture: ComponentFixture<VotingsViewerComponent>;
+describe('ViewVotingComponent', () => {
+  let component: ViewVotingComponent;
+  let fixture: ComponentFixture<ViewVotingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VotingsViewerComponent]
+      imports: [ViewVotingComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VotingsViewerComponent);
+    fixture = TestBed.createComponent(ViewVotingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

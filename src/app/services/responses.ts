@@ -7,6 +7,7 @@ export interface Voting {
   decryptionKey: string,
   startDate: string,
   endDate: string,
+  encryptedUntil: string,
   assetCode: string,
   visibility: string,
   ballotType: string,

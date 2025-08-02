@@ -12,6 +12,7 @@ import {ToastsService, ToastType} from '../../../services/toasts.service';
 import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
 import {mergeMap} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 export enum Step {
   BasicData,
@@ -34,6 +35,8 @@ export enum Step {
 })
 export class CreateVotingStepsComponent {
   Step = Step;
+
+  router = inject(Router);
 
   currentStep = Step.BasicData;
   votingRequest: CreateVotingRequest = new CreateVotingRequest();
@@ -125,6 +128,7 @@ export class CreateVotingStepsComponent {
 
   onCreatedSuccessfully() {
     this.toastsService.push({message: "successfully created voting!", type: ToastType.Success});
+    this.router.navigate(["/voting/my-created-votings"]);
   }
 
   onCreateFailed(error: any) {

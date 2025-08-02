@@ -21,10 +21,8 @@ export class MyCreatedVotingsComponent extends VotingsPaging implements OnInit{
     this.votingService.getCreated(this.currentPage)
       .subscribe({
         next: p => this.onPageReceived(p),
-        complete: () => {
-          this.isLoading = false;
-          this.isLoadingFirstTime = false;
-        }
+        complete: () => this.loadingFinished(),
+        error: () => this.loadingFinishedWitError()
       });
   }
 }
