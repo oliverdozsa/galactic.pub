@@ -27,11 +27,15 @@ export class CreateVotingParticipantsComponent {
   private emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   get isEmailValid() {
-    return this.emailRegex.test(this.emailInput);
+    return this.emailRegex.test(this.emailInput) && !this.isEmailAlreadyAdded;
   }
 
   get isMaxVotersReached() {
     return this.participants.length >= this.votingRequest.maxVoters;
+  }
+
+  get isEmailAlreadyAdded() {
+    return this.participants.find(e => e == this.emailInput) != undefined;
   }
 
   onAddEvent() {

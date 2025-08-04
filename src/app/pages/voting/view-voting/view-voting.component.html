@@ -2,17 +2,17 @@
 <div *ngIf="!isLoading && !isError && authService.isLoggedIn">
 
   <div class="tabs tabs-border">
-    <input type="radio" name="poll-data" class="tab" aria-label="basic data" checked="checked"/>
+    <input type="radio" name="poll-data" class="tab text-base" aria-label="basic data" checked="checked"/>
     <div class="tab-content border-base-300 bg-base-100 p-10 rounded-md">
       <app-view-voting-basic-data [voting]="voting!"></app-view-voting-basic-data>
     </div>
 
-    <input type="radio" name="poll-data" class="tab" aria-label="technical data"/>
+    <input type="radio" name="poll-data" class="tab text-base" aria-label="technical data"/>
     <div class="tab-content border-base-300 bg-base-100 p-10 rounded-md">
       <app-view-voting-technical-data [voting]="voting!"></app-view-voting-technical-data>
     </div>
 
-    <input type="radio" name="poll-data" class="tab" aria-label="polls"/>
+    <input type="radio" name="poll-data" class="tab text-base" aria-label="polls"/>
     <div class="tab-content border-base-300 bg-base-100 p-10 rounded-md">
       <app-view-voting-polls [voting]="voting!"></app-view-voting-polls>
     </div>

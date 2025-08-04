@@ -5,8 +5,8 @@
 <div *ngIf="votings.length > 0">
   <ul class="list bg-base-100">
     <li *ngFor="let voting of votings; let i = index" class="list-row">
-      <div class="list-col-grow">
-        {{ voting.title }}
+      <div routerLink="/voting/{{voting.id}}" class="list-col-grow">
+        <a class="hover:underline text-lg font-bold cursor-pointer">{{ voting.title }}</a>
       </div>
 
       <a routerLink="/voting/{{voting.id}}" class="btn btn-square btn-ghost" (click)="onOpenClicked(i)">
