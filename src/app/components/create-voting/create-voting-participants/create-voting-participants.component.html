@@ -22,6 +22,9 @@
 <div *ngIf="isMaxVotersReached" class="text-error">Cannot add more voters, already at full capacity
   ({{ votingRequest.maxVoters }})!
 </div>
+<div *ngIf="isEmailAlreadyAdded" class="text-error">
+  "{{this.emailInput}}" has already been added!
+</div>
 <div *ngIf="!isMaxVotersReached" class="fieldset-label">
   <div>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

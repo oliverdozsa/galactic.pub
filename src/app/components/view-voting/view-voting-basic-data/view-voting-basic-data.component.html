@@ -5,7 +5,7 @@
 
   <h3>limitations</h3>
   <ul>
-    <li>number of voters: USED VOTERS / {{ voting.maxVoters }}</li>
+    <li>number of voters: <span [class]="numOfVotersClass" class="font-bold">{{voting.numOfVoters}} / {{ voting.maxVoters }} ({{numOfVotersPercentFull.toFixed(2)}} % full)</span></li>
     <li>
       visibility:
       <span *ngIf="voting.visibility.toLowerCase() == 'private'">private <span class="text-base-content/50"> - only visible to participants</span></span>

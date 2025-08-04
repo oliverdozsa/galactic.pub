@@ -13,7 +13,8 @@ export interface Voting {
   ballotType: string,
   maxChoices: number,
   isOnTestNetwork: boolean,
-  polls: VotingPoll[]
+  polls: VotingPoll[],
+  numOfVoters: number
 }
 
 export interface VotingPoll {
