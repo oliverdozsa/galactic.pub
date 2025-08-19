@@ -52,4 +52,9 @@ export class VotingService {
     const url = this.apiUrl + `/stellar/votings/${votingId}`;
     return this.httpClient.get<Voting>(url);
   }
+
+  public delete(votingId: number) {
+    const url = this.apiUrl + `/stellar/votings/${votingId}`;
+    return this.httpClient.delete(url);
+  }
 }

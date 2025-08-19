@@ -3,6 +3,8 @@ import {Voting} from '../../services/responses';
 import {NgForOf, NgIf} from '@angular/common';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {RouterLink} from '@angular/router';
+import {VotingService} from '../../services/voting.service';
+import {ToastsService} from '../../services/toasts.service';
 
 @Component({
   selector: 'app-voting-list',
@@ -29,29 +31,53 @@ export class VotingListComponent {
     }
   };
 
+  @ViewChild("votingsDeleteModal")
+  deleteModal: ElementRef | undefined;
+
+  votingService = inject(VotingService);
+  spinnerService = inject(NgxSpinnerService);
+  toastsService = inject(ToastsService);
+
+  openedVoting: Voting | undefined = undefined;
+  isDeleting = false;
+
   get isLoading(): boolean {
     return this._isLoading
   }
 
-  @ViewChild("votingsViewerModal")
-  viewModal: ElementRef | undefined;
-
-  @ViewChild("votingsDeleteModal")
-  deleteModal: ElementRef | undefined;
-
-  openedVoting: Voting | undefined = undefined;
-
   private _isLoading = false;
 
-  spinnerService = inject(NgxSpinnerService);
-
-  onOpenClicked(i: number) {
-    this.openedVoting = this.votings[i];
-    this.viewModal?.nativeElement.showModal();
+  isVotingDeleting(voting: Voting) {
+    return this.openedVoting && this.openedVoting.id == voting.id && this.isDeleting;
   }
 
   onDeleteClicked(i: number) {
     this.openedVoting = this.votings[i];
-    this.viewModal?.nativeElement.showModal();
+    this.deleteModal?.nativeElement.showModal();
+  }
+
+  onDeleteCancelClicked() {
+    this.deleteModal?.nativeElement.close();
+  }
+
+  onDeleteYesClicked() {
+    this.deleteModal?.nativeElement.close();
+    this.isDeleting = true;
+
+    this.votingService.delete(this.openedVoting!.id)
+      .subscribe({
+        next: () => this.onDeleteVotingSuccessful(),
+        error: () => this.onDeleteVotingFailed()
+      })
+  }
+
+  onDeleteVotingSuccessful() {
+    this.isDeleting = false;
+    // TODO
+  }
+
+  onDeleteVotingFailed() {
+    this.isDeleting = false;
+    // TODO
   }
 }
