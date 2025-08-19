@@ -1,10 +1,11 @@
-import {Component, ElementRef, inject, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Voting} from '../../services/responses';
 import {NgForOf, NgIf} from '@angular/common';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {RouterLink} from '@angular/router';
 import {VotingService} from '../../services/voting.service';
 import {ToastsService} from '../../services/toasts.service';
+import {DeleteVoting} from './delete-voting';
 
 @Component({
   selector: 'app-voting-list',
@@ -16,7 +17,7 @@ import {ToastsService} from '../../services/toasts.service';
   templateUrl: './voting-list.component.html',
   styleUrl: './voting-list.component.css'
 })
-export class VotingListComponent {
+export class VotingListComponent implements OnInit {
   @Input()
   votings: Voting[] = [];
 
@@ -32,52 +33,21 @@ export class VotingListComponent {
   };
 
   @ViewChild("votingsDeleteModal")
-  deleteModal: ElementRef | undefined;
+  deleteModal!: ElementRef;
 
   votingService = inject(VotingService);
   spinnerService = inject(NgxSpinnerService);
   toastsService = inject(ToastsService);
+  deleteVoting: DeleteVoting | undefined;
 
-  openedVoting: Voting | undefined = undefined;
-  isDeleting = false;
+  ngOnInit(): void {
+    this.deleteVoting = new DeleteVoting(this.votingService, this.toastsService, this.deleteModal);
+  }
+
 
   get isLoading(): boolean {
     return this._isLoading
   }
 
   private _isLoading = false;
-
-  isVotingDeleting(voting: Voting) {
-    return this.openedVoting && this.openedVoting.id == voting.id && this.isDeleting;
-  }
-
-  onDeleteClicked(i: number) {
-    this.openedVoting = this.votings[i];
-    this.deleteModal?.nativeElement.showModal();
-  }
-
-  onDeleteCancelClicked() {
-    this.deleteModal?.nativeElement.close();
-  }
-
-  onDeleteYesClicked() {
-    this.deleteModal?.nativeElement.close();
-    this.isDeleting = true;
-
-    this.votingService.delete(this.openedVoting!.id)
-      .subscribe({
-        next: () => this.onDeleteVotingSuccessful(),
-        error: () => this.onDeleteVotingFailed()
-      })
-  }
-
-  onDeleteVotingSuccessful() {
-    this.isDeleting = false;
-    // TODO
-  }
-
-  onDeleteVotingFailed() {
-    this.isDeleting = false;
-    // TODO
-  }
 }
