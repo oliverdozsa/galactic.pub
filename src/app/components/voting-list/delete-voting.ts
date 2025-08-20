@@ -1,49 +1,51 @@
-import {VotingService} from '../../services/voting.service';
-import {Toast, ToastsService} from '../../services/toasts.service';
 import {Voting} from '../../services/responses';
-import {ElementRef} from '@angular/core';
+import {VotingListComponent} from './voting-list.component';
+import {ToastType} from '../../services/toasts.service';
 
 export class DeleteVoting {
-  isDeleting = false;
   votingToDelete: Voting | undefined;
 
-  constructor(
-    private votingService: VotingService,
-    private toastService: ToastsService,
-    private deleteModal: ElementRef) {
+  private isYesClicked = false;
+
+  constructor(private component: VotingListComponent) {
   }
 
-  isVotingDeleting(voting: Voting) {
-    return this.votingToDelete && this.votingToDelete.id == voting.id && this.isDeleting;
+  isDeleting(voting: Voting) {
+    return this.votingToDelete && this.votingToDelete.id == voting.id && this.isYesClicked;
   }
 
   onClicked(voting: Voting) {
     this.votingToDelete = voting;
-    this.deleteModal?.nativeElement.showModal();
+    this.component.deleteModal?.nativeElement.showModal();
   }
 
   onCancelClicked() {
-    this.deleteModal?.nativeElement.close();
+    this.component.deleteModal?.nativeElement.close();
+    this.votingToDelete = undefined;
   }
 
   onYesClicked() {
-    this.deleteModal?.nativeElement.close();
-    this.isDeleting = true;
+    this.isYesClicked = true;
+    this.component.deleteModal?.nativeElement.close();
 
-    this.votingService.delete(this.votingToDelete!.id)
+    this.component.votingService.delete(this.votingToDelete!.id)
       .subscribe({
-        next: () => this.onScucess(),
+        next: () => this.onSuccess(),
         error: () => this.onFailed()
       })
   }
 
-  onScucess() {
-    this.isDeleting = false;
-    // TODO
+  onSuccess() {
+    this.component.votings = this.component.votings.filter(v => v.id != this.votingToDelete?.id);
+
+    this.isYesClicked = false;
+    this.votingToDelete = undefined;
+    this.component.toastsService.push({type: ToastType.Success, message: "Successfully deleted voting."});
   }
 
   onFailed() {
-    this.isDeleting = false;
-    // TODO
+    this.isYesClicked = false;
+    this.votingToDelete = undefined;
+    this.component.toastsService.push({type: ToastType.Error, message: "Failed to delete voting."});
   }
 }
