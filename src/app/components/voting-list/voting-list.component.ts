@@ -38,10 +38,10 @@ export class VotingListComponent implements OnInit {
   votingService = inject(VotingService);
   spinnerService = inject(NgxSpinnerService);
   toastsService = inject(ToastsService);
-  deleteVoting: DeleteVoting | undefined;
+  deleteVoting!: DeleteVoting;
 
   ngOnInit(): void {
-    this.deleteVoting = new DeleteVoting(this.votingService, this.toastsService, this.deleteModal);
+    this.deleteVoting = new DeleteVoting(this);
   }
 
 
