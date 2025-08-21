@@ -22,6 +22,9 @@ export class VotingListComponent implements OnInit {
   votings: Voting[] = [];
 
   @Input()
+  hideDelete: boolean = false;
+
+  @Input()
   set isLoading(value: boolean) {
     this._isLoading = value;
 
