@@ -1,6 +1,7 @@
 import {Voting} from '../../services/responses';
 import {VotingListComponent} from './voting-list.component';
 import {ToastType} from '../../services/toasts.service';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 export class DeleteVoting {
   votingToDelete: Voting | undefined;
@@ -8,10 +9,6 @@ export class DeleteVoting {
   private isYesClicked = false;
 
   constructor(private component: VotingListComponent) {
-  }
-
-  isDeleting(voting: Voting) {
-    return this.votingToDelete && this.votingToDelete.id == voting.id && this.isYesClicked;
   }
 
   onClicked(voting: Voting) {
@@ -28,6 +25,8 @@ export class DeleteVoting {
     this.isYesClicked = true;
     this.component.deleteModal?.nativeElement.close();
 
+    this.component.spinnerService.show();
+
     this.component.votingService.delete(this.votingToDelete!.id)
       .subscribe({
         next: () => this.onSuccess(),
@@ -41,11 +40,15 @@ export class DeleteVoting {
     this.isYesClicked = false;
     this.votingToDelete = undefined;
     this.component.toastsService.push({type: ToastType.Success, message: "Successfully deleted voting."});
+
+    this.component.spinnerService.hide();
   }
 
   onFailed() {
     this.isYesClicked = false;
     this.votingToDelete = undefined;
     this.component.toastsService.push({type: ToastType.Error, message: "Failed to delete voting."});
+
+    this.component.spinnerService.hide();
   }
 }
