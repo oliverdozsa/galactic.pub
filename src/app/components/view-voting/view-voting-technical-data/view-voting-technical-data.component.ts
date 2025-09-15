@@ -10,4 +10,12 @@ import {Voting} from '../../../services/responses';
 export class ViewVotingTechnicalDataComponent {
   @Input()
   voting!: Voting;
+
+  getStellarChainBaseUrl(voting: Voting) {
+    return `https://${voting.isOnTestNetwork ? "testnet." : ""}stellarchain.io`;
+  }
+
+  truncateAccountId(accountId: string) {
+    return accountId.slice(0, 10) + "...";
+  }
 }

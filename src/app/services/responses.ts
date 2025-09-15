@@ -14,7 +14,8 @@ export interface Voting {
   maxChoices: number,
   isOnTestNetwork: boolean,
   polls: VotingPoll[],
-  numOfVoters: number
+  numOfVoters: number,
+  fundingAccountId: string
 }
 
 export interface VotingPoll {
