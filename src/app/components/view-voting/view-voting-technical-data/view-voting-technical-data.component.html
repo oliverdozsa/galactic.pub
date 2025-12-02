@@ -1,21 +1,89 @@
-<article class="prose">
-  <h3>token id</h3>
-  <pre class="not-prose">{{ voting.assetCode }}</pre>
-
-  <h3>funding account</h3>
-  <div class="flex flex-row gap-1">
+<article class="prose max-w-full">
+  <div class="grid grid-cols-2 justify-center justify-items-center">
     <div>
-      <pre class="not-prose"><a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.fundingAccountId">{{ truncateAccountId(voting.fundingAccountId) }}</a></pre>
+      <h3>token id</h3>
+      <pre class="not-prose">{{ voting.assetCode }}</pre>
+
+      <h3>funding account</h3>
+      <div class="flex flex-row gap-1">
+        <div>
+          <pre class="not-prose"><a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.fundingAccountId">{{ truncateAccountId(voting.fundingAccountId) }}</a></pre>
+        </div>
+
+        <div>
+          <a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.fundingAccountId">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                 class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
 
     <div>
-      <a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.fundingAccountId">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-             class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
-        </svg>
-      </a>
+      <h3>distribution account</h3>
+      <div *ngIf="!voting.distributionAccountId">
+        <pre class="not-prose">not yet available</pre>
+      </div>
+      <div *ngIf="voting.distributionAccountId" class="flex flex-row gap-1">
+        <div>
+          <pre class="not-prose"><a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.distributionAccountId">{{ truncateAccountId(voting.distributionAccountId) }}</a></pre>
+        </div>
+
+        <div>
+          <a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.distributionAccountId">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                 class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <h3>ballot account</h3>
+      <div *ngIf="!voting.ballotAccountId">
+        <pre class="not-prose">not yet available</pre>
+      </div>
+      <div *ngIf="voting.ballotAccountId" class="flex flex-row gap-1">
+        <div>
+          <pre class="not-prose"><a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.ballotAccountId">{{ truncateAccountId(voting.ballotAccountId) }}</a></pre>
+        </div>
+
+        <div>
+          <a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.ballotAccountId">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                 class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <h3>issuer account</h3>
+      <div *ngIf="!voting.issuerAccountId">
+        <pre class="not-prose">not yet available</pre>
+      </div>
+
+      <div *ngIf="voting.issuerAccountId" class="flex flex-row gap-1">
+        <div>
+          <pre class="not-prose"><a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.issuerAccountId">{{ truncateAccountId(voting.issuerAccountId) }}</a></pre>
+        </div>
+
+        <div>
+          <a class="link" target="_blank" [href]="getStellarChainBaseUrl(voting) + '/accounts/' + voting.issuerAccountId">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                 class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </article>
