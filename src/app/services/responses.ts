@@ -15,7 +15,10 @@ export interface Voting {
   isOnTestNetwork: boolean,
   polls: VotingPoll[],
   numOfVoters: number,
-  fundingAccountId: string
+  fundingAccountId: string,
+  distributionAccountId: string,
+  ballotAccountId: string,
+  issuerAccountId: string
 }
 
 export interface VotingPoll {

@@ -1,9 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {Voting} from '../../../services/responses';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-view-voting-technical-data',
-  imports: [],
+  imports: [
+    NgIf
+  ],
   templateUrl: './view-voting-technical-data.component.html',
   styleUrl: './view-voting-technical-data.component.css'
 })
