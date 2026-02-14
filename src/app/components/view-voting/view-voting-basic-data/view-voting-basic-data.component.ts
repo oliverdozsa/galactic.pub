@@ -33,4 +33,12 @@ export class ViewVotingBasicDataComponent {
   get numOfVotersPercentFull() {
     return this.voting.numOfVoters / this.voting.maxVoters * 100;
   }
+
+  get isVotingOpen() {
+    const startDate = Date.parse(this.voting.startDate);
+    const endDate = Date.parse(this.voting.endDate);
+
+    // TODO
+    return false;
+  }
 }

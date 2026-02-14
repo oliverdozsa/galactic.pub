@@ -18,7 +18,8 @@ export interface Voting {
   fundingAccountId: string,
   distributionAccountId: string,
   ballotAccountId: string,
-  issuerAccountId: string
+  issuerAccountId: string,
+  isParticipant: string
 }
 
 export interface VotingPoll {
