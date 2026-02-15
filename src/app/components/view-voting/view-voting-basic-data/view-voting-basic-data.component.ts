@@ -1,11 +1,14 @@
 import {Component, Input} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {Voting} from '../../../services/responses';
+import {getVotingStatus, getVotingStatusText, VotingStatus} from '../../../pages/voting/voting-utils';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-view-voting-basic-data',
   imports: [
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './view-voting-basic-data.component.html',
   styleUrl: './view-voting-basic-data.component.css'
@@ -13,6 +16,8 @@ import {Voting} from '../../../services/responses';
 export class ViewVotingBasicDataComponent {
   @Input()
   voting!: Voting;
+
+  VotingStatus = VotingStatus;
 
   toLocaleDateTime(dateString: string) {
     const date = new Date(Date.parse(dateString));
@@ -34,11 +39,11 @@ export class ViewVotingBasicDataComponent {
     return this.voting.numOfVoters / this.voting.maxVoters * 100;
   }
 
-  get isVotingOpen() {
-    const startDate = Date.parse(this.voting.startDate);
-    const endDate = Date.parse(this.voting.endDate);
+  get votingStatus() {
+    return getVotingStatus(this.voting);
+  }
 
-    // TODO
-    return false;
+  get statusText(): string {
+    return getVotingStatusText(this.votingStatus);
   }
 }

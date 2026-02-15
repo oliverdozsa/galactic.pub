@@ -6,6 +6,7 @@ import {RouterLink} from '@angular/router';
 import {VotingService} from '../../services/voting.service';
 import {ToastsService} from '../../services/toasts.service';
 import {DeleteVoting} from './delete-voting';
+import {getVotingStatus, getVotingStatusText, VotingStatus} from '../../pages/voting/voting-utils';
 
 @Component({
   selector: 'app-voting-list',
@@ -43,6 +44,8 @@ export class VotingListComponent implements OnInit {
   toastsService = inject(ToastsService);
   deleteVoting!: DeleteVoting;
 
+  VotingStatus = VotingStatus;
+
   ngOnInit(): void {
     this.deleteVoting = new DeleteVoting(this);
   }
@@ -53,4 +56,7 @@ export class VotingListComponent implements OnInit {
   }
 
   private _isLoading = false;
+
+  protected readonly getVotingStatus = getVotingStatus;
+  protected readonly getVotingStatusText = getVotingStatusText;
 }
