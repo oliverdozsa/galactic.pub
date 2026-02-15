@@ -69,10 +69,5 @@ export class ViewVotingComponent implements OnInit {
     this.toastService.push({type: ToastType.Error, message: "Failed to get voting :(."})
   }
 
-  toLocaleDateTime(dateString: string) {
-    const date = new Date(Date.parse(dateString));
-    return date.toLocaleString();
-  }
-
   protected readonly Date = Date;
 }

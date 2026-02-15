@@ -1,1 +1,18 @@
-<p>vote works!</p>
+<app-not-logged-in *ngIf="!authService.isLoggedIn"></app-not-logged-in>
+<div *ngIf="!isLoading && !isError && authService.isLoggedIn && voting">
+  <div *ngIf="voting.isParticipant">
+    <div *ngIf="isVotingOpen">
+      <app-cast-vote></app-cast-vote>
+    </div>
+    <div *ngIf="!isVotingOpen">
+      <div role="alert" class="alert alert-error alert-outline">
+        <span>voting ended!</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!voting.isParticipant">
+    <div role="alert" class="alert alert-error alert-outline">
+      <span>you're not participating in this voting!</span>
+    </div>
+  </div>
+</div>
