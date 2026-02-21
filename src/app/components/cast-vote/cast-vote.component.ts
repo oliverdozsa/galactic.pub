@@ -1,11 +1,36 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, inject, viewChild} from '@angular/core';
+import {CastVoteService} from '../../services/cast-vote.service';
+import {Voting} from '../../services/responses';
+import {NgIf} from '@angular/common';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {CastVotePollsComponent} from './cast-vote-polls/cast-vote-polls.component';
 
 @Component({
   selector: 'app-cast-vote',
-  imports: [],
+  imports: [
+    NgIf,
+    CastVotePollsComponent
+  ],
   templateUrl: './cast-vote.component.html',
   styleUrl: './cast-vote.component.css'
 })
 export class CastVoteComponent {
+  castVoteService = inject(CastVoteService);
 
+  dialog = viewChild<ElementRef<HTMLDialogElement>>("castVoteDialog");
+
+  get voting(): Voting {
+    return this.castVoteService.voting;
+  }
+
+  constructor() {
+    this.castVoteService.castVoteStarted.pipe(takeUntilDestroyed())
+      .subscribe({
+        next: () => this.castVoteStarted()
+      });
+  }
+
+  private castVoteStarted() {
+    this.dialog()?.nativeElement.showModal();
+  }
 }

@@ -1,0 +1,22 @@
+<div class="w-full">
+  <article class="prose">
+    <h3>Make your choice!</h3>
+    <div *ngFor="let poll of voting.polls">
+      <h4>{{ poll.question }}</h4>
+      <p>{{ poll.description }}</p>
+      <div>
+        <div *ngFor="let option of poll.pollOptions" class="flex items-center gap-3 py-2">
+          <input type="radio" class="radio" />
+          <label class="label text-base-content">{{option.name}}</label>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <div class="flex justify-center w-full">
+    <div>
+      <button class="btn btn-success">VOTE!</button>
+    </div>
+  </div>
+
+</div>

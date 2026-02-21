@@ -1,14 +1,16 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, inject, Input, viewChild} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {Voting} from '../../../services/responses';
 import {getVotingStatus, getVotingStatusText, VotingStatus} from '../../../pages/voting/voting-utils';
 import {RouterLink} from '@angular/router';
+import {CastVoteService} from '../../../services/cast-vote.service';
+import {CastVoteComponent} from '../../cast-vote/cast-vote.component';
 
 @Component({
   selector: 'app-view-voting-basic-data',
   imports: [
     NgIf,
-    RouterLink
+    CastVoteComponent
   ],
   templateUrl: './view-voting-basic-data.component.html',
   styleUrl: './view-voting-basic-data.component.css'
@@ -16,6 +18,8 @@ import {RouterLink} from '@angular/router';
 export class ViewVotingBasicDataComponent {
   @Input()
   voting!: Voting;
+
+  castVoteService = inject(CastVoteService);
 
   VotingStatus = VotingStatus;
 
@@ -45,5 +49,10 @@ export class ViewVotingBasicDataComponent {
 
   get statusText(): string {
     return getVotingStatusText(this.votingStatus);
+  }
+
+  onVoteClick() {
+    this.castVoteService.voting = this.voting;
+    this.castVoteService.castVoteStarted.next();
   }
 }
