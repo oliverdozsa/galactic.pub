@@ -7,7 +7,7 @@
     <div *ngIf="voting">
       <div class="carousel">
         <div #castVoteSlide class="carousel-item w-full">
-          <app-cast-vote-polls [voting]="voting" class="w-full"></app-cast-vote-polls>
+          <app-cast-vote-polls [voting]="voting" (choicesChanged)="onChoicesChanged($event)" class="w-full"></app-cast-vote-polls>
         </div>
 
         <div #voteDetailsSlide id="item1" class="carousel-item w-full">

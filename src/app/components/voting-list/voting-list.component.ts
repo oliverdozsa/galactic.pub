@@ -7,13 +7,16 @@ import {VotingService} from '../../services/voting.service';
 import {ToastsService} from '../../services/toasts.service';
 import {DeleteVoting} from './delete-voting';
 import {getVotingStatus, getVotingStatusText, VotingStatus} from '../../pages/voting/voting-utils';
+import {CastVoteComponent} from '../cast-vote/cast-vote.component';
+import {CastVoteService} from '../../services/cast-vote.service';
 
 @Component({
   selector: 'app-voting-list',
   imports: [
     NgIf,
     NgForOf,
-    RouterLink
+    RouterLink,
+    CastVoteComponent
   ],
   templateUrl: './voting-list.component.html',
   styleUrl: './voting-list.component.css'
@@ -42,6 +45,7 @@ export class VotingListComponent implements OnInit {
   votingService = inject(VotingService);
   spinnerService = inject(NgxSpinnerService);
   toastsService = inject(ToastsService);
+  castVoteService = inject(CastVoteService);
   deleteVoting!: DeleteVoting;
 
   VotingStatus = VotingStatus;
@@ -53,6 +57,11 @@ export class VotingListComponent implements OnInit {
 
   get isLoading(): boolean {
     return this._isLoading
+  }
+
+  onVoteClick(voting: Voting) {
+    this.castVoteService.voting = voting;
+    this.castVoteService.castVoteStarted.next();
   }
 
   private _isLoading = false;

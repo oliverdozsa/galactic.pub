@@ -4,11 +4,11 @@
     <div *ngFor="let poll of voting.polls">
       <h4>{{ poll.question }}</h4>
       <p>{{ poll.description }}</p>
-      <div>
-        <div *ngFor="let option of poll.pollOptions" class="flex items-center gap-3 py-2">
-          <input type="radio" class="radio" />
-          <label class="label text-base-content">{{option.name}}</label>
-        </div>
+      <div *ngIf="voting.ballotType == BallotType.MultiPoll">
+        <app-multi-poll [poll]="poll" (choiceChanged)="onSingleChoiceChange(poll.index, $event)"></app-multi-poll>
+      </div>
+      <div *ngIf="voting.ballotType == BallotType.MultiChoice">
+        <app-multi-choice [poll]="poll" (choicesChanged)="onMultipleChoicesChanged(poll.index, $event)"></app-multi-choice>
       </div>
     </div>
   </article>
