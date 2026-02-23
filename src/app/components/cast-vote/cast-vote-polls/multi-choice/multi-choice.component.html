@@ -1,4 +1,4 @@
 <div *ngFor="let option of poll.pollOptions" class="flex items-center gap-3 py-2">
-  <input type="checkbox" class="checkbox" />
+  <input type="checkbox" class="checkbox" [checked]="isChecked(option)" (change)="checkToggle(option)" />
   <label class="label text-base-content">{{option.name}}</label>
 </div>

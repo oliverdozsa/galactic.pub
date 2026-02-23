@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Voting} from '../../../services/responses';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {Voting, VotingPoll} from '../../../services/responses';
 import {NgForOf, NgIf} from '@angular/common';
 import {BallotType} from '../../create-voting/create-voting-request';
 import {MultiPollComponent} from './multi-poll/multi-poll.component';
 import {MultiChoiceComponent} from './multi-choice/multi-choice.component';
-import {PollIndex, PollOptionCode} from '../../../services/cast-vote.service';
+import {CastVoteService, PollIndex, PollOptionCode} from '../../../services/cast-vote.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-cast-vote-polls',
@@ -26,6 +27,15 @@ export class CastVotePollsComponent {
   @Output()
   choicesChanged = new EventEmitter<Map<PollIndex, Set<PollOptionCode>>>();
 
+  castVoteService = inject(CastVoteService);
+
+  constructor() {
+    this.castVoteService.castVoteStarted.pipe(takeUntilDestroyed())
+      .subscribe({
+        next: () => this.castVoteStarted()
+      });
+  }
+
   private choices = new Map<PollIndex, Set<PollOptionCode>>();
 
   onSingleChoiceChange(index: PollIndex, choice: PollOptionCode) {
@@ -35,5 +45,26 @@ export class CastVotePollsComponent {
   onMultipleChoicesChanged(index: PollIndex, choices: Set<PollIndex>) {
     this.choices.set(index, choices);
     this.choicesChanged.emit(this.choices);
+  }
+
+  isChoiceValidFor(poll: VotingPoll) {
+    if(!this.choices.has(poll.index)) {
+      return false;
+    }
+
+    let isNumberOfChoicesValid = true;
+    if(this.voting.ballotType == BallotType.MultiChoice) {
+      isNumberOfChoicesValid = this.choices.get(poll.index)!.size <= this.voting.maxChoices;
+    }
+
+    return this.choices.get(poll.index)!.size > 0 && isNumberOfChoicesValid;
+  }
+
+  areAllChoicesValid() {
+    return this.voting.polls.every(poll => this.isChoiceValidFor(poll));
+  }
+
+  private castVoteStarted() {
+    this.choices.clear();
   }
 }

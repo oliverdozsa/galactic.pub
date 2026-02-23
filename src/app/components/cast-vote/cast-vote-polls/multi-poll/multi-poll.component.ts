@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {VotingPoll} from '../../../../services/responses';
 import {NgForOf} from '@angular/common';
-import {PollOptionCode} from '../../../../services/cast-vote.service';
+import {CastVoteService, PollOptionCode} from '../../../../services/cast-vote.service';
 import {FormsModule} from '@angular/forms';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-multi-poll',
@@ -17,9 +18,14 @@ export class MultiPollComponent {
   @Input()
   poll!: VotingPoll;
 
-  _choice!: PollOptionCode;
+  @Output()
+  choiceChanged = new EventEmitter<PollOptionCode>();
 
-  get choice(): PollOptionCode {
+  castVoteService = inject(CastVoteService);
+
+  _choice: PollOptionCode | undefined;
+
+  get choice(): PollOptionCode | undefined {
     return this._choice;
   }
 
@@ -28,6 +34,14 @@ export class MultiPollComponent {
     this.choiceChanged.emit(this._choice);
   }
 
-  @Output()
-  choiceChanged = new EventEmitter<PollOptionCode>();
+  constructor() {
+    this.castVoteService.castVoteStarted.pipe(takeUntilDestroyed())
+      .subscribe({
+        next: () => this.castVoteStarted()
+      });
+  }
+
+  private castVoteStarted() {
+    this._choice = undefined;
+  }
 }

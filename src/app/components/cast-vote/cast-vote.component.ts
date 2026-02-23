@@ -9,8 +9,7 @@ import {CastVotePollsComponent} from './cast-vote-polls/cast-vote-polls.componen
   selector: 'app-cast-vote',
   imports: [
     NgIf,
-    CastVotePollsComponent,
-    JsonPipe
+    CastVotePollsComponent
   ],
   templateUrl: './cast-vote.component.html',
   styleUrl: './cast-vote.component.css'
@@ -38,6 +37,7 @@ export class CastVoteComponent {
   }
 
   private castVoteStarted() {
-    this.dialog()?.nativeElement.showModal();
+    this.choices.clear();
+    setTimeout(() => this.dialog()?.nativeElement.showModal(), 100);
   }
 }

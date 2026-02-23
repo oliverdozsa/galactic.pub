@@ -6,16 +6,19 @@
       <p>{{ poll.description }}</p>
       <div *ngIf="voting.ballotType == BallotType.MultiPoll">
         <app-multi-poll [poll]="poll" (choiceChanged)="onSingleChoiceChange(poll.index, $event)"></app-multi-poll>
+        <div *ngIf="!isChoiceValidFor(poll)" class="text-error">you must choose one!</div>
       </div>
       <div *ngIf="voting.ballotType == BallotType.MultiChoice">
-        <app-multi-choice [poll]="poll" (choicesChanged)="onMultipleChoicesChanged(poll.index, $event)"></app-multi-choice>
+        <app-multi-choice [poll]="poll"
+                          (choicesChanged)="onMultipleChoicesChanged(poll.index, $event)"></app-multi-choice>
+        <div *ngIf="!isChoiceValidFor(poll)" class="text-error">you must choose at least 1 and at most {{ voting.maxChoices }}</div>
       </div>
     </div>
   </article>
 
   <div class="flex justify-center w-full">
     <div>
-      <button class="btn btn-success">VOTE!</button>
+      <button [disabled]="!areAllChoicesValid()" class="btn btn-success">VOTE!</button>
     </div>
   </div>
 
