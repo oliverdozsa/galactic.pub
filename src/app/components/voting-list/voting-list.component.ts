@@ -61,7 +61,7 @@ export class VotingListComponent implements OnInit {
 
   onVoteClick(voting: Voting) {
     this.castVoteService.voting = voting;
-    this.castVoteService.castVoteStarted.next();
+    this.castVoteService.initiated.next();
   }
 
   private _isLoading = false;

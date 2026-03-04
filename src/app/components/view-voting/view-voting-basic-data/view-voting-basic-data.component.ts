@@ -53,6 +53,6 @@ export class ViewVotingBasicDataComponent {
 
   onVoteClick() {
     this.castVoteService.voting = this.voting;
-    this.castVoteService.castVoteStarted.next();
+    this.castVoteService.initiated.next();
   }
 }

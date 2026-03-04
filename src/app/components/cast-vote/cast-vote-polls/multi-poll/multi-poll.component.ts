@@ -35,13 +35,13 @@ export class MultiPollComponent {
   }
 
   constructor() {
-    this.castVoteService.castVoteStarted.pipe(takeUntilDestroyed())
+    this.castVoteService.initiated.pipe(takeUntilDestroyed())
       .subscribe({
-        next: () => this.castVoteStarted()
+        next: () => this.onInitiated()
       });
   }
 
-  private castVoteStarted() {
+  private onInitiated() {
     this._choice = undefined;
   }
 }

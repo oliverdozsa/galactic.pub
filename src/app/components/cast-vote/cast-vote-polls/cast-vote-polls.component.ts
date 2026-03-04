@@ -6,6 +6,7 @@ import {MultiPollComponent} from './multi-poll/multi-poll.component';
 import {MultiChoiceComponent} from './multi-choice/multi-choice.component';
 import {CastVoteService, PollIndex, PollOptionCode} from '../../../services/cast-vote.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-cast-vote-polls',
@@ -30,9 +31,9 @@ export class CastVotePollsComponent {
   castVoteService = inject(CastVoteService);
 
   constructor() {
-    this.castVoteService.castVoteStarted.pipe(takeUntilDestroyed())
+    this.castVoteService.initiated.pipe(takeUntilDestroyed())
       .subscribe({
-        next: () => this.castVoteStarted()
+        next: () => this.onInitiated()
       });
   }
 
@@ -64,7 +65,11 @@ export class CastVotePollsComponent {
     return this.voting.polls.every(poll => this.isChoiceValidFor(poll));
   }
 
-  private castVoteStarted() {
+  onVoteClicked() {
+    this.castVoteService.castVote();
+  }
+
+  private onInitiated() {
     this.choices.clear();
   }
 }

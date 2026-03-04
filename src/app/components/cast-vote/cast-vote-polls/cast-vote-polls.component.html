@@ -18,7 +18,7 @@
 
   <div class="flex justify-center w-full">
     <div>
-      <button [disabled]="!areAllChoicesValid()" class="btn btn-success">VOTE!</button>
+      <button [disabled]="!areAllChoicesValid()" (click)="onVoteClicked()" class="btn btn-success">VOTE!</button>
     </div>
   </div>
 

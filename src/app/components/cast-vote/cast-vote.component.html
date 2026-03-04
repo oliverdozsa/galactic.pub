@@ -24,5 +24,8 @@
         <button class="btn btn-sm" (click)="voteDetailsSlide.scrollIntoView()">vote details</button>
       </div>
     </div>
+    <ngx-spinner name="forCastingVote" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="false">
+      <p style="color: #fff">{{castVoteService.progressText}}</p>
+    </ngx-spinner>
   </div>
 </dialog>

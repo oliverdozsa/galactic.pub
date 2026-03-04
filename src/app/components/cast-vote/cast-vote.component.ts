@@ -4,12 +4,14 @@ import {Voting} from '../../services/responses';
 import {JsonPipe, NgIf} from '@angular/common';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {CastVotePollsComponent} from './cast-vote-polls/cast-vote-polls.component';
+import {NgxSpinnerComponent} from 'ngx-spinner';
 
 @Component({
   selector: 'app-cast-vote',
   imports: [
     NgIf,
-    CastVotePollsComponent
+    CastVotePollsComponent,
+    NgxSpinnerComponent
   ],
   templateUrl: './cast-vote.component.html',
   styleUrl: './cast-vote.component.css'
@@ -26,9 +28,9 @@ export class CastVoteComponent {
   }
 
   constructor() {
-    this.castVoteService.castVoteStarted.pipe(takeUntilDestroyed())
+    this.castVoteService.initiated.pipe(takeUntilDestroyed())
       .subscribe({
-        next: () => this.castVoteStarted()
+        next: () => this.onInitiated()
       });
   }
 
@@ -36,7 +38,7 @@ export class CastVoteComponent {
     this.choices = choices;
   }
 
-  private castVoteStarted() {
+  private onInitiated() {
     this.choices.clear();
     setTimeout(() => this.dialog()?.nativeElement.showModal(), 100);
   }

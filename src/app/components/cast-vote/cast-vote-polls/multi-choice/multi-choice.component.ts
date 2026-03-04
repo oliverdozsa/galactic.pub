@@ -26,9 +26,9 @@ export class MultiChoiceComponent {
   castVoteService = inject(CastVoteService);
 
   constructor() {
-    this.castVoteService.castVoteStarted.pipe(takeUntilDestroyed())
+    this.castVoteService.initiated.pipe(takeUntilDestroyed())
       .subscribe({
-        next: () => this.castVoteStarted()
+        next: () => this.onInitiated()
       });
   }
 
@@ -46,7 +46,7 @@ export class MultiChoiceComponent {
     this.choicesChanged.emit(this.checkedOptions);
   }
 
-  private castVoteStarted() {
+  private onInitiated() {
     this.checkedOptions.clear();
   }
 }
