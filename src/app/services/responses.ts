@@ -38,3 +38,7 @@ export interface Page<T> {
   items: T[],
   totalPages: number
 }
+
+export interface SigningPublicKey {
+  publicKey: string
+}

@@ -1,7 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {Voting} from './responses';
-import {Subject} from 'rxjs';
+import {SigningPublicKey, Voting} from './responses';
+import {Observable, of, Subject} from 'rxjs';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 export type PollIndex = number;
 export type PollOptionCode = number;
@@ -18,6 +20,14 @@ export class CastVoteService {
 
   progressText = "";
 
+  private httpClient = inject(HttpClient);
+  private apiUrl: string;
+
+  initiateFor(voting: Voting) {
+    this.voting = voting;
+    this.initiated.next();
+  }
+
   castVote() {
     // TODO: steps
     //   1. Create the RSA envelope: the message in the format: votingId|voteTokenHolderNewAccount
@@ -33,7 +43,15 @@ export class CastVoteService {
     //          poll index, and bb is similar but encodes the option code. If voting is encrypted encrypt the choices
     //          through the encrypt API first.
     this.spinnerService.show("forCastingVote");
+    // TODO
+    this.getSigningKeyPublic().pipe();
   }
 
-  constructor() { }
+  constructor() {
+    this.apiUrl = environment.apiUrl;
+  }
+
+  private getSigningKeyPublic(): Observable<SigningPublicKey> {
+    return this.httpClient.get<SigningPublicKey>(this.apiUrl + "/stellar/commission/publickey");
+  }
 }

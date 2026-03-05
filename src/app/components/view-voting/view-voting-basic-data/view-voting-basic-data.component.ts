@@ -52,7 +52,6 @@ export class ViewVotingBasicDataComponent {
   }
 
   onVoteClick() {
-    this.castVoteService.voting = this.voting;
-    this.castVoteService.initiated.next();
+    this.castVoteService.initiateFor(this.voting);
   }
 }
