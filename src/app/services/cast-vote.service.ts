@@ -34,7 +34,7 @@ export class CastVoteService {
     //      and from this create enveloped message
     //   2. Send the RSA envelope for signing () /signenvelope API (authenticated)
     //   3. From step 1. & 2. construct the revealed signature for the original message
-    //   4. Get the transaction XDR by sending the revealed and the revealed message to /transaction API anonymously
+    //   4. Get the transaction XDR by sending the revealed message to /transaction API anonymously!
     //   5. Send the transaction to the Stellar network to have the vote token on the holder account
     //   6. Cast the vote by sending the vote token from holder to the ballot account. The memo contains the choices.
     //      Take care of encrypted voting!
@@ -44,7 +44,7 @@ export class CastVoteService {
     //          through the encrypt API first.
     this.spinnerService.show("forCastingVote");
     // TODO
-    this.getSigningKeyPublic().pipe();
+    this.getSigningKeyPublic().subscribe({next: k => console.log(JSON.stringify(k))});
   }
 
   constructor() {
