@@ -1,0 +1,258 @@
+<section style="
+  position: relative;
+  overflow: hidden;
+  background: var(--gp-bg);
+  padding-top: 7rem;
+  padding-bottom: 5rem;
+">
+
+  <!-- Constellation backdrop SVG -->
+  <svg
+    aria-hidden="true"
+    style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;"
+    viewBox="0 0 1440 480"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <!-- Constellation lines -->
+    <g stroke="#DDD8F8" stroke-width="0.8" opacity="0.8">
+      <!-- Cluster A: top-left -->
+      <line x1="120" y1="60" x2="200" y2="40"/>
+      <line x1="200" y1="40" x2="280" y2="90"/>
+      <line x1="170" y1="132" x2="120" y2="60"/>
+      <line x1="170" y1="132" x2="280" y2="90"/>
+      <!-- A → B bridge -->
+      <line x1="280" y1="90" x2="360" y2="118"/>
+      <line x1="360" y1="118" x2="500" y2="48"/>
+      <!-- Cluster B: top-center -->
+      <line x1="500" y1="48" x2="582" y2="78"/>
+      <line x1="582" y1="78" x2="658" y2="32"/>
+      <line x1="658" y1="32" x2="732" y2="96"/>
+      <line x1="732" y1="96" x2="618" y2="158"/>
+      <line x1="618" y1="158" x2="500" y2="48"/>
+      <!-- B → C bridge -->
+      <line x1="732" y1="96" x2="808" y2="68"/>
+      <line x1="808" y1="68" x2="952" y2="42"/>
+      <!-- Cluster C: top-right -->
+      <line x1="952" y1="42" x2="1032" y2="78"/>
+      <line x1="1032" y1="78" x2="1112" y2="48"/>
+      <line x1="1112" y1="48" x2="1192" y2="88"/>
+      <line x1="1192" y1="88" x2="1062" y2="138"/>
+      <line x1="1062" y1="138" x2="1032" y2="78"/>
+      <!-- Right edge -->
+      <line x1="1192" y1="88" x2="1308" y2="122"/>
+    </g>
+
+    <!-- Stars: background (tiny) -->
+    <g fill="#C4B5F4" opacity="0.6">
+      <circle cx="70"  cy="200" r="1"/>
+      <circle cx="240" cy="255" r="1"/>
+      <circle cx="415" cy="198" r="1"/>
+      <circle cx="712" cy="218" r="1"/>
+      <circle cx="882" cy="198" r="1"/>
+      <circle cx="1302" cy="65"  r="1"/>
+      <circle cx="1384" cy="62"  r="1"/>
+      <circle cx="1422" cy="182" r="1"/>
+      <circle cx="152"  cy="342" r="1"/>
+      <circle cx="382"  cy="372" r="1"/>
+      <circle cx="642"  cy="358" r="1"/>
+      <circle cx="882"  cy="368" r="1"/>
+      <circle cx="1152" cy="332" r="1"/>
+      <circle cx="1362" cy="372" r="1"/>
+      <circle cx="752"  cy="422" r="1"/>
+      <circle cx="302"  cy="432" r="1"/>
+      <circle cx="1052" cy="402" r="1"/>
+      <circle cx="540"  cy="290" r="1"/>
+      <circle cx="900"  cy="310" r="1"/>
+      <circle cx="1250" cy="260" r="1"/>
+    </g>
+
+    <!-- Stars: constellation nodes (medium) -->
+    <g fill="#B0A0EE">
+      <circle cx="360"  cy="118" r="1.5"/>
+      <circle cx="808"  cy="68"  r="1.5"/>
+      <circle cx="1308" cy="122" r="1.5"/>
+      <circle cx="200"  cy="40"  r="1.5"/>
+      <circle cx="280"  cy="90"  r="2"/>
+      <circle cx="170"  cy="132" r="1.5"/>
+      <circle cx="582"  cy="78"  r="1.5"/>
+      <circle cx="658"  cy="32"  r="2"/>
+      <circle cx="732"  cy="96"  r="1.5"/>
+      <circle cx="618"  cy="158" r="2"/>
+      <circle cx="1032" cy="78"  r="1.5"/>
+      <circle cx="1112" cy="48"  r="2"/>
+      <circle cx="1192" cy="88"  r="1.5"/>
+      <circle cx="1062" cy="138" r="1"/>
+    </g>
+
+    <!-- Stars: prominent vertices (larger) -->
+    <g fill="#9580E8">
+      <circle cx="120" cy="60"  r="2.5"/>
+      <circle cx="500" cy="48"  r="2.5"/>
+      <circle cx="952" cy="42"  r="2.5"/>
+    </g>
+
+    <!-- Gold star sparks -->
+    <g fill="#F0A12B">
+      <!-- 4-pointed spark at top-left vertex -->
+      <path d="M120,53 L121.8,58 L127,60 L121.8,62 L120,67 L118.2,62 L113,60 L118.2,58 Z"/>
+      <!-- tiny spark near C cluster -->
+      <path d="M952,36 L953.5,40 L958,42 L953.5,44 L952,48 L950.5,44 L946,42 L950.5,40 Z"/>
+      <!-- scattered tiny gold dot -->
+      <circle cx="1308" cy="122" r="2" fill="#F0A12B" opacity="0.7"/>
+    </g>
+  </svg>
+
+  <!-- Content -->
+  <div style="
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+  ">
+
+    <!-- Text -->
+    <div style="flex: 1; max-width: 38rem;">
+      <div style="
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--gp-star-light);
+        color: var(--gp-star);
+        border: 1px solid #F8DFA0;
+        border-radius: 2rem;
+        padding: 0.25rem 0.875rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+      ">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+          <path d="M5,0.5 L5.9,3.8 L9.3,3.8 L6.7,5.8 L7.6,9.1 L5,7.1 L2.4,9.1 L3.3,5.8 L0.7,3.8 L4.1,3.8 Z" fill="var(--gp-star)"/>
+        </svg>
+        Experimental Lab
+      </div>
+
+      <h1 style="
+        font-size: clamp(2.4rem, 5vw, 3.75rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        color: var(--gp-text-1);
+        margin: 0 0 1.25rem;
+      ">
+        Projects from<br>
+        <span style="color: var(--gp-accent);">the edge</span> of<br>
+        what's possible
+      </h1>
+
+      <p style="
+        font-size: 1.1rem;
+        line-height: 1.65;
+        color: var(--gp-text-2);
+        margin: 0 0 2rem;
+        max-width: 32rem;
+      ">
+        A personal collection of experiments — exploring blockchain, privacy,
+        and whatever sparks curiosity next. Built to learn, shared openly.
+      </p>
+
+      <a href="#projects" style="
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--gp-accent);
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background 0.15s, transform 0.15s;
+        box-shadow: 0 4px 14px rgba(108, 71, 217, 0.25);
+      "
+      onmouseover="this.style.background='var(--gp-accent-dark)'; this.style.transform='translateY(-1px)'"
+      onmouseout="this.style.background='var(--gp-accent)'; this.style.transform='translateY(0)'"
+      >
+        Browse projects
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Planet illustration -->
+    <div aria-hidden="true" style="flex-shrink: 0; width: 300px; height: 300px; display: none;" class="hero-planet">
+      <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+        <defs>
+          <radialGradient id="planet-grad" cx="42%" cy="38%" r="58%">
+            <stop offset="0%" stop-color="#EDE9FF"/>
+            <stop offset="100%" stop-color="#D5CFF5"/>
+          </radialGradient>
+          <radialGradient id="moon-grad" cx="40%" cy="35%" r="60%">
+            <stop offset="0%" stop-color="#F0ECFE"/>
+            <stop offset="100%" stop-color="#D5CFF5"/>
+          </radialGradient>
+          <clipPath id="ring-front-clip">
+            <rect x="0" y="155" width="300" height="145"/>
+          </clipPath>
+        </defs>
+
+        <!-- Background stars -->
+        <circle cx="30"  cy="28"  r="1.5" fill="#C4B5F4"/>
+        <circle cx="262" cy="44"  r="1"   fill="#C4B5F4"/>
+        <circle cx="275" cy="188" r="1.5" fill="#C4B5F4"/>
+        <circle cx="22"  cy="210" r="1"   fill="#C4B5F4"/>
+        <circle cx="280" cy="130" r="1"   fill="#C4B5F4"/>
+        <circle cx="18"  cy="140" r="1"   fill="#C4B5F4"/>
+        <circle cx="260" cy="265" r="1"   fill="#C4B5F4"/>
+        <circle cx="45"  cy="268" r="1.5" fill="#C4B5F4"/>
+
+        <!-- Gold star sparks -->
+        <path d="M28,54 L29.8,58.5 L34.5,60 L29.8,61.5 L28,66 L26.2,61.5 L21.5,60 L26.2,58.5 Z" fill="#F0A12B"/>
+        <path d="M258,200 L259.4,204 L263.5,205.5 L259.4,207 L258,211 L256.6,207 L252.5,205.5 L256.6,204 Z" fill="#F0A12B" opacity="0.7"/>
+
+        <!-- Ring: back half (behind planet) -->
+        <ellipse cx="152" cy="158" rx="108" ry="26"
+          stroke="#C4B5F4" stroke-width="2" opacity="0.5"
+          transform="rotate(-10 152 158)"/>
+
+        <!-- Planet body -->
+        <circle cx="152" cy="150" r="68" fill="url(#planet-grad)" stroke="#C4B5F4" stroke-width="1.5"/>
+
+        <!-- Planet surface details -->
+        <circle cx="132" cy="130" r="26" fill="#E4DEFF" opacity="0.5"/>
+        <circle cx="168" cy="158" r="16" fill="#DDD6FF" opacity="0.35"/>
+        <circle cx="145" cy="168" r="10" fill="#E8E4FF" opacity="0.4"/>
+
+        <!-- Ring: front half (in front of planet) -->
+        <ellipse cx="152" cy="158" rx="108" ry="26"
+          stroke="#9580E8" stroke-width="2" opacity="0.65"
+          transform="rotate(-10 152 158)"
+          clip-path="url(#ring-front-clip)"/>
+
+        <!-- Moon -->
+        <circle cx="248" cy="76" r="18" fill="url(#moon-grad)" stroke="#C4B5F4" stroke-width="1.2"/>
+        <circle cx="242" cy="70" r="7"  fill="#D5CFF5" opacity="0.45"/>
+
+        <!-- Small orbiting dot -->
+        <circle cx="60" cy="122" r="5.5" fill="var(--gp-accent)" opacity="0.55"/>
+        <circle cx="60" cy="122" r="3"   fill="var(--gp-accent)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 900px) {
+    .hero-planet {
+      display: block !important;
+    }
+  }
+</style>

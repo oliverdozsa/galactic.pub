@@ -1,0 +1,41 @@
+<footer style="
+  border-top: 1px solid var(--gp-border-light);
+  background: var(--gp-bg);
+  padding: 2rem 1.5rem;
+">
+  <div style="
+    max-width: 72rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  ">
+    <!-- Logo wordmark -->
+    <span style="
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gp-text-3);
+      letter-spacing: -0.01em;
+    ">
+      galactic<span style="color: var(--gp-star);">.</span>pub
+    </span>
+
+    <!-- Constellation divider + copyright -->
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <svg width="36" height="8" viewBox="0 0 36 8" aria-hidden="true">
+        <circle cx="2"  cy="4" r="1.5" fill="var(--gp-border)"/>
+        <line x1="3.5" y1="4" x2="10" y2="4" stroke="var(--gp-border)" stroke-width="0.8"/>
+        <circle cx="12" cy="4" r="1"   fill="var(--gp-border)"/>
+        <line x1="13" y1="4" x2="20" y2="4" stroke="var(--gp-border)" stroke-width="0.8"/>
+        <circle cx="22" cy="4" r="1.5" fill="var(--gp-border)"/>
+        <line x1="23.5" y1="4" x2="30" y2="4" stroke="var(--gp-border)" stroke-width="0.8"/>
+        <circle cx="34" cy="4" r="1"   fill="var(--gp-border)"/>
+      </svg>
+      <span style="font-size: 0.8rem; color: var(--gp-text-3);">
+        &copy; {{ year }} <a href="https://github.com/oliverdozsa/" target="_blank">Oliver Dozsa</a>
+      </span>
+    </div>
+  </div>
+</footer>

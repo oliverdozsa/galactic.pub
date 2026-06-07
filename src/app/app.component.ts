@@ -1,12 +1,23 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { HeroComponent } from './hero/hero.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [HeaderComponent, HeroComponent, ProjectsComponent, FooterComponent],
+  template: `
+    <app-header />
+    <main>
+      <app-hero />
+      <app-projects />
+    </main>
+    <app-footer />
+  `,
+  styles: [`
+    :host { display: block; }
+    main { min-height: 100vh; }
+  `],
 })
-export class AppComponent {
-  title = 'galactic.pub';
-}
+export class AppComponent {}
