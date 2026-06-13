@@ -19,6 +19,16 @@ export interface Project {
 export class ProjectsComponent {
   readonly projects: Project[] = [
     {
+      id: 'recps-app',
+      name: 'recps.app',
+      tagline: 'Smart recipe search',
+      description:
+        'Search recipes by what you have — or what you want to avoid. Filter by included and excluded ingredients, prep time, number of ingredients, and more advanced criteria.',
+      tags: ['Recipes', 'Search', 'Filters'],
+      status: 'live',
+      url: 'https://recps.app',
+    },
+    {
       id: 'stellar-vote',
       name: 'Stellar Vote',
       tagline: 'Anonymous on-chain voting',

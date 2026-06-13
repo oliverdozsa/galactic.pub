@@ -62,6 +62,20 @@
           <!-- Card top: icon + status -->
           <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;">
 
+            <!-- Project icon: recps.app -->
+            @if (project.id === 'recps-app') {
+              <div style="
+                width: 56px; height: 56px; flex-shrink: 0;
+                background: #d6e6b2;
+                border: 1px solid var(--gp-border);
+                border-radius: 1rem;
+                display: flex; align-items: center; justify-content: center;
+                overflow: hidden;
+              ">
+                <img src="recps.app-logo.svg" alt="recps.app logo" width="40" height="40" style="display:block;">
+              </div>
+            }
+
             <!-- Project icon: Stellar Vote -->
             @if (project.id === 'stellar-vote') {
               <div style="
@@ -172,7 +186,7 @@
             border-radius: 0.625rem;
             transition: background 0.15s, color 0.15s;
             align-self: flex-start;
-          "
+          " target="_blank"
           onmouseover="this.style.background='var(--gp-accent)'; this.style.color='white'"
           onmouseout="this.style.background='transparent'; this.style.color='var(--gp-accent)'"
           >
