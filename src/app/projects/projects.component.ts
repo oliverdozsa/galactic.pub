@@ -35,8 +35,8 @@ export class ProjectsComponent {
       description:
         'A trustless, anonymous voting system on the Stellar network. Smart contracts handle ballot logic — no central authority decides the outcome, and no voter reveals their identity.',
       tags: ['Stellar', 'Smart Contracts', 'Web3', 'Privacy'],
-      status: 'wip',
-      url: '#',
+      status: 'live',
+      url: 'https://vote.galactic.pub/about',
     },
   ];
 
