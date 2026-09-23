@@ -38,6 +38,16 @@ export class ProjectsComponent {
       status: 'live',
       url: 'https://vote.galactic.pub/about',
     },
+    {
+      id: 'choragon',
+      name: 'Choragon',
+      tagline: 'Gamified task management',
+      description:
+        'A task management system that plays like a trading card game — turn your to-dos into cards, build decks of quests, and level up by getting things done.',
+      tags: ['Productivity', 'Gamification', 'TCG'],
+      status: 'wip',
+      url: '',
+    },
   ];
 
   readonly statusLabel: Record<Project['status'], string> = {
