@@ -29,24 +29,14 @@ export class ProjectsComponent {
       url: 'https://recps.app',
     },
     {
-      id: 'stellar-vote',
-      name: 'Stellar Vote',
-      tagline: 'Anonymous on-chain voting',
-      description:
-        'A trustless, anonymous voting system on the Stellar network. Smart contracts handle ballot logic — no central authority decides the outcome, and no voter reveals their identity.',
-      tags: ['Stellar', 'Smart Contracts', 'Web3', 'Privacy'],
-      status: 'live',
-      url: 'https://vote.galactic.pub/about',
-    },
-    {
-      id: 'choragon',
-      name: 'Choragon',
+      id: 'choraforge',
+      name: 'ChoraForge',
       tagline: 'Gamified task management',
       description:
         'A task management system that plays like a trading card game — turn your to-dos into cards, build decks of quests, and level up by getting things done.',
       tags: ['Productivity', 'Gamification', 'TCG'],
-      status: 'wip',
-      url: '',
+      status: 'beta',
+      url: 'https://choraforge.galactic.pub',
     },
   ];
 

@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
 })
 export class AboutComponent {
   readonly interests = [
-    'Blockchain', 'Distributed Systems', 'Privacy Tech',
-    'Web Development', 'Open Source', 'Functional Programming',
+    'Web Development', 'Open Source', 'Distributed Systems', 'Blockchain',
   ];
 }

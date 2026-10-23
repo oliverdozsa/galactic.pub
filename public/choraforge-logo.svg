@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs>
+      <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#fff1c4"></stop><stop offset=".25" style="stop-color:#b9852a"></stop><stop offset=".5" style="stop-color:#f2c75c"></stop><stop offset=".78" style="stop-color:#6e4a14"></stop><stop offset="1" style="stop-color:#ffe9a8"></stop></linearGradient>
+      <linearGradient id="gGoldV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff3cc"></stop><stop offset=".48" style="stop-color:#f2c75c"></stop><stop offset=".52" style="stop-color:#a8752a"></stop><stop offset="1" style="stop-color:#ffe08a"></stop></linearGradient>
+      <radialGradient id="gInk" cx=".5" cy=".3" r=".8"><stop offset="0" style="stop-color:#2a2434"></stop><stop offset="1" style="stop-color:#100e15"></stop></radialGradient>
+    </defs>
+      <polygon points="60,4 108.5,32 108.5,88 60,116 11.5,88 11.5,32" style="fill:url(#gGold)"></polygon>
+      <polygon points="60,13 100.7,36.5 100.7,83.5 60,107 19.3,83.5 19.3,36.5" style="fill:url(#gInk)"></polygon>
+      <polygon points="60,18 96.4,39 96.4,81 60,102 23.6,81 23.6,39" style="fill:none;stroke:#f2c75c;stroke-width:1;opacity:.55"></polygon>
+      <g style="stroke:rgba(255,255,255,.2);stroke-width:.8;stroke-linejoin:round">
+        <polygon points="36,50 46,38 53,50" style="fill:#8fb8ff"></polygon>
+        <polygon points="46,38 74,38 67,50 53,50" style="fill:#d6e6ff"></polygon>
+        <polygon points="74,38 84,50 67,50" style="fill:#5b8cf0"></polygon>
+        <polygon points="36,50 53,50 60,84" style="fill:#2d4fa8"></polygon>
+        <polygon points="53,50 67,50 60,84" style="fill:#4a74d6"></polygon>
+        <polygon points="67,50 84,50 60,84" style="fill:#1d356f"></polygon>
+      </g>
+      <path d="M82 27 L83.4 31.6 L88 33 L83.4 34.4 L82 39 L80.6 34.4 L76 33 L80.6 31.6Z" style="fill:#ffffff"></path>
+      <polygon points="11.5,54 16,60 11.5,66 7,60" style="fill:#fff1c4"></polygon>
+      <polygon points="108.5,54 113,60 108.5,66 104,60" style="fill:#fff1c4"></polygon>
+    </svg>
